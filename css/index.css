@@ -1,0 +1,297 @@
+/*
+ * Any styles in here will be applied to all pages that match the pattern in the manifest. Typically, you
+ * will need to use `!important` to override styles on other web pages.
+ *
+ */
+
+@media only screen and (max-width: 600px) {
+
+  #cr-rs-filter-menu.cr-rs-class {
+    flex-direction: column;
+    row-gap: 10px;
+  }
+
+  .cr-rs-filter-vertical-divider {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+
+  #cr-rs-filter-menu.cr-rs-class {
+    flex-direction: row;
+    column-gap: 18px;
+  }
+
+  .cr-rs-filter-vertical-divider {
+    /* 
+    Helpful link: https://www.w3schools.com/howto/howto_css_vertical_line.asp 
+    */
+    border-left: 1px solid #cecaca;
+    height: 25px;
+  }
+}
+
+
+
+#cr-rs-filter-menu.cr-rs-class {
+  /* 
+  Styles pretty much copied from '.simulcast-calendar-header 
+  .premium-message' and '.premium-message' 
+  */
+
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5em;
+  color: #F78C24;
+  border-radius: 0.25rem;
+  background-color: #FFFFFF;
+
+  font-weight: 400;
+
+  padding: 0.9em 1em;
+  /* text-align: center; */
+  font-size: .8125rem;
+  text-shadow: 0 0 0.077em rgb(54 50 49 / 50%);
+  /* background-color: #cecaca; */
+
+  /* Helpful link for flex: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+  display: flex;
+  /* flex-direction: row; */
+  flex-wrap: nowrap;
+  /* justify-content:space-between; */
+  align-items: center;
+  /* gap: 10px; */
+  /* gap: 10px 20px; */
+  /* row-gap column gap */
+  /* row-gap: 10px; */
+  /* column-gap: 18px; */
+  width: max-content;
+}
+
+/* 
+Style the swtich
+Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
+ */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+  margin-left: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 17px;
+  background-color: #cecaca;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  border-radius: 50%;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #F78C24;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #F78C24;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* End Switch Styles */
+
+/* Style checkboxes */
+
+#cr-rs-filter-menu-pick-dubs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  /* justify-content:space-between; */
+  /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+  align-items: stretch;
+  /* gap: 10px; */
+  /* gap: 10px 20px; */
+  /* row-gap column gap */
+  /* row-gap: 10px; */
+  column-gap: 1px;
+}
+
+#cr-rs-filter-menu-pick-dubs input {
+
+  /* accent-color: #F78C24; */
+  /* margins-right: .3em; */
+
+  /* https://stackoverflow.com/a/719545/1193704 */
+  vertical-align: middle;
+  position: relative;
+  bottom: .08em;
+  /* this is a better value for different fonts! */
+}
+
+#cr-rs-filter-menu-pick-dubs input[type="checkbox"] {
+  /* position: absolute; */
+  opacity: 0;
+  /* z-index: -1; */
+}
+
+/* Text color for the label */
+#cr-rs-filter-menu-pick-dubs input[type="checkbox"]+span {
+  cursor: pointer;
+  font-size: 13px;
+  color: black;
+}
+
+/* Checkbox un-checked style */
+#cr-rs-filter-menu-pick-dubs input[type="checkbox"]+span:before {
+  content: '';
+  border: 1px solid #cecaca;
+  border-radius: 2px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 0.3em;
+  bottom: .08em;
+  /* margin-top: 0.5em; */
+  /* vertical-align: -2px; */
+}
+
+/* Checked checkbox style (in this case the background is red) */
+#cr-rs-filter-menu-pick-dubs input[type="checkbox"]:checked+span:before {
+  /* NOTE: Replace the url with a path to an SVG of a checkmark to get a checkmark icon */
+  background-image: url('chrome-extension://__MSG_@@extension_id__/images/checkmark.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  /* The size of the checkmark icon, you may/may not need this */
+  background-size: 15px;
+  border-radius: 2px;
+  background-color: #F78C24;
+  color: white;
+}
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+#cr-rs-filter-menu-pick-dubs input[type="checkbox"]:focus+span:before,
+#cr-rs-filter-menu-pick-dubs input[type="checkbox"]:not(:disabled)+span:hover:before {
+  /* Visible in the full-color space */
+  box-shadow: 0px 0px 0px 2px #F78C24;
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 2px;
+  outline-style: dotted;
+}
+
+
+/* Disabled checkbox styles */
+#cr-rs-filter-menu-pick-dubs input[type="checkbox"]:disabled+span {
+  cursor: default;
+  color: black;
+  opacity: 0.5;
+}
+
+/* #cr-rs-filter-menu-pick-dubs input[type='checkbox']:checked:after {
+  content: '\2713';
+  color:white;
+  text-align: center;
+  position: relative;
+    bottom: 0.08em;
+} */
+
+#cr-rs-filter-menu-pick-dubs label {
+  color: black;
+  font-size: 13px;
+}
+
+button.cr-rs-class {
+  border-radius: 4px;
+  background-color: #F78C24;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  padding: 4px 4px;
+}
+
+
+/* Style Radio */
+
+.cr-rs-class.switch-holder {
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
+}
+
+.switch-field {
+  display: flex;
+}
+
+.switch-field input {
+  position: absolute !important;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  width: 1px;
+  border: 0;
+  overflow: hidden;
+}
+
+.switch-field label {
+  background-color: white;
+  color: black;
+  font-size: 13px;
+  line-height: 1;
+  text-align: center;
+  padding: 4px 8px;
+  margin-right: -1px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease-in-out;
+}
+
+.switch-field label:hover {
+  cursor: pointer;
+}
+
+.switch-field input:checked+label {
+  background-color: #F78C24;
+  color: white;
+}
+
+.switch-field label:first-of-type {
+  border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+  border-radius: 0 4px 4px 0;
+}

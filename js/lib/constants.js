@@ -1,0 +1,1 @@
+const CRRS_CLASS = "cr-rs-class";

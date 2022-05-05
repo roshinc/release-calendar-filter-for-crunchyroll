@@ -1,0 +1,218 @@
+/*
+ * Any styles in here will be applied to all pages that match the pattern in the manifest. Typically, you
+ * will need to use `!important` to override styles on other web pages.
+ *
+ * This particular template makes the body colour #000 on google.com
+ */
+
+ body {
+    /*background: #212529 !important;*/
+  }
+  
+  .vl {
+    border-left: 1px solid #cecaca;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+    margin-left: 10px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cecaca;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #F78C24;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #F78C24;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 17px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  
+  .cr-rs-filter-menu p {
+    margin-left: 10px;
+    font-weight: 600;
+  }
+  
+  .cr-rs-filter-checkbox-menu{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* justify-content:space-between; */
+    /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    align-items: stretch;
+    gap: 10px;
+    gap: 10px 20px; /* row-gap column gap */
+    row-gap: 10px;
+    column-gap: 20px;
+  }
+  /* https://stackoverflow.com/a/719545/1193704 */
+  .cr-rs-filter-checkbox-menu input{
+    accent-color: #F78C24;
+    vertical-align: middle; 
+    position: relative;
+    bottom: .08em; /* this is a better value for different fonts! */
+  }
+  
+  .cr-rs-filter-menu {
+    font-family: "Helvetica Neue",Arial,sans-serif;
+    line-height: 1.5em;
+    color: #F78C24;
+    border-radius: 0.25rem;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* justify-content:space-between; */
+    align-items: stretch;
+    gap: 10px;
+    gap: 10px 20px; /* row-gap column gap */
+    row-gap: 10px;
+    column-gap: 20px;
+  }
+  
+  .cr-rs-filter-menu, .cr-rs-filter-menu .premium-membership-text {
+    font-weight: 400;
+  }
+  
+  .simulcast-calendar-header .cr-rs-filter-menu {
+    padding: 0.9em 0.308em;
+    /* text-align: center; */
+    font-size: .8125rem;
+    /* text-shadow: 0 0 0.077em rgb(54 50 49 / 50%); */
+    background-color: #FFFFFF;
+  }
+  
+  /* .simulcast-calendar-header .cr-rs-filter-menu a {
+    color: #fff;
+    text-decoration: underline;
+  } */
+  
+  #cr-rs-filter-toggle{
+    margin: 1.5rem auto;
+    text-align: center;
+  }
+  
+  #cr-rs-filter-toggle.content{
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .cr-rs-hide {
+    display: none;
+  }
+  
+  .sidebar {
+    height: 90%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #f78c25;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    margin-top: 4.9em;
+  }
+  
+  .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidebar a:hover {
+    color: #f1f1f1;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: #444;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+  
+  .shadow-element {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+    clip-path: inset(0px -5px 0px 0px);
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {
+      padding-top: 15px;
+    }
+  
+    .sidebar a {
+      font-size: 18px;
+    }
+  }
