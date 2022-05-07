@@ -4,6 +4,13 @@
  *
  */
 
+:root {
+  --cr-rc-main-accent-color: #F78C24;
+  --cr-rc-main-gray-color: #cecaca;
+
+  --cr-rc-main-font-size: .8125rem;
+}
+
 @media only screen and (max-width: 600px) {
 
   #cr-rs-filter-menu.cr-rs-class {
@@ -23,11 +30,53 @@
     column-gap: 18px;
   }
 
+  .cr-rs-hide {
+    display: none;
+  }
+
+  .cr-rs-filter-hidden-count {
+    list-style: none;
+    cursor: pointer;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    vertical-align: baseline;
+    height: 1.05rem;
+    font-family: Verdana, 'Lucida Grande', sans-serif;
+    font-size: .7rem;
+    line-height: 1.5;
+    color: #a09895;
+  }
+
+  p.premium-message {
+    margin-bottom: 0.6% !important;
+  }
+
+  .cr-rs-filter-hidden-count.changed {
+    border-radius: 4px;
+    animation: highlight 500ms ease-out;
+  }
+
+  @keyframes highlight {
+    0% {
+      background-color: var(--cr-rc-main-accent-color);
+    }
+
+    100% {
+      background-color: inherit;
+    }
+  }
+
+
   .cr-rs-filter-vertical-divider {
     /* 
     Helpful link: https://www.w3schools.com/howto/howto_css_vertical_line.asp 
     */
-    border-left: 1px solid #cecaca;
+    border-left: 1px solid var(--cr-rc-main-gray-color);
     height: 25px;
   }
 }
@@ -42,7 +91,7 @@
 
   font-family: "Helvetica Neue", Arial, sans-serif;
   line-height: 1.5em;
-  color: #F78C24;
+  color: var(--cr-rc-main-accent-color);
   border-radius: 0.25rem;
   background-color: #FFFFFF;
 
@@ -50,9 +99,9 @@
 
   padding: 0.9em 1em;
   /* text-align: center; */
-  font-size: .8125rem;
+  font-size: var(--cr-rc-main-font-size);
   text-shadow: 0 0 0.077em rgb(54 50 49 / 50%);
-  /* background-color: #cecaca; */
+  /* background-color: var(--cr-rc-main-gray-color); */
 
   /* Helpful link for flex: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
   display: flex;
@@ -94,7 +143,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   right: 0;
   bottom: 0;
   border-radius: 17px;
-  background-color: #cecaca;
+  background-color: var(--cr-rc-main-gray-color);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -113,11 +162,11 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 }
 
 input:checked+.slider {
-  background-color: #F78C24;
+  background-color: var(--cr-rc-main-accent-color);
 }
 
 input:focus+.slider {
-  box-shadow: 0 0 1px #F78C24;
+  box-shadow: 0 0 1px var(--cr-rc-main-accent-color);
 }
 
 input:checked+.slider:before {
@@ -146,7 +195,7 @@ input:checked+.slider:before {
 
 #cr-rs-filter-menu-pick-dubs input {
 
-  /* accent-color: #F78C24; */
+  /* accent-color: var(--cr-rc-main-accent-color); */
   /* margins-right: .3em; */
 
   /* https://stackoverflow.com/a/719545/1193704 */
@@ -165,14 +214,14 @@ input:checked+.slider:before {
 /* Text color for the label */
 #cr-rs-filter-menu-pick-dubs input[type="checkbox"]+span {
   cursor: pointer;
-  font-size: 13px;
+  font-size: var(--cr-rc-main-font-size);
   color: black;
 }
 
 /* Checkbox un-checked style */
 #cr-rs-filter-menu-pick-dubs input[type="checkbox"]+span:before {
   content: '';
-  border: 1px solid #cecaca;
+  border: 1px solid var(--cr-rc-main-gray-color);
   border-radius: 2px;
   display: inline-block;
   width: 10px;
@@ -192,7 +241,7 @@ input:checked+.slider:before {
   /* The size of the checkmark icon, you may/may not need this */
   background-size: 15px;
   border-radius: 2px;
-  background-color: #F78C24;
+  background-color: var(--cr-rc-main-accent-color);
   color: white;
 }
 
@@ -200,7 +249,7 @@ input:checked+.slider:before {
 #cr-rs-filter-menu-pick-dubs input[type="checkbox"]:focus+span:before,
 #cr-rs-filter-menu-pick-dubs input[type="checkbox"]:not(:disabled)+span:hover:before {
   /* Visible in the full-color space */
-  box-shadow: 0px 0px 0px 2px #F78C24;
+  box-shadow: 0px 0px 0px 2px var(--cr-rc-main-accent-color);
 
   /* Visible in Windows high-contrast themes
      box-shadow will be hidden in these modes and
@@ -230,12 +279,12 @@ input:checked+.slider:before {
 
 #cr-rs-filter-menu-pick-dubs label {
   color: black;
-  font-size: 13px;
+  font-size: var(--cr-rc-main-font-size);
 }
 
 button.cr-rs-class {
   border-radius: 4px;
-  background-color: #F78C24;
+  background-color: var(--cr-rc-main-accent-color);
   border: none;
   color: white;
   text-align: center;
@@ -270,7 +319,7 @@ button.cr-rs-class {
 .switch-field label {
   background-color: white;
   color: black;
-  font-size: 13px;
+  font-size: var(--cr-rc-main-font-size);
   line-height: 1;
   text-align: center;
   padding: 4px 8px;
@@ -284,7 +333,7 @@ button.cr-rs-class {
 }
 
 .switch-field input:checked+label {
-  background-color: #F78C24;
+  background-color: var(--cr-rc-main-accent-color);
   color: white;
 }
 

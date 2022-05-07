@@ -1,44 +1,148 @@
+const handleShowDubsToggle = (event) => {
+  reflowHiddenCount();
+  const isChecked = event.target.checked;
 
-const CRRS_FILTER_MENU_DIV_ID = "cr-rs-filter-menu";
-const CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID = "cr-rs-filter-menu-show-dubs";
-const CRRS_FILTER_MENU_PICK_DUBS_DIV_ID = "cr-rs-filter-menu-pick-dubs";
+  let dubPickers = _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
 
-
-const applyFilters = (event) => {
-  console.log("clicked")
-  console.log(event)
-  console.log(`Shows Dubs? ${document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID).checked}`);
-  console.log();
+  if (isChecked) {
+    dubPickers.each((elem, i) => {
+      //TODO: Show all dubs
+      crrsFilter.showAllDubs();
+      elem.checked = true;
+    });
+  } else {
+    dubPickers.each((elem, i) => {
+      //TODO: Hide all dubs
+      crrsFilter.hideAllDubs();
+      elem.checked = false;
+    });
+  }
 };
 
-const createToggleSwtich = (labelText, elementId, elementToAttachTo, checked) => {
+const handleDubPickerCheckbox = (event) => {
+  reflowHiddenCount();
+  let target = _(event.target);
+  const isChecked = target.elem.checked;
+
+  let dubToggle = _(document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID));
+  let dubPicked = document.querySelectorAll(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input:checked`);
+  let langsToShow = Array.from(dubPicked).flatMap(cb => {
+    return _(cb).data("lang");
+  });
+
+  if (isChecked) {
+    dubToggle.elem.checked = true;
+    crrsFilter.showDubsOf(langsToShow);
+  } else {
+    if (dubPicked.length < 1) {
+      dubToggle.elem.checked = false;
+      //TODO: Hide all dubs
+      crrsFilter.hideAllDubs();
+    } else {
+      let show = Array.from(dubPicked).flatMap(cb => {
+        return _(cb).data("lang");
+      });
+      crrsFilter.showDubsOf(show);
+    }
+
+  }
+
+};
+
+const handleQueueRadioGroup = (event) => {
+  reflowHiddenCount();
+  let selectedValue = document.querySelector(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]:checked`).value;
+
+  switch (selectedValue) {
+    case 'only':
+      crrsFilter.showInQueueOnly();
+      break;
+    case 'show':
+      crrsFilter.showInQueue();
+      break;
+    case 'hide':
+      crrsFilter.hideInQueue();
+      break;
+    default:
+      console.log(`unknow selection ${selectedValue}.`);
+  }
+}
+
+const handlePremiereRadioGroup = (event) => {
+  reflowHiddenCount();
+  let selectedValue = document.querySelector(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]:checked`).value;
+
+  switch (selectedValue) {
+    case 'only':
+      crrsFilter.showPermiereOnly();
+      break;
+    case 'show':
+      crrsFilter.showPermiere();
+      break;
+    case 'hide':
+      crrsFilter.hidePermiere();
+      break;
+    default:
+      console.log(`unknow selection ${selectedValue}.`);
+  }
+}
+
+
+const reflowHiddenCount = () => {
+
+  let hiddenCounts = document.querySelectorAll(`.${CRRS_HIDDEN_COUNT_CLASS_NAME}`);
+
+  hiddenCounts.forEach(element => {
+    element.classList.remove("changed");
+    void element.offsetWidth;
+  });
+};
+
+/**
+ * Create a UI element with a checkbox styled as a toggle switch
+ * 
+ * @param {string} labelText the label of the toggle switch
+ * @param {string} elementId the ID of the toggle input
+ * @param {HTMLElement} elementToAttachTo element the toggle should append to
+ * @param {EventListener} eventHandlerMethod callback function for onchange
+ * @param {boolean} checked {true} if the defalut state of the switch should be on
+ */
+const createToggleSwtich = (labelText, elementId, elementToAttachTo, eventHandlerMethod, checked) => {
   // ---- Add Toggle Switch ----
   // **1. The wraping Label element **
-  let showDubsSwitchText = _("+label")
+  let toggleSwitchText = _("+label")
     .attr("for", elementId)
     .text(labelText)
     .addClass([CRRS_CLASS]);
   // **2. The Label element **
-  let showDubsSwitchLabel = _("+label")
+  let toggleSwitchLabel = _("+label")
     .attr("for", elementId)
     .addClass([CRRS_CLASS, "switch"]);
   // **3. The Input element **
-  let showDubsSwitchInput = _("+input")
+  let toggleSwitchInput = _("+input")
     .attr("id", elementId)
     .attr("type", "checkbox")
-    .attr("checked", checked)
-    .on("change", applyFilters)
+    .on("change", eventHandlerMethod)
     .addClass(CRRS_CLASS);
+  if (checked) {
+    toggleSwitchInput.attr("checked", checked);
+  }
   // **4. The Span element **
-  let showDubsSwitchSpan = _("+span")
+  let toggleSwitchSpan = _("+span")
     .addClass([CRRS_CLASS, "slider", "round"]);
   // Connect elements
-  showDubsSwitchText.append([showDubsSwitchLabel]);
-  showDubsSwitchLabel.append([showDubsSwitchInput, showDubsSwitchSpan]);
+  toggleSwitchText.append([toggleSwitchLabel]);
+  toggleSwitchLabel.append([toggleSwitchInput, toggleSwitchSpan]);
   // Add to container
-  elementToAttachTo.append(showDubsSwitchText);
+  elementToAttachTo.append(toggleSwitchText);
 };
 
+
+/**
+ * Creates a div thats styled to look like a vertical divider
+ * 
+ * @param {HTMLElement} elementToAttachTo element the div should append to
+ */
 const createVerticalDivider = (elementToAttachTo) => {
   // ---- Add Vertical Divider ---- 
   let dividerDivElement = _("+div")
@@ -47,62 +151,133 @@ const createVerticalDivider = (elementToAttachTo) => {
   elementToAttachTo.append(dividerDivElement);
 };
 
-const addCheckBox = (labelText, elementId, elementToAttachTo, checked) => {
-  // **2. The span element **
-  let dubSelectionSpan = _("+span")
+/**
+ * Creates a div thats styled to look like a vertical divider
+ * 
+ * @param {HTMLElement} elementToAttachTo element the div should append to
+ */
+const createHiddenCount = (elementToAttachTo) => {
+  let hiddenCount = _().react(
+    {},
+    {
+      render: state => {
+        let response = _("+div", `${state.count} Hidden`)
+          .addClass([CRRS_CLASS, CRRS_HIDDEN_COUNT_CLASS_NAME]);
+        if (state.changed) {
+          response.addClass(["changed"]);
+        }
+
+        return response;
+      } //This is XSS safe
+    }
+  )
+
+  _(elementToAttachTo, hiddenCount);
+
+  //Edit below line to update state
+  hiddenCount.state.count = "0";
+  // // ---- Add Vertical Divider ---- 
+  // let dividerDivElement = _("+div")
+  //   .text("0 Hidden")
+  //   .addClass([CRRS_CLASS, "cr-rs-filter-hidden-count"]);
+  // elementToAttachTo.append(dividerDivElement);
+  return hiddenCount;
+
+};
+
+
+/**
+ * Create a UI element with a custom checkbox 
+ * 
+ * @param {string} labelText the label of the checkbox
+ * @param {string} elementId the ID of the checkbox
+ * @param {HTMLElement} elementToAttachTo element the checkbox should append to
+ * @param {EventListener} eventHandlerMethod callback function for onchange
+ * @param {Array} dataAttrs data attributes to add to the input
+ * @param {boolean} checked {true} if the defalut state of the switch should be on
+ */
+const addCheckBox = (labelText, elementId, elementToAttachTo, eventHandlerMethod, dataAttrs, checked) => {
+  // **1. The wraping span element **
+  let customCheckboxSpan = _("+span")
     .addClass(CRRS_CLASS);
-  // **2. The span element **
-  let dubSelectionInput = _("+input")
+  // **2. The input element **
+  let customCheckboxInput = _("+input")
     .attr("id", elementId)
     .attr("type", "checkbox")
-    .on("change", applyFilters)
+    .on("change", eventHandlerMethod)
     .addClass(CRRS_CLASS);
-
-  if (checked) {
-    dubSelectionInput.attr("checked", checked);
+  for (const dataAttr in dataAttrs) {
+    if (Object.hasOwnProperty.call(dataAttrs, dataAttr)) {
+      const element = dataAttrs[dataAttr];
+      customCheckboxInput.data(dataAttr, element);
+    }
   }
 
+  if (checked) {
+    customCheckboxInput.attr("checked", checked);
+  }
+  // **3. The inner span element **
   let fakeCheckSpan = _("+span")
     .addClass(CRRS_CLASS)
     .text(labelText);
 
-  // **2. The label element **
-  let dubSelectionLabel = _("+label")
+  // **4. The label element **
+  let customCheckboxLabel = _("+label")
     .attr("for", elementId)
     //.text(labelText)
     .addClass(CRRS_CLASS);
-  dubSelectionLabel.append(dubSelectionInput);
-  dubSelectionLabel.append(fakeCheckSpan);
+  customCheckboxLabel.append(customCheckboxInput);
+  customCheckboxLabel.append(fakeCheckSpan);
 
   // Connect elements
-  dubSelectionSpan.append([dubSelectionLabel]);
+  customCheckboxSpan.append([customCheckboxLabel]);
   // Add to container
-  elementToAttachTo.append([dubSelectionSpan]);
+  elementToAttachTo.append([customCheckboxSpan]);
 };
 
-const addRadioOption = (labelText, elementId, switchName, elementToAttachTo, checked) => {
-  let firstOptionInput = _("+input")
+
+/**
+ * Create a UI element with a custom radio option for the group 'switchName'
+ * 
+ * @param {string} labelText the label of the radio
+ * @param {string} elementId the ID of the radio
+ * @param {string} switchName the name of ratio group
+ * @param {HTMLElement} elementToAttachTo element the radio should append to
+ * @param {EventListener} eventHandlerMethod callback function for onchange
+ * @param {boolean} checked {true} if the defalut state of the switch should be on
+ */
+const addRadioOption = (labelText, elementId, switchName, elementToAttachTo, eventHandlerMethod, checked) => {
+  // **1. The Input element **
+  let optionInput = _("+input")
     .attr("type", "radio")
-    .on("change", applyFilters)
+    .on("change", eventHandlerMethod)
     .attr("id", elementId)
     .attr("name", switchName)
     .attr("value", labelText.toLowerCase())
     .addClass([CRRS_CLASS]);
   if (checked) {
-    firstOptionInput.attr("checked", checked);
+    optionInput.attr("checked", checked);
   }
-
-  let firstOptionLabel = _("+label")
+  // **1. The Label element **
+  let optionLabel = _("+label")
     .attr("for", elementId)
     .text(labelText)
     .attr("title", labelText)
     .addClass([CRRS_CLASS, "switch-field"]);
 
   // Add to container
-  elementToAttachTo.append([firstOptionInput, firstOptionLabel]);
+  elementToAttachTo.append([optionInput, optionLabel]);
 };
 
-const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo) => {
+/**
+ * 
+ * @param {string} groupText the label for the group
+ * @param {string} idPrefix the perfix of the id for the options
+ * @param {string} switchName name of the group
+ * @param {HTMLElement} elementToAttachTo element the radio should append to
+ * @param {EventListener} eventHandlerMethod callback function for onchange
+ */
+const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo, eventHandlerMethod) => {
   let buttonGroup = _("+div")
     .addClass([CRRS_CLASS, "switch-holder"]);
 
@@ -118,9 +293,9 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo)
   for (let radioOption of radioOptions) {
     console.log(radioOption);
     if (radioOption === "Show") {
-      addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, true);
+      addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, eventHandlerMethod, true);
     } else {
-      addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, false);
+      addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, eventHandlerMethod, false);
     }
   }
 
@@ -133,15 +308,19 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo)
  * @param {HTMLElement} elementToAttachTo the element to append the menu to
  * @param {Week} week the content object
  */
-const creatInlineMenu = (elementToAttachTo, week) => {
+const createInlineMenu = (elementToAttachTo, week) => {
   let containerDiv = _("+div")
     .attr("id", CRRS_FILTER_MENU_DIV_ID)
     .addClass(CRRS_CLASS);
 
   // ---- Add Toggle Switch for showing all dub ----
-  createToggleSwtich("Show Dubs", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, containerDiv, true);
+  createToggleSwtich("Show Dubs", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, containerDiv, handleShowDubsToggle, true);
+
+
   // ---- Add Vertical Divider ---- 
   createVerticalDivider(containerDiv);
+
+
   // ---- Add Checkbox for showing specific dubs ----
   // **1. The wraping div element **
   let dubSelectionDiv = _("+div")
@@ -154,29 +333,32 @@ const creatInlineMenu = (elementToAttachTo, week) => {
 
   dubSelectionDiv.append([dubSelectionText]);
 
-  const languages = ["English", "Spanish", "French", "German", "Portuguese", "Others"];
+  const languages = Filter.dubLangs();
 
   for (let language of languages) {
-    console.log(language);
-    addCheckBox(language, `cr-rs-filter-menu-pick-dubs-lang-${language.toLowerCase()}`, dubSelectionDiv, true);
+    let map = [];
+    map['lang'] = language.toLowerCase()
+    addCheckBox(language, `${CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX}${language.toLowerCase()}`, dubSelectionDiv, handleDubPickerCheckbox, map, true);
   }
 
   // Add to container
   containerDiv.append(dubSelectionDiv);
 
+
   // ---- Add Vertical Divider ---- 
   createVerticalDivider(containerDiv);
+
 
   // ---- Add Toggle Switch for showing in queue only ----
   //createToggleSwtich("In Queue Only", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID + "q", containerDiv, false);
-  addRadioButtonGroup("In Queue:", "in-queue-toggle", "in-queue-switch", containerDiv);
+  addRadioButtonGroup("In Queue:", "in-queue-toggle", CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, containerDiv, handleQueueRadioGroup);
 
   // ---- Add Vertical Divider ---- 
   createVerticalDivider(containerDiv);
 
   // ---- Add Toggle Switch for showing in queue only ----
-  //createToggleSwtich("Permier Only", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID + "p", containerDiv, false);
-  addRadioButtonGroup("Permier:", "premier-toggle", "permier-switch", containerDiv);
+  //createToggleSwtich("Permiere Only", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID + "p", containerDiv, false);
+  addRadioButtonGroup("Permiere:", "premier-toggle", CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME, containerDiv, handlePremiereRadioGroup);
 
   // ---- Add Vertical Divider ---- 
   createVerticalDivider(containerDiv);

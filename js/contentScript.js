@@ -8,7 +8,8 @@ window.onload = function () {
 
   console.log("Create Menu");
   let week = new Week(document.querySelectorAll(".day"));
-  createInlineCalDomMenu(document.querySelector("header.simulcast-calendar-header"), week);
+  crrsFilter = new Filter(week);
+  createInlineMenu(document.querySelector("header.simulcast-calendar-header"), week);
   console.log("Done Create Menu");
 
   /*  let observer = new MutationObserver(function (mutations, me) {

@@ -35,6 +35,7 @@
         "js/classes/content.js",
         "js/classes/day.js",
         "js/classes/week.js",
+        "js/classes/filter.js",
         "js/contentScript.js"
       ]
     }
