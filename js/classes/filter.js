@@ -2,22 +2,80 @@ class Filter {
 
     #weekContent;
 
-    #hideAllDubs = false;
-    #showSomeDubs = false;
-    #dubsShown = [];
+    #hideAllDubs;
+    #showSomeDubs;
+    #dubsShown;
 
     static #dubsLangList = ["English", "Spanish", "French", "German", "Portuguese", "Others"];
     #dubsLangListInternal = ["english", "spanish", "french", "german", "portuguese", "others"];
 
-    #showInQueue = true;
-    #showOnlyInQueue = false;
+    #showInQueue;
+    #showOnlyInQueue;
 
-    #showPremiere = true;
-    #showOnlyPremiere = false;
+    #showPremiere;
+    #showOnlyPremiere;
 
-
+    /**
+     * 
+     * @param {Week} weekContent the content object
+     */
     constructor(weekContent) {
+        this.#setDefaults();
         this.#weekContent = weekContent;
+    }
+
+    restore(savedJson) {
+        this.#weekContent = weekContent;
+
+        this.#hideAllDubs = savedJson["hideAllDub"];
+        this.#dubsShown = savedJson["dubsShown"];
+
+        this.#showOnlyInQueue = savedJson["showInQueue"];
+        this.#showOnlyInQueue = savedJson["showOnlyInQueue"];
+
+        this.#showPremiere = savedJson["showPremiere"];
+        this.#showOnlyPremiere = savedJson["showOnlyPremiere"];
+
+        this.#showPremiere = savedJson["showPremiere"];
+        this.#showOnlyPremiere = savedJson["showOnlyPremiere"];
+
+        if (!this.#showSomeDubs) {
+            this.#show([]);
+        } else {
+            this.#show(this.#dubsShown);
+        }
+    }
+
+    reset() {
+        this.#setDefaults();
+        this.#show([]);
+    }
+
+    #setDefaults() {
+        this.#hideAllDubs = false;
+        this.#showSomeDubs = false;
+        this.#dubsShown = [];
+        this.#showInQueue = true;
+        this.#showOnlyInQueue = false;
+
+        this.#showPremiere = true;
+        this.#showOnlyPremiere = false;
+    }
+
+    createJson() {
+        let jsonArray = [];
+        jsonArray["hideAllDub"] = this.#hideAllDubs;
+        jsonArray["dubsShown"] = this.#dubsShown;
+
+        jsonArray["showInQueue"] = this.#showOnlyInQueue;
+        jsonArray["showOnlyInQueue"] = this.#showOnlyInQueue;
+
+        jsonArray["showPremiere"] = this.#showPremiere;
+        jsonArray["showOnlyPremiere"] = this.#showOnlyPremiere;
+
+        jsonArray["showPremiere"] = this.#showPremiere;
+        jsonArray["showOnlyPremiere"] = this.#showOnlyPremiere;
+
     }
 
     static dubLangs() {
@@ -37,9 +95,9 @@ class Filter {
             this.#dubsShown = [];
 
             //TODO: Hide all dubs
-            console.log("TODO: Hide all dubs");
+            // console.log("TODO: Hide all dubs");
             this.#show([]);
-            console.log("Done hiding");
+            // console.log("Done hiding");
         }
     }
 
@@ -51,9 +109,9 @@ class Filter {
             this.#dubsShown = this.#dubsLangListInternal;
 
             //TODO: Show all dubs
-            console.log("TODO: Show all dubs");
+            // console.log("TODO: Show all dubs");
             this.#show([]);
-            console.log("Done showing");
+            // console.log("Done showing");
         }
     }
 
@@ -71,9 +129,9 @@ class Filter {
             let toShow = intersection.filter(x => !this.#dubsShown.includes(x));
             let toHide = this.#dubsShown.filter(x => !intersection.includes(x));
 
-            console.log("TODO: Show dubs of");
-            console.log("To Show: " + toShow);
-            console.log("To Hide: " + toHide);
+            //console.log("TODO: Show dubs of");
+            //console.log("To Show: " + toShow);
+            //console.log("To Hide: " + toHide);
 
             this.#dubsShown = intersection;
             this.#show(this.#dubsShown);
@@ -88,7 +146,7 @@ class Filter {
             this.#showInQueue = false;
             this.#showOnlyInQueue = false;
 
-            console.log("TODO: Hide in queue");
+            //console.log("TODO: Hide in queue");
             this.#show(this.#dubsShown);
         }
     }
@@ -99,7 +157,7 @@ class Filter {
             this.#showInQueue = true;
             this.#showOnlyInQueue = false;
 
-            console.log("TODO: Show in queue");
+            //console.log("TODO: Show in queue");
             this.#show(this.#dubsShown);
         }
     }
@@ -110,7 +168,7 @@ class Filter {
             this.#showInQueue = true;
             this.#showOnlyInQueue = true;
 
-            console.log("TODO: Show in queue only");
+            //console.log("TODO: Show in queue only");
             this.#show(this.#dubsShown);
         }
     }
@@ -121,7 +179,7 @@ class Filter {
             this.#showPremiere = false;
             this.#showOnlyPremiere = false;
 
-            console.log("TODO: Hide premiere");
+            //console.log("TODO: Hide premiere");
             this.#show(this.#dubsShown);
         }
     }
@@ -132,7 +190,7 @@ class Filter {
             this.#showPremiere = true;
             this.#showOnlyPremiere = false;
 
-            console.log("TODO: Show premiere");
+            //console.log("TODO: Show premiere");
             this.#show(this.#dubsShown);
         }
     }
@@ -143,7 +201,7 @@ class Filter {
             this.#showPremiere = true;
             this.#showOnlyPremiere = true;
 
-            console.log("TODO: Show premiere only");
+            //console.log("TODO: Show premiere only");
             this.#show(this.#dubsShown);
         }
     }

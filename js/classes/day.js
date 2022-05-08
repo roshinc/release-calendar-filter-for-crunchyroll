@@ -18,7 +18,7 @@ class Day {
 
     #parseContent(content) {
         const todaysContent = Array.from(content);
-        console.log(content);
+        // console.log(content);
         todaysContent.forEach((content, index) => {
             const aContent = new Content(content);
             this.#todaysContentList[index] = aContent;
@@ -40,7 +40,7 @@ class Day {
         if (hideAllDubs) {
             hiddenContent.push.apply(hiddenContent, this.#todaysDubsList);
         } else {
-            console.log(allowedDubs);
+            // console.log(allowedDubs);
             if (allowedDubs.length > 0) {
                 this.#todaysDubsList.forEach((content, index) => {
                     if (!allowedDubs.includes(content.dubLang.toLowerCase())) {

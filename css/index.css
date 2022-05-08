@@ -11,7 +11,7 @@
   --cr-rc-main-font-size: .8125rem;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
 
   #cr-rs-filter-menu.cr-rs-class {
     flex-direction: column;
@@ -23,7 +23,7 @@
   }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 900px) {
 
   #cr-rs-filter-menu.cr-rs-class {
     flex-direction: row;
@@ -114,7 +114,7 @@
   /* row-gap column gap */
   /* row-gap: 10px; */
   /* column-gap: 18px; */
-  width: max-content;
+  /* width: max-content; */
 }
 
 /* 
@@ -299,9 +299,27 @@ button.cr-rs-class {
 
 .cr-rs-class.switch-holder {
   display: flex;
-  column-gap: 5px;
+  /* column-gap: 5px; */
   align-items: center;
 }
+
+@media only screen and (max-width: 1182px) {
+
+  .cr-rs-class.switch-holder {
+    flex-direction: column;
+    column-gap: 5px;
+  }
+}
+
+@media only screen and (min-width: 1182px) {
+
+  .cr-rs-class.switch-holder {
+    flex-direction: row;
+    column-gap: 5px;
+  }
+}
+
+/* 1310 */
 
 .switch-field {
   display: flex;

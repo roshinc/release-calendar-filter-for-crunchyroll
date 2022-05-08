@@ -31,6 +31,8 @@
       "js": [
         "js/vendors/caldom.min.js",
         "js/lib/constants.js",
+        "js/lib/utils.js",
+        "js/lib/event_handler.js",
         "js/lib/ui_modifier.js",
         "js/classes/content.js",
         "js/classes/day.js",

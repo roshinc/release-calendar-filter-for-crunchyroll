@@ -1,103 +1,3 @@
-const handleShowDubsToggle = (event) => {
-  reflowHiddenCount();
-  const isChecked = event.target.checked;
-
-  let dubPickers = _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
-
-  if (isChecked) {
-    dubPickers.each((elem, i) => {
-      //TODO: Show all dubs
-      crrsFilter.showAllDubs();
-      elem.checked = true;
-    });
-  } else {
-    dubPickers.each((elem, i) => {
-      //TODO: Hide all dubs
-      crrsFilter.hideAllDubs();
-      elem.checked = false;
-    });
-  }
-};
-
-const handleDubPickerCheckbox = (event) => {
-  reflowHiddenCount();
-  let target = _(event.target);
-  const isChecked = target.elem.checked;
-
-  let dubToggle = _(document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID));
-  let dubPicked = document.querySelectorAll(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input:checked`);
-  let langsToShow = Array.from(dubPicked).flatMap(cb => {
-    return _(cb).data("lang");
-  });
-
-  if (isChecked) {
-    dubToggle.elem.checked = true;
-    crrsFilter.showDubsOf(langsToShow);
-  } else {
-    if (dubPicked.length < 1) {
-      dubToggle.elem.checked = false;
-      //TODO: Hide all dubs
-      crrsFilter.hideAllDubs();
-    } else {
-      let show = Array.from(dubPicked).flatMap(cb => {
-        return _(cb).data("lang");
-      });
-      crrsFilter.showDubsOf(show);
-    }
-
-  }
-
-};
-
-const handleQueueRadioGroup = (event) => {
-  reflowHiddenCount();
-  let selectedValue = document.querySelector(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]:checked`).value;
-
-  switch (selectedValue) {
-    case 'only':
-      crrsFilter.showInQueueOnly();
-      break;
-    case 'show':
-      crrsFilter.showInQueue();
-      break;
-    case 'hide':
-      crrsFilter.hideInQueue();
-      break;
-    default:
-      console.log(`unknow selection ${selectedValue}.`);
-  }
-}
-
-const handlePremiereRadioGroup = (event) => {
-  reflowHiddenCount();
-  let selectedValue = document.querySelector(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]:checked`).value;
-
-  switch (selectedValue) {
-    case 'only':
-      crrsFilter.showPermiereOnly();
-      break;
-    case 'show':
-      crrsFilter.showPermiere();
-      break;
-    case 'hide':
-      crrsFilter.hidePermiere();
-      break;
-    default:
-      console.log(`unknow selection ${selectedValue}.`);
-  }
-}
-
-
-const reflowHiddenCount = () => {
-
-  let hiddenCounts = document.querySelectorAll(`.${CRRS_HIDDEN_COUNT_CLASS_NAME}`);
-
-  hiddenCounts.forEach(element => {
-    element.classList.remove("changed");
-    void element.offsetWidth;
-  });
-};
-
 /**
  * Create a UI element with a checkbox styled as a toggle switch
  * 
@@ -291,7 +191,7 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo,
   const radioOptions = ["Only", "Show", "Hide"];
 
   for (let radioOption of radioOptions) {
-    console.log(radioOption);
+    // console.log(radioOption);
     if (radioOption === "Show") {
       addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, eventHandlerMethod, true);
     } else {
@@ -306,9 +206,8 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo,
 /**
  * 
  * @param {HTMLElement} elementToAttachTo the element to append the menu to
- * @param {Week} week the content object
  */
-const createInlineMenu = (elementToAttachTo, week) => {
+const createInlineMenu = (elementToAttachTo) => {
   let containerDiv = _("+div")
     .attr("id", CRRS_FILTER_MENU_DIV_ID)
     .addClass(CRRS_CLASS);
@@ -368,6 +267,7 @@ const createInlineMenu = (elementToAttachTo, week) => {
     .text("Reset")
     .attr("title", "Reset Filters")
     .attr("aria-label", "Reset Filters")
+    .on("click", handelResetBtn)
     .addClass(CRRS_CLASS);
 
   containerDiv.append([resetBtn]);
