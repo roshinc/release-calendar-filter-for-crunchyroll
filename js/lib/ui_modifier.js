@@ -262,15 +262,52 @@ const createInlineMenu = (elementToAttachTo) => {
   // ---- Add Vertical Divider ---- 
   createVerticalDivider(containerDiv);
 
+  let lockDiv = _("+div")
+    .addClass([CRRS_CLASS, "end-button-group"]);
+
+  // <i class="demo-icon icon-lock">&#xe802;</i>
+
+  // ---- Add Lock Button ---- 
+  let lockBtn = _("+button")
+    .data("isLocked", "false")
+    .attr("title", "Save Filters")
+    .attr("aria-label", "Save Filters")
+    .on("click", handelLockBtn)
+    .addClass(CRRS_CLASS);
+  // Add Lock icon
+  let lockIcon = _("+i")
+    .html('&#xe803;')
+    .addClass(["fontello-icon", "unlocked"]);
+  //   .html('&#xe802;')
+  // .addClass("fontello-icon", "icon-lock");
+
+  lockBtn.append(lockIcon);
+
+  // let unlockBtn = _("+button")
+  //   //.text("S")
+  //   .attr("title", "Save Filters")
+  //   .attr("aria-label", "Save Filters")
+  //   .on("click", handelLockBtn)
+  //   .addClass(CRRS_CLASS);
+
+
+  // // ---- Add Reset Button ---- 
+  // let unlockIcon = _("+i")
+  //   .html('&#xe803;')
+  //   .addClass("fontello-icon", "icon-lock-open-1");
+
+  // unlockBtn.append(unlockIcon);
+
   // ---- Add Reset Button ---- 
   let resetBtn = _("+button")
-    .text("Reset")
+    .text("X")
     .attr("title", "Reset Filters")
     .attr("aria-label", "Reset Filters")
     .on("click", handelResetBtn)
     .addClass(CRRS_CLASS);
 
-  containerDiv.append([resetBtn]);
+  lockDiv.append([lockBtn, resetBtn]);
+  containerDiv.append([lockDiv]);
 
   // Creat 3 button toggle
 

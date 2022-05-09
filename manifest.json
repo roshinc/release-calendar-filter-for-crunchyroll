@@ -9,7 +9,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "images/checkmark.svg"
+        "images/checkmark.svg",
+        "font/*"
       ],
       "extension_ids": [
         "obpphalkbgbbdennbifedaleahjcfmfh"
@@ -26,6 +27,7 @@
         "https://www.crunchyroll.com/simulcastcalendar*"
       ],
       "css": [
+        "css/fontello.css",
         "css/index.css"
       ],
       "js": [

@@ -88,6 +88,37 @@ const handlePremiereRadioGroup = (event) => {
 }
 
 
+const handelLockBtn = (event) => {
+    reflowHiddenCount();
+
+    let icon, lock;
+
+    if (event.target.nodeName == 'I') {
+        icon = _(event.target);
+        lock = _(event.target.parentNode);
+    } else {
+        lock = _(event.target);
+        icon = _(event.target.firstChild);
+    }
+    let isLocked = lock.data("isLocked");
+    console.log(lock.elem);
+    console.log(icon.elem);
+
+
+    if (isLocked == "true") {
+        //unlock
+        console.log("TODO: unlock filters");
+        lock.data("isLocked", "false");
+        icon.html('&#xe803;').removeClass("locked").addClass("unlocked");
+    } else {
+        //lock
+        console.log("TODO: lock filters");
+        lock.data("isLocked", "true");
+        icon.html('&#xe802;').removeClass("unlocked").addClass("locked");
+    }
+
+}
+
 const handelResetBtn = (event) => {
     reflowHiddenCount();
     let dubToggle = _(document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID));

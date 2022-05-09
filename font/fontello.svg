@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2022 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="lock" unicode="&#xe802;" d="M582 437v-356q0-32-32-32h-518q-32 0-32 32v356q0 10 3 17t7 10 12 5 13 2 16 0 14-1v127h1q9 87 74 141t153 53 151-62 71-152h1l2-107q4 0 15 1t15 0 13-2 12-5 6-10 3-17z m-161 162q0 51-37 74t-91 23q-53 0-92-25t-39-77v-124h259v129z" horiz-adv-x="582" />
+
+<glyph glyph-name="lock-open-1" unicode="&#xe803;" d="M582 437v-356q0-32-32-32h-518q-32 0-32 32v356q0 33 32 33h389v194q0 51-37 74t-91 23q-53 0-92-25t-39-77v-125h-97v128h1q9 87 74 141t153 53 151-63 71-151h1l2-172q4 0 15 1t15 0 13-2 12-5 6-10 3-17z" horiz-adv-x="582" />
+</font>
+</defs>
+</svg>
