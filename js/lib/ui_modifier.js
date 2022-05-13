@@ -208,6 +208,7 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo,
  * @param {HTMLElement} elementToAttachTo the element to append the menu to
  */
 const createInlineMenu = (elementToAttachTo) => {
+
   let containerDiv = _("+div")
     .attr("id", CRRS_FILTER_MENU_DIV_ID)
     .addClass(CRRS_CLASS);
@@ -265,7 +266,6 @@ const createInlineMenu = (elementToAttachTo) => {
   let lockDiv = _("+div")
     .addClass([CRRS_CLASS, "end-button-group"]);
 
-  // <i class="demo-icon icon-lock">&#xe802;</i>
 
   // ---- Add Lock Button ---- 
   let lockBtn = _("+button")
@@ -274,42 +274,38 @@ const createInlineMenu = (elementToAttachTo) => {
     .attr("aria-label", "Save Filters")
     .on("click", handelLockBtn)
     .addClass(CRRS_CLASS);
+
   // Add Lock icon
   let lockIcon = _("+i")
-    .html('&#xe803;')
-    .addClass(["fontello-icon", "unlocked"]);
-  //   .html('&#xe802;')
-  // .addClass("fontello-icon", "icon-lock");
+    .addClass(["fontello-icon", "icon-save", "unlocked"]);
+
 
   lockBtn.append(lockIcon);
 
-  // let unlockBtn = _("+button")
-  //   //.text("S")
-  //   .attr("title", "Save Filters")
-  //   .attr("aria-label", "Save Filters")
-  //   .on("click", handelLockBtn)
-  //   .addClass(CRRS_CLASS);
-
-
-  // // ---- Add Reset Button ---- 
-  // let unlockIcon = _("+i")
-  //   .html('&#xe803;')
-  //   .addClass("fontello-icon", "icon-lock-open-1");
-
-  // unlockBtn.append(unlockIcon);
-
   // ---- Add Reset Button ---- 
   let resetBtn = _("+button")
-    .text("X")
     .attr("title", "Reset Filters")
     .attr("aria-label", "Reset Filters")
     .on("click", handelResetBtn)
     .addClass(CRRS_CLASS);
 
+  //Add rest icon
+  let resetIcon = _("+i")
+    .addClass(["fontello-icon", "icon-reset"]);
+
+  resetBtn.append(resetIcon);
+
   lockDiv.append([lockBtn, resetBtn]);
   containerDiv.append([lockDiv]);
 
-  // Creat 3 button toggle
-
+  //Add container to the given element
   _(elementToAttachTo).append(containerDiv);
 };
+
+
+const handleUIChangesOnSaveStatus = (status) => {
+  if (status) {
+    let dubPickers = _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
+    dubPickers.disabled = true;
+  }
+}

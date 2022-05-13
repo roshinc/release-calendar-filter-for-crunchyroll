@@ -25,16 +25,13 @@ class Filter {
     }
 
     restore(savedJson) {
-        this.#weekContent = weekContent;
+        //this.#weekContent = weekContent;
 
         this.#hideAllDubs = savedJson["hideAllDub"];
         this.#dubsShown = savedJson["dubsShown"];
 
-        this.#showOnlyInQueue = savedJson["showInQueue"];
+        this.#showInQueue = savedJson["showInQueue"];
         this.#showOnlyInQueue = savedJson["showOnlyInQueue"];
-
-        this.#showPremiere = savedJson["showPremiere"];
-        this.#showOnlyPremiere = savedJson["showOnlyPremiere"];
 
         this.#showPremiere = savedJson["showPremiere"];
         this.#showOnlyPremiere = savedJson["showOnlyPremiere"];
@@ -63,7 +60,7 @@ class Filter {
     }
 
     createJson() {
-        let jsonArray = [];
+        let jsonArray = {};
         jsonArray["hideAllDub"] = this.#hideAllDubs;
         jsonArray["dubsShown"] = this.#dubsShown;
 
@@ -73,9 +70,7 @@ class Filter {
         jsonArray["showPremiere"] = this.#showPremiere;
         jsonArray["showOnlyPremiere"] = this.#showOnlyPremiere;
 
-        jsonArray["showPremiere"] = this.#showPremiere;
-        jsonArray["showOnlyPremiere"] = this.#showOnlyPremiere;
-
+        return jsonArray;
     }
 
     static dubLangs() {

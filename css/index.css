@@ -178,7 +178,35 @@ input:checked+.slider:before {
   transform: translateX(13px);
 }
 
+/* Adding a dotted border around the active tabbed-into switch */
+input:focus+.slider:before,
+input:not(:disabled)+.slider:hover:before {
+  /* Visible in the full-color space */
+  box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 4px;
+  outline-style: dotted;
+}
+
+
+/* Disabled switch styles */
+input:disabled+.slider {
+  cursor: default;
+  opacity: 0.5;
+}
+
 /* End Switch Styles */
+
+.disabled-in-js {
+  cursor: default;
+  opacity: 0.5;
+}
 
 /* Style checkboxes */
 
@@ -351,23 +379,49 @@ input:checked+.slider:before {
   border-radius: 0 4px 4px 0;
 }
 
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+.switch-field input:focus+label,
+.switch-field input+label:focus,
+.switch-field input:not(:disabled)+label:hover {
+  /* Visible in the full-color space */
+  box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 2px;
+  outline-style: dotted;
+}
+
+
+/* Disabled checkbox styles */
+.switch-field input:disabled+label {
+  cursor: default;
+  color: black;
+  opacity: 0.5;
+}
+
 /* End Radio Group Styles */
 
 /* Start end buttons Style */
 
 .end-button-group {
   display: flex;
-  column-gap: 60%;
+  /* column-gap: 60%;
   font-weight: bold;
   margin-left: 1.1%;
-  padding-right: .5%;
+  padding-right: .5%; */
 }
 
 button.cr-rs-class {
   /* border-radius: 4px; */
   background-color: rgba(127, 127, 127, 0);
   border: none;
-  font-size: 136%;
+  font-size: 100%;
   text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3);
   text-align: center;
   text-decoration: none;
@@ -417,4 +471,30 @@ button.cr-rs-class {
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+button.cr-rs-class:focus+.fontello-icon,
+button.cr-rs-class+.fontello-icon:focus,
+button.cr-rs-class:not(:disabled)+.fontello-icon:hover {
+  /* Visible in the full-color space */
+  box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 2px;
+  outline-style: dotted;
+}
+
+
+/* Disabled checkbox styles */
+button.cr-rs-class:disabled+.fontello-icon,
+button.cr-rs-class:disabled {
+  cursor: default;
+  color: black;
+  opacity: 0.5;
 }

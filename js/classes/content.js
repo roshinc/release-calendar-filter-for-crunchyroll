@@ -78,16 +78,16 @@ class Content {
     const featuredEpArticle = releaseArticle.querySelector('article.js-featured-episode');
 
     const releaseArticleDataset = releaseArticle.dataset;
-
-    fetch(releaseArticleDataset.popoverUrl, {
-      method: 'get'
-    }).then(
-      r => r.json()
-    ).then(function (data) {
-      this.popOverJson = data;
-    }).catch(function (err) {
-      // Error :(
-    });
+    // disabled for local testing
+    // fetch(releaseArticleDataset.popoverUrl, {
+    //   method: 'get'
+    // }).then(
+    //   r => r.json()
+    // ).then(function (data) {
+    //   this.popOverJson = data;
+    // }).catch(function (err) {
+    //   // Error :(
+    // });
 
     this.#episodesAvailable = releaseArticleDataset.episodeNum;
     this.#multiEpisode = this.#episodesAvailable.includes('-');

@@ -107,14 +107,17 @@ const handelLockBtn = (event) => {
 
     if (isLocked == "true") {
         //unlock
+        clearSavedFilter();
         console.log("TODO: unlock filters");
         lock.data("isLocked", "false");
-        icon.html('&#xe803;').removeClass("locked").addClass("unlocked");
+        icon.removeClass("locked").addClass("unlocked");
     } else {
         //lock
+        saveFilter(crrsFilter.createJson());
+        handleUIChangesOnSaveStatus(true);
         console.log("TODO: lock filters");
         lock.data("isLocked", "true");
-        icon.html('&#xe802;').removeClass("unlocked").addClass("locked");
+        icon.removeClass("unlocked").addClass("locked");
     }
 
 }
@@ -129,19 +132,88 @@ const handelResetBtn = (event) => {
         elem.checked = true;
     });
 
-    let queueGroup = _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`);
-    queueGroup.each((elem, i) => {
+    let queueGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`);
+
+    for (const [i, elem] of queueGroup.entries()) {
         if (i == 1) {
             elem.checked = true;
+            break;
+        }
+    }
+
+    let premiereGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`);
+
+    for (const [i, elem] of premiereGroup.entries()) {
+        console.log(i);
+        if (i == 1) {
+            elem.checked = true;
+            break;
+        }
+    }
+    clearSavedFilter();
+    crrsFilter.reset()
+
+}
+
+const restoreFilterAndUI = (savedFilter) => {
+    if (savedFilter == crrsFilter.createJson()) {
+        return;
+    }
+
+    reflowHiddenCount();
+
+    let dubToggle = _(document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID));
+    dubToggle.elem.checked = !savedFilter["hideAllDub"];
+
+    let dubPickers = _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
+    let dubsShown = savedFilter["dubsShown"];
+    console.log(dubsShown);
+    dubPickers.each((elem, i) => {
+        console.log(elem);
+        if (dubsShown.includes(_(elem).data("lang")[0])) {
+            elem.checked = true;
+        } else {
+            elem.checked = false;
         }
     });
 
-    let premiereGroup = _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`);
-    premiereGroup.each((elem, i) => {
-        if (i == 1) {
+    let showInQueue = savedFilter["showInQueue"];
+    let showOnlyInQueue = savedFilter["showOnlyInQueue"];
+
+    let indexToPick;
+    if (showOnlyInQueue) {
+        indexToPick = 0;
+    } else if (!showInQueue && !showOnlyInQueue) {
+        indexToPick = 2;
+    }
+
+    let queueGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`);
+
+    for (const [i, elem] of queueGroup.entries()) {
+        if (i == indexToPick) {
             elem.checked = true;
+            break;
         }
-    });
-    crrsFilter.reset()
+
+    }
+
+    let showPremiere = savedFilter["showPremiere"];
+    let showOnlyPremiere = savedFilter["showOnlyPremiere"];
+
+    indexToPick = 1;
+    if (showOnlyPremiere) {
+        indexToPick = 0;
+    } else if (!showOnlyPremiere && !showPremiere) {
+        indexToPick = 2;
+    }
+
+    let premiereGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`);
+    for (const [i, elem] of premiereGroup.entries()) {
+        if (i == indexToPick) {
+            elem.checked = true;
+            break;
+        }
+    }
+    crrsFilter.restore(savedFilter);
 
 }

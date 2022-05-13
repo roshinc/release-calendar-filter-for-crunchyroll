@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'fontello';
-  src: url('chrome-extension://__MSG_@@extension_id__/font/fontello.eot?28395362');
-  src: url('chrome-extension://__MSG_@@extension_id__/font/fontello.eot?28395362#iefix') format('embedded-opentype'),
-    url('chrome-extension://__MSG_@@extension_id__/font/fontello.woff2?28395362') format('woff2'),
-    url('chrome-extension://__MSG_@@extension_id__/font/fontello.woff?28395362') format('woff'),
-    url('chrome-extension://__MSG_@@extension_id__/font/fontello.ttf?28395362') format('truetype'),
-    url('chrome-extension://__MSG_@@extension_id__/font/fontello.svg?28395362#fontello') format('svg');
+  src: url('chrome-extension://__MSG_@@extension_id__/font/fontello.eot?54459955');
+  src: url('chrome-extension://__MSG_@@extension_id__/font/fontello.eot?54459955#iefix') format('embedded-opentype'),
+    url('chrome-extension://__MSG_@@extension_id__/font/fontello.woff2?54459955') format('woff2'),
+    url('chrome-extension://__MSG_@@extension_id__/font/fontello.woff?54459955') format('woff'),
+    url('chrome-extension://__MSG_@@extension_id__/font/fontello.ttf?54459955') format('truetype'),
+    url('chrome-extension://__MSG_@@extension_id__/font/fontello.svg?54459955#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -16,7 +16,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('chrome-extension://__MSG_@@extension_id__/font/fontello.svg?28395362#fontello') format('svg');
+    src: url('chrome-extension://__MSG_@@extension_id__/font/fontello.svg?54459955#fontello') format('svg');
   }
 }
 */
@@ -56,13 +56,13 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
-.icon-lock:before {
-  content: '\e802';
+.icon-save:before {
+  content: '\e800';
 }
 
-/* '' */
-.icon-lock-open-1:before {
-  content: '\e803';
+/* '' */
+.icon-reset:before {
+  content: '\e801';
 }
 
-/* '' */
+/* '' */

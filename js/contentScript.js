@@ -7,5 +7,6 @@ window.onload = function () {
   let week = new Week(document.querySelectorAll(".day"));
   // global filter holder
   crrsFilter = new Filter(week);
+  restoreFilter(restoreFilterAndUI);
 }
 
