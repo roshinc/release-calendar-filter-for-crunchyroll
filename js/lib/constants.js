@@ -13,6 +13,9 @@ const CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX = "cr-rs-filter-menu-pick-dubs-
 const CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME = "in-queue-switch";
 const CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME = "permiere-switch";
 
+// End Button Group
+const CRRS_FILTER_MENU_LOCK_BTN_ID = "cr-rs-filter-menu-lock-filters";
+
 // Hold filter object
 let crrsFilter;
 

@@ -97,7 +97,7 @@ p.premium-message {
   color: var(--cr-rc-main-accent-color);
   border-radius: 0.25rem;
   background-color: #FFFFFF;
-
+  cursor: default;
   font-weight: 400;
 
   padding: 0.9em 1em;
@@ -205,7 +205,7 @@ input:disabled+.slider {
 
 .disabled-in-js {
   cursor: default;
-  opacity: 0.5;
+  /* opacity: 0.5; */
 }
 
 /* Style checkboxes */
@@ -401,7 +401,7 @@ input:disabled+.slider {
 /* Disabled checkbox styles */
 .switch-field input:disabled+label {
   cursor: default;
-  color: black;
+  /* color: black; */
   opacity: 0.5;
 }
 
@@ -411,6 +411,9 @@ input:disabled+.slider {
 
 .end-button-group {
   display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
   /* column-gap: 60%;
   font-weight: bold;
   margin-left: 1.1%;
@@ -421,8 +424,8 @@ button.cr-rs-class {
   /* border-radius: 4px; */
   background-color: rgba(127, 127, 127, 0);
   border: none;
-  font-size: 100%;
-  text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3);
+  /* font-size: 100%; */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -466,7 +469,7 @@ button.cr-rs-class {
   /* margin-left: .2em; */
 
   /* You can be more comfortable with increased icons size */
-  font-size: 123%;
+  font-size: 134%;
 
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
@@ -474,11 +477,55 @@ button.cr-rs-class {
 }
 
 /* Adding a dotted border around the active tabbed-into checkbox */
-button.cr-rs-class:focus+.fontello-icon,
-button.cr-rs-class+.fontello-icon:focus,
-button.cr-rs-class:not(:disabled)+.fontello-icon:hover {
+button.cr-rs-class:focus .fontello-icon:not(.locked),
+button.cr-rs-class .fontello-icon:not(.locked):focus,
+button.cr-rs-class:not(:disabled) .fontello-icon:not(.locked):hover {
   /* Visible in the full-color space */
-  box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+  /* box-shadow: 0px 0px 0px  */
+  /* text-shadow: 1px 1px 4px var(--cr-rc-main-accent-color); */
+  /* Width and color values */
+  /* text-shadow: -1px -1px 0 var(--cr-rc-main-accent-color), 1px -1px 0 var(--cr-rc-main-accent-color), -1px 1px 0 var(--cr-rc-main-accent-color), 1px 1px 0 var(--cr-rc-main-accent-color); */
+  text-shadow:
+    -2px -2px 0 var(--cr-rc-main-accent-color),
+    0 -2px 0 var(--cr-rc-main-accent-color),
+    2px -2px 0 var(--cr-rc-main-accent-color),
+    2px 0 0 var(--cr-rc-main-accent-color),
+    2px 2px 0 var(--cr-rc-main-accent-color),
+    0 2px 0 var(--cr-rc-main-accent-color),
+    -2px 2px 0 var(--cr-rc-main-accent-color),
+    -2px 0 0 var(--cr-rc-main-accent-color);
+  /* -webkit-text-stroke: 4px var(--cr-rc-main-accent-color);
+  text-stroke: 4px var(--cr-rc-main-accent-color); */
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 2px;
+  outline-style: dotted;
+}
+
+button.cr-rs-class:focus .fontello-icon:not(.unlocked),
+button.cr-rs-class .fontello-icon:not(.unlocked):focus,
+button.cr-rs-class:not(:disabled) .fontello-icon:not(.unlocked):hover {
+  /* Visible in the full-color space */
+  /* box-shadow: 0px 0px 0px  */
+  /* text-shadow: 1px 1px 4px var(--cr-rc-main-accent-color); */
+  /* Width and color values */
+  /* text-shadow: -1px -1px 0 var(--cr-rc-main-gray-color), 1px -1px 0 var(--cr-rc-main-gray-color), -1px 1px 0 var(--cr-rc-main-gray-color), 1px 1px 0 var(--cr-rc-main-gray-color); */
+  text-shadow:
+    -2px -2px 0 var(--cr-rc-main-gray-color),
+    0 -2px 0 var(--cr-rc-main-gray-color),
+    2px -2px 0 var(--cr-rc-main-gray-color),
+    2px 0 0 var(--cr-rc-main-gray-color),
+    2px 2px 0 var(--cr-rc-main-gray-color),
+    0 2px 0 var(--cr-rc-main-gray-color),
+    -2px 2px 0 var(--cr-rc-main-gray-color),
+    -2px 0 0 var(--cr-rc-main-gray-color);
+  /* -webkit-text-stroke: 4px var(--cr-rc-main-accent-color);
+  text-stroke: 4px var(--cr-rc-main-accent-color); */
 
   /* Visible in Windows high-contrast themes
      box-shadow will be hidden in these modes and
@@ -491,10 +538,10 @@ button.cr-rs-class:not(:disabled)+.fontello-icon:hover {
 }
 
 
-/* Disabled checkbox styles */
+/* Disabled button styles */
 button.cr-rs-class:disabled+.fontello-icon,
 button.cr-rs-class:disabled {
   cursor: default;
-  color: black;
+  /* color: black; */
   opacity: 0.5;
 }

@@ -64,7 +64,7 @@ class Filter {
         jsonArray["hideAllDub"] = this.#hideAllDubs;
         jsonArray["dubsShown"] = this.#dubsShown;
 
-        jsonArray["showInQueue"] = this.#showOnlyInQueue;
+        jsonArray["showInQueue"] = this.#showInQueue;
         jsonArray["showOnlyInQueue"] = this.#showOnlyInQueue;
 
         jsonArray["showPremiere"] = this.#showPremiere;

@@ -270,6 +270,7 @@ const createInlineMenu = (elementToAttachTo) => {
   // ---- Add Lock Button ---- 
   let lockBtn = _("+button")
     .data("isLocked", "false")
+    .attr("id", CRRS_FILTER_MENU_LOCK_BTN_ID)
     .attr("title", "Save Filters")
     .attr("aria-label", "Save Filters")
     .on("click", handelLockBtn)
@@ -277,7 +278,7 @@ const createInlineMenu = (elementToAttachTo) => {
 
   // Add Lock icon
   let lockIcon = _("+i")
-    .addClass(["fontello-icon", "icon-save", "unlocked"]);
+    .addClass(["fontello-icon", "icon-unlocked", "unlocked"]);
 
 
   lockBtn.append(lockIcon);
@@ -303,9 +304,44 @@ const createInlineMenu = (elementToAttachTo) => {
 };
 
 
-const handleUIChangesOnSaveStatus = (status) => {
+const handleUIChangesOnSaveStatus = (status, icon) => {
+
+  let dubToggle = _(`#${CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID}`);
   if (status) {
-    let dubPickers = _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
-    dubPickers.disabled = true;
+
+    icon.removeClass(["unlocked", "icon-unlocked"]).addClass(["locked", "icon-locked"]);
+
+    dubToggle.attr("disabled", status);
+    dubToggle.parent(1).addClass("disabled-in-js");
+    _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).attr("disabled", status);
+
+    _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).attr("disabled", status);
+    _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).attr("disabled", status);
+
+  } else {
+    icon.removeClass(["locked", "icon-locked"]).addClass(["unlocked", "icon-unlocked"]);
+
+    dubToggle.elem.removeAttribute("disabled");
+    dubToggle.parent(1).removeClass("disabled-in-js");
+
+    _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).each(function (elem, i) { elem.removeAttribute("disabled") });
+
+    _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).each(function (elem, i) { elem.removeAttribute("disabled") });
+    _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).each(function (elem, i) { elem.removeAttribute("disabled") });
+
+  }
+}
+
+
+const lockFilters = (status, lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID}`), icon = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID} i`)) => {
+  if (status) {
+    //lock
+    console.log("TODO: lock filters");
+    handleUIChangesOnSaveStatus(true, icon);
+    lockBtn.data("isLocked", "true");
+  } else {
+    console.log("TODO: unlock filters");
+    handleUIChangesOnSaveStatus(false, icon);
+    lockBtn.data("isLocked", "false");
   }
 }

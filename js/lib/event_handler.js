@@ -108,16 +108,11 @@ const handelLockBtn = (event) => {
     if (isLocked == "true") {
         //unlock
         clearSavedFilter();
-        console.log("TODO: unlock filters");
-        lock.data("isLocked", "false");
-        icon.removeClass("locked").addClass("unlocked");
+        lockFilters(false, lock, icon);
     } else {
         //lock
         saveFilter(crrsFilter.createJson());
-        handleUIChangesOnSaveStatus(true);
-        console.log("TODO: lock filters");
-        lock.data("isLocked", "true");
-        icon.removeClass("unlocked").addClass("locked");
+        lockFilters(true, lock, icon);
     }
 
 }
@@ -150,7 +145,9 @@ const handelResetBtn = (event) => {
             break;
         }
     }
+
     clearSavedFilter();
+    lockFilters(false);
     crrsFilter.reset()
 
 }
@@ -162,23 +159,31 @@ const restoreFilterAndUI = (savedFilter) => {
 
     reflowHiddenCount();
 
-    let dubToggle = _(document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID));
-    dubToggle.elem.checked = !savedFilter["hideAllDub"];
+    const hideAllDubs = savedFilter["hideAllDub"];
+    let dubToggle = document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID);
+    dubToggle.checked = !hideAllDubs;
 
-    let dubPickers = _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
-    let dubsShown = savedFilter["dubsShown"];
+    let dubPickers = document.querySelectorAll(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
+    const dubsShown = savedFilter["dubsShown"];
+    console.log(dubToggle);
     console.log(dubsShown);
-    dubPickers.each((elem, i) => {
-        console.log(elem);
-        if (dubsShown.includes(_(elem).data("lang")[0])) {
-            elem.checked = true;
-        } else {
+    // if no dubs are shown uncheck all the langs
+    if (hideAllDubs) {
+        for (const [i, elem] of dubPickers.entries()) {
             elem.checked = false;
         }
-    });
+    } else if (dubsShown.length > 0) {
+        for (const [i, elem] of dubPickers.entries()) {
+            if (dubsShown.includes(_(elem).data("lang")[0])) {
+                elem.checked = true;
+            } else {
+                elem.checked = false;
+            }
+        }
+    }
 
-    let showInQueue = savedFilter["showInQueue"];
-    let showOnlyInQueue = savedFilter["showOnlyInQueue"];
+    const showInQueue = savedFilter["showInQueue"];
+    const showOnlyInQueue = savedFilter["showOnlyInQueue"];
 
     let indexToPick;
     if (showOnlyInQueue) {
@@ -197,8 +202,8 @@ const restoreFilterAndUI = (savedFilter) => {
 
     }
 
-    let showPremiere = savedFilter["showPremiere"];
-    let showOnlyPremiere = savedFilter["showOnlyPremiere"];
+    const showPremiere = savedFilter["showPremiere"];
+    const showOnlyPremiere = savedFilter["showOnlyPremiere"];
 
     indexToPick = 1;
     if (showOnlyPremiere) {
@@ -216,4 +221,5 @@ const restoreFilterAndUI = (savedFilter) => {
     }
     crrsFilter.restore(savedFilter);
 
+    lockFilters(true);
 }
