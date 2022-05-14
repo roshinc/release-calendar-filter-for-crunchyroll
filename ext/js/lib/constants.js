@@ -2,6 +2,7 @@ const CRRS_CLASS = "cr-rs-class";
 
 const CRRS_FILTER_MENU_DIV_ID = "cr-rs-filter-menu";
 
+
 // Show Dubs Toggle
 const CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID = "cr-rs-filter-menu-show-dubs";
 

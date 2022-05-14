@@ -8,12 +8,17 @@
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
 const createToggleSwtich = (labelText, elementId, elementToAttachTo, eventHandlerMethod, checked) => {
+  //class names
+  const TOGGLE_CONTAINER_LABEL_CLASS = "rs-cr-toggle-container";
+  const TOGGLE_INNER_LABEL_CLASS = "rs-cr-toggle-switch";
+
+
   // ---- Add Toggle Switch ----
   // **1. The wraping Label element **
   let toggleSwitchText = _("+label")
     .attr("for", elementId)
     .text(labelText)
-    .addClass([CRRS_CLASS]);
+    .addClass([CRRS_CLASS, TOGGLE_CONTAINER_LABEL_CLASS]);
   // **2. The Label element **
   let toggleSwitchLabel = _("+label")
     .attr("for", elementId)
