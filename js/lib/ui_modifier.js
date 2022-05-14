@@ -261,7 +261,7 @@ const createInlineMenu = (elementToAttachTo) => {
   addRadioButtonGroup("Permiere:", "premier-toggle", CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME, containerDiv, handlePremiereRadioGroup);
 
   // ---- Add Vertical Divider ---- 
-  createVerticalDivider(containerDiv);
+  //createVerticalDivider(containerDiv);
 
   let lockDiv = _("+div")
     .addClass([CRRS_CLASS, "end-button-group"]);
