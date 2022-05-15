@@ -81,6 +81,14 @@ p.premium-message {
     flex-direction: row;
     column-gap: 18px;
   }
+
+  .cr-rs-filter-vertical-divider {
+    /* 
+      Helpful link: https://www.w3schools.com/howto/howto_css_vertical_line.asp 
+      */
+    border-left: 1px solid var(--cr-rc-main-gray-color);
+    height: 25px;
+  }
 }
 
 /* || SWITCH STYLES */
@@ -88,7 +96,7 @@ p.premium-message {
 /* 
 Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
  */
-.switch {
+.rs-cr-toggle-switch {
   display: inline-block;
   height: var(--cr-rc-switch-height);
   margin-left: 10px;
@@ -96,13 +104,13 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   width: 30px;
 }
 
-.switch input {
+.rs-cr-toggle-switch .rs-cr-toggle-input {
   height: 0;
   opacity: 0;
   width: 0;
 }
 
-.slider {
+.rs-cr-toggle-slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -115,7 +123,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   transition: .4s;
 }
 
-.slider:before {
+.rs-cr-toggle-slider:before {
   position: absolute;
   content: "";
   height: var(--cr-rc-switch-inner-circle-size);
@@ -128,19 +136,19 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   transition: .4s;
 }
 
-input[type="checkbox"]:checked+.slider {
+.rs-cr-toggle-input:checked+.rs-cr-toggle-slider {
   background-color: var(--cr-rc-main-accent-color);
 }
 
-input[type="checkbox"]:checked+.slider:before {
+.rs-cr-toggle-input:checked+.rs-cr-toggle-slider:before {
   -webkit-transform: translateX(var(--cr-rc-switch-inner-circle-size));
   -ms-transform: translateX(var(--cr-rc-switch-inner-circle-size));
   transform: translateX(var(--cr-rc-switch-inner-circle-size));
 }
 
-.rs-cr-toggle-container:hover input[type="checkbox"]:not(:disabled)+.slider:before,
-.rs-cr-toggle-container input[type="checkbox"]:focus+.slider:before,
-.rs-cr-toggle-container input[type="checkbox"]:not(:disabled)+.slider:hover:before {
+.rs-cr-toggle-container:hover .rs-cr-toggle-input:not(:disabled)+.rs-cr-toggle-slider:before,
+.rs-cr-toggle-input:focus+.rs-cr-toggle-slider:before,
+.rs-cr-toggle-input:not(:disabled)+.rs-cr-toggle-slider:hover:before {
   /* Visible in the full-color space */
   box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
 
@@ -155,7 +163,294 @@ input[type="checkbox"]:checked+.slider:before {
 }
 
 /* Disabled switch styles */
-input[type="checkbox"]:disabled+.slider {
+.rs-cr-toggle-input:disabled+.rs-cr-toggle-slider {
   cursor: default;
   opacity: 0.5;
+}
+
+/* || CHECKBOX STYLES */
+
+#cr-rs-filter-menu-pick-dubs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+  align-items: stretch;
+  column-gap: 1px;
+}
+
+.rs-cr-checkbox-input {
+  /* https://stackoverflow.com/a/719545/1193704 */
+  vertical-align: middle;
+  position: relative;
+  bottom: .08em;
+  /* this is a better value for different fonts! */
+
+  opacity: 0;
+}
+
+/* Text color for the label */
+.rs-cr-checkbox-inner-span {
+  cursor: pointer;
+  font-size: var(--cr-rc-main-font-size);
+  color: black;
+}
+
+/* Checkbox un-checked style */
+.rs-cr-checkbox-inner-span:before {
+  content: '';
+  border: 1px solid var(--cr-rc-main-gray-color);
+  border-radius: 2px;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 0.3em;
+  bottom: .08em;
+}
+
+/* Checked checkbox style (in this case the background is red) */
+.rs-cr-checkbox-input:checked+.rs-cr-checkbox-inner-span:before {
+  /* NOTE: Replace the url with a path to an SVG of a checkmark to get a checkmark icon */
+  background-image: url('chrome-extension://__MSG_@@extension_id__/images/checkmark.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  /* The size of the checkmark icon, you may/may not need this */
+  background-size: 15px;
+  border-radius: 2px;
+  background-color: var(--cr-rc-main-accent-color);
+  color: white;
+}
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+.rs-cr-checkbox-input:focus+.rs-cr-checkbox-inner-span:before,
+.rs-cr-checkbox-input:not(:disabled)+.rs-cr-checkbox-inner-span:hover:before {
+  /* Visible in the full-color space */
+  box-shadow: 0px 0px 0px 2px var(--cr-rc-main-accent-color);
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 2px;
+  outline-style: dotted;
+}
+
+/* Disabled checkbox styles */
+.rs-cr-checkbox-input:disabled+.rs-cr-checkbox-inner-span {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* || RADIOS STYLES */
+
+.rs-cr-radio-group {
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 1182px) {
+
+  .rs-cr-radio-group {
+    flex-direction: column;
+    column-gap: 5px;
+  }
+}
+
+@media only screen and (min-width: 1182px) {
+
+  .rs-cr-radio-group {
+    flex-direction: row;
+    column-gap: 5px;
+  }
+}
+
+.rs-cr-radio-button-group {
+  display: flex;
+}
+
+.rs-cr-radio-button-input {
+  position: absolute !important;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  width: 1px;
+  border: 0;
+  overflow: hidden;
+}
+
+.rs-cr-radio-button-label {
+  background-color: white;
+  color: black;
+  font-size: var(--cr-rc-main-font-size);
+  line-height: 1;
+  text-align: center;
+  padding: 4px 8px;
+  margin-right: -1px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease-in-out;
+}
+
+.rs-cr-radio-button-label:hover {
+  cursor: pointer;
+}
+
+.rs-cr-radio-button-group input:checked+.rs-cr-radio-button-label {
+  background-color: var(--cr-rc-main-accent-color);
+  color: white;
+}
+
+.rs-cr-radio-button-label:first-of-type {
+  border-radius: 4px 0 0 4px;
+}
+
+.rs-cr-radio-button-label:last-of-type {
+  border-radius: 0 4px 4px 0;
+}
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+.rs-cr-radio-button-input:focus+.rs-cr-radio-button-label,
+.rs-cr-radio-button-inputt+.rs-cr-radio-button-label:focus,
+.rs-cr-radio-button-input:not(:disabled)+.rs-cr-radio-button-label:hover {
+  /* Visible in the full-color space */
+  box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 2px;
+  outline-style: dotted;
+}
+
+
+/* Disabled radion group styles */
+.rs-cr-radio-button-input:disabled+.rs-cr-radio-button-label {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* || END BUTTON STYLES */
+
+.rs-cr-end-button-group {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  margin-left: 1.46%;
+}
+
+.rs-cr-end-button {
+  background-color: rgba(127, 127, 127, 0);
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  padding-top: unset;
+  padding-left: unset;
+  padding-right: unset;
+  padding-bottom: unset;
+}
+
+.rs-cr-orange-text,
+.rs-cr-locked {
+  color: var(--cr-rc-main-accent-color);
+}
+
+.rs-cr-unlocked {
+  color: var(--cr-rc-main-gray-color)
+}
+
+.fontello-icon {
+  /* increased icons size */
+  font-size: 134%;
+}
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+.rs-cr-end-button:focus .fontello-icon.rs-cr-unlocked,
+.rs-cr-end-button .rs-cr-unlocked:focus,
+.rs-cr-end-button:not(:disabled) .rs-cr-unlocked:hover {
+  /* Visible in the full-color space */
+  text-shadow:
+    -2px -2px 0 var(--cr-rc-main-accent-color),
+    0 -2px 0 var(--cr-rc-main-accent-color),
+    2px -2px 0 var(--cr-rc-main-accent-color),
+    2px 0 0 var(--cr-rc-main-accent-color),
+    2px 2px 0 var(--cr-rc-main-accent-color),
+    0 2px 0 var(--cr-rc-main-accent-color),
+    -2px 2px 0 var(--cr-rc-main-accent-color),
+    -2px 0 0 var(--cr-rc-main-accent-color);
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 2px;
+  outline-style: dotted;
+}
+
+.rs-cr-end-button:focus .rs-cr-locked,
+.rs-cr-locked:focus,
+.rs-cr-end-button:not(:disabled) .rs-cr-locked:hover,
+.rs-cr-end-button:focus .rs-cr-orange-text,
+.rs-cr-end-button .rs-cr-orange-text:focus,
+.rs-cr-end-button:not(:disabled) .rs-cr-orange-text:hover {
+  /* Visible in the full-color space */
+  text-shadow:
+    -2px -2px 0 var(--cr-rc-main-gray-color),
+    0 -2px 0 var(--cr-rc-main-gray-color),
+    2px -2px 0 var(--cr-rc-main-gray-color),
+    2px 0 0 var(--cr-rc-main-gray-color),
+    2px 2px 0 var(--cr-rc-main-gray-color),
+    0 2px 0 var(--cr-rc-main-gray-color),
+    -2px 2px 0 var(--cr-rc-main-gray-color),
+    -2px 0 0 var(--cr-rc-main-gray-color);
+
+  /* Visible in Windows high-contrast themes
+     box-shadow will be hidden in these modes and
+     transparency will not be hidden in high-contrast
+     thus box-shadow will not show but the outline will
+     providing accessibility */
+  outline-color: transparent;
+  outline-width: 2px;
+  outline-style: dotted;
+}
+
+/* || HIDDEN COUNT STYLES */
+.cr-rs-filter-hidden-count {
+  list-style: none;
+  cursor: pointer;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  vertical-align: baseline;
+  height: 1.05rem;
+  font-family: Verdana, 'Lucida Grande', sans-serif;
+  font-size: .7rem;
+  line-height: 1.5;
+  color: #a09895;
+}
+
+.cr-rs-filter-hidden-count.changed {
+  border-radius: 4px;
+  animation: highlight 500ms ease-out;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: var(--cr-rc-main-accent-color);
+  }
+
+  100% {
+    background-color: inherit;
+  }
 }

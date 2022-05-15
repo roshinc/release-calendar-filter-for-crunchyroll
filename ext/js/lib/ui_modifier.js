@@ -11,7 +11,8 @@ const createToggleSwtich = (labelText, elementId, elementToAttachTo, eventHandle
   //class names
   const TOGGLE_CONTAINER_LABEL_CLASS = "rs-cr-toggle-container";
   const TOGGLE_INNER_LABEL_CLASS = "rs-cr-toggle-switch";
-
+  const TOGGLE_INPUT_CLASS = "rs-cr-toggle-input";
+  const TOGGLE_SPAN_CLASS = "rs-cr-toggle-slider";
 
   // ---- Add Toggle Switch ----
   // **1. The wraping Label element **
@@ -20,21 +21,21 @@ const createToggleSwtich = (labelText, elementId, elementToAttachTo, eventHandle
     .text(labelText)
     .addClass([CRRS_CLASS, TOGGLE_CONTAINER_LABEL_CLASS]);
   // **2. The Label element **
-  let toggleSwitchLabel = _("+label")
+  let toggleSwitchLabel = _("+span")
     .attr("for", elementId)
-    .addClass([CRRS_CLASS, "switch"]);
+    .addClass([CRRS_CLASS, TOGGLE_INNER_LABEL_CLASS]);
   // **3. The Input element **
   let toggleSwitchInput = _("+input")
     .attr("id", elementId)
     .attr("type", "checkbox")
     .on("change", eventHandlerMethod)
-    .addClass(CRRS_CLASS);
+    .addClass([CRRS_CLASS, TOGGLE_INPUT_CLASS]);
   if (checked) {
     toggleSwitchInput.attr("checked", checked);
   }
   // **4. The Span element **
   let toggleSwitchSpan = _("+span")
-    .addClass([CRRS_CLASS, "slider", "round"]);
+    .addClass([CRRS_CLASS, TOGGLE_SPAN_CLASS]);
   // Connect elements
   toggleSwitchText.append([toggleSwitchLabel]);
   toggleSwitchLabel.append([toggleSwitchInput, toggleSwitchSpan]);
@@ -57,7 +58,7 @@ const createVerticalDivider = (elementToAttachTo) => {
 };
 
 /**
- * Creates a div thats styled to look like a vertical divider
+ * Creates an element that shows the number of content being hidden  
  * 
  * @param {HTMLElement} elementToAttachTo element the div should append to
  */
@@ -81,11 +82,7 @@ const createHiddenCount = (elementToAttachTo) => {
 
   //Edit below line to update state
   hiddenCount.state.count = "0";
-  // // ---- Add Vertical Divider ---- 
-  // let dividerDivElement = _("+div")
-  //   .text("0 Hidden")
-  //   .addClass([CRRS_CLASS, "cr-rs-filter-hidden-count"]);
-  // elementToAttachTo.append(dividerDivElement);
+
   return hiddenCount;
 
 };
@@ -102,6 +99,10 @@ const createHiddenCount = (elementToAttachTo) => {
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
 const addCheckBox = (labelText, elementId, elementToAttachTo, eventHandlerMethod, dataAttrs, checked) => {
+
+  const CHECKBOX_INPUT_CLASS = "rs-cr-checkbox-input";
+  const CHECKBOX_INNER_SPAN_CLASS = "rs-cr-checkbox-inner-span";
+
   // **1. The wraping span element **
   let customCheckboxSpan = _("+span")
     .addClass(CRRS_CLASS);
@@ -110,7 +111,7 @@ const addCheckBox = (labelText, elementId, elementToAttachTo, eventHandlerMethod
     .attr("id", elementId)
     .attr("type", "checkbox")
     .on("change", eventHandlerMethod)
-    .addClass(CRRS_CLASS);
+    .addClass([CRRS_CLASS, CHECKBOX_INPUT_CLASS]);
   for (const dataAttr in dataAttrs) {
     if (Object.hasOwnProperty.call(dataAttrs, dataAttr)) {
       const element = dataAttrs[dataAttr];
@@ -123,7 +124,7 @@ const addCheckBox = (labelText, elementId, elementToAttachTo, eventHandlerMethod
   }
   // **3. The inner span element **
   let fakeCheckSpan = _("+span")
-    .addClass(CRRS_CLASS)
+    .addClass([CRRS_CLASS, CHECKBOX_INNER_SPAN_CLASS])
     .text(labelText);
 
   // **4. The label element **
@@ -152,6 +153,10 @@ const addCheckBox = (labelText, elementId, elementToAttachTo, eventHandlerMethod
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
 const addRadioOption = (labelText, elementId, switchName, elementToAttachTo, eventHandlerMethod, checked) => {
+
+  const RADIO_BUTTON_INPUT_CLASS = "rs-cr-radio-button-input";
+  const RADIO_BUTTON_LABEL_CLASS = "rs-cr-radio-button-label";
+
   // **1. The Input element **
   let optionInput = _("+input")
     .attr("type", "radio")
@@ -159,7 +164,7 @@ const addRadioOption = (labelText, elementId, switchName, elementToAttachTo, eve
     .attr("id", elementId)
     .attr("name", switchName)
     .attr("value", labelText.toLowerCase())
-    .addClass([CRRS_CLASS]);
+    .addClass([CRRS_CLASS, RADIO_BUTTON_INPUT_CLASS]);
   if (checked) {
     optionInput.attr("checked", checked);
   }
@@ -168,7 +173,7 @@ const addRadioOption = (labelText, elementId, switchName, elementToAttachTo, eve
     .attr("for", elementId)
     .text(labelText)
     .attr("title", labelText)
-    .addClass([CRRS_CLASS, "switch-field"]);
+    .addClass([CRRS_CLASS, RADIO_BUTTON_LABEL_CLASS]);
 
   // Add to container
   elementToAttachTo.append([optionInput, optionLabel]);
@@ -183,15 +188,19 @@ const addRadioOption = (labelText, elementId, switchName, elementToAttachTo, eve
  * @param {EventListener} eventHandlerMethod callback function for onchange
  */
 const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo, eventHandlerMethod) => {
+
+  const RADIO_GROUP_CLASS = "rs-cr-radio-group";
+  const RADIO_BUTTON_GROUP_CLASS = "rs-cr-radio-button-group";
+
   let buttonGroup = _("+div")
-    .addClass([CRRS_CLASS, "switch-holder"]);
+    .addClass([CRRS_CLASS, RADIO_GROUP_CLASS]);
 
   let buttonGroupText = _("+span")
     .text(groupText)
     .addClass([CRRS_CLASS, "switch-holder-text"]);
 
   let buttonGroupRadioContainer = _("+div")
-    .addClass([CRRS_CLASS, "switch-field"]);
+    .addClass([CRRS_CLASS, RADIO_BUTTON_GROUP_CLASS]);
 
   const radioOptions = ["Only", "Show", "Hide"];
 
@@ -265,11 +274,17 @@ const createInlineMenu = (elementToAttachTo) => {
   //createToggleSwtich("Permiere Only", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID + "p", containerDiv, false);
   addRadioButtonGroup("Permiere:", "premier-toggle", CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME, containerDiv, handlePremiereRadioGroup);
 
-  // ---- Add Vertical Divider ---- 
-  //createVerticalDivider(containerDiv);
+  // ---- Add End Button Group ---- 
+  const END_BUTTON_GROUP_CLASS = "rs-cr-end-button-group";
+  const END_BUTTON_CLASS = "rs-cr-end-button";
+
+  const ORANGE_TEXT_CLASS = "rs-cr-orange-text";
+
+  const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
+
 
   let lockDiv = _("+div")
-    .addClass([CRRS_CLASS, "end-button-group"]);
+    .addClass([CRRS_CLASS, END_BUTTON_GROUP_CLASS]);
 
 
   // ---- Add Lock Button ---- 
@@ -279,11 +294,11 @@ const createInlineMenu = (elementToAttachTo) => {
     .attr("title", "Save Filters")
     .attr("aria-label", "Save Filters")
     .on("click", handelLockBtn)
-    .addClass(CRRS_CLASS);
+    .addClass([CRRS_CLASS, END_BUTTON_CLASS]);
 
   // Add Lock icon
   let lockIcon = _("+i")
-    .addClass(["fontello-icon", "icon-unlocked", "unlocked"]);
+    .addClass(["fontello-icon", "icon-unlocked", END_BUTTON_UNLOCKED_CLASS]);
 
 
   lockBtn.append(lockIcon);
@@ -293,11 +308,11 @@ const createInlineMenu = (elementToAttachTo) => {
     .attr("title", "Reset Filters")
     .attr("aria-label", "Reset Filters")
     .on("click", handelResetBtn)
-    .addClass(CRRS_CLASS);
+    .addClass([CRRS_CLASS, END_BUTTON_CLASS]);
 
   //Add rest icon
   let resetIcon = _("+i")
-    .addClass(["fontello-icon", "icon-reset"]);
+    .addClass(["fontello-icon", "icon-reset", ORANGE_TEXT_CLASS]);
 
   resetBtn.append(resetIcon);
 
@@ -311,10 +326,13 @@ const createInlineMenu = (elementToAttachTo) => {
 
 const handleUIChangesOnSaveStatus = (status, icon) => {
 
+  const END_BUTTON_LOCKED_CLASS = "rs-cr-locked";
+  const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
+
   let dubToggle = _(`#${CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID}`);
   if (status) {
 
-    icon.removeClass(["unlocked", "icon-unlocked"]).addClass(["locked", "icon-locked"]);
+    icon.removeClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]).addClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]);
 
     dubToggle.attr("disabled", status);
     dubToggle.parent(1).addClass("disabled-in-js");
@@ -324,7 +342,7 @@ const handleUIChangesOnSaveStatus = (status, icon) => {
     _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).attr("disabled", status);
 
   } else {
-    icon.removeClass(["locked", "icon-locked"]).addClass(["unlocked", "icon-unlocked"]);
+    icon.removeClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]).addClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]);
 
     dubToggle.elem.removeAttribute("disabled");
     dubToggle.parent(1).removeClass("disabled-in-js");
