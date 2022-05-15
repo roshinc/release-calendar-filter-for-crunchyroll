@@ -9,12 +9,12 @@ const saveFilter = (filter) => {
 };
 
 
-const restoreFilter = (callbackMethod) => {
+const restoreFilter = (callbackMethod, modifyUI = true) => {
     chrome.storage.sync.get(['filter'], function (result) {
         console.log('Value currently is ' + result);
         console.log(result);
         if (result['filter']) {
-            callbackMethod(result['filter']);
+            callbackMethod(result['filter'], modifyUI);
         }
     });
 }

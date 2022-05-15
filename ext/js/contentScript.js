@@ -3,7 +3,7 @@
  */
 
 window.onload = function () {
-  createInlineMenu(document.querySelector("header.simulcast-calendar-header"));
+  //createInlineMenu(document.querySelector("header.simulcast-calendar-header"));
   let week = new Week(document.querySelectorAll(".day"));
   // global filter holder
   crrsFilter = new Filter(week);
