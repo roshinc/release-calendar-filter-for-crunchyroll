@@ -3,7 +3,7 @@ class Week {
     #weekStart;
     #daysOfTheWeek = [];
 
-    constructor(content) {
+    constructor(content, showHiddenCount = true) {
         const days = Array.from(content);
         days.forEach((day, index) => {
             let dateElem = day.querySelector('.specific-date');
@@ -13,7 +13,7 @@ class Week {
             if (index == 0) {
                 this.#weekStart = time;
             }
-            this.#daysOfTheWeek[index] = new Day(time, createHiddenCount(dateElem.parentNode), day.querySelectorAll("li"));
+            this.#daysOfTheWeek[index] = new Day(time, showHiddenCount ? createHiddenCount(dateElem.parentNode) : null, day.querySelectorAll("li"));
         });
     }
 
@@ -22,20 +22,6 @@ class Week {
             day.show(hideAllDubs, allowedDubs, hideInQueue, showInQueueOnly, hidePermiere, showPermiereOnly);
         });
     }
-
-    // hideDubs() {
-    //     console.log("Hide on week called");
-    //     this.#daysOfTheWeek.forEach((day, index) => {
-    //         day.hideDubs();
-    //     });
-    // }
-
-    // showDubs() {
-    //     console.log("Show on week called");
-    //     this.#daysOfTheWeek.forEach((day, index) => {
-    //         day.showDubs();
-    //     });
-    // }
 
 
 }

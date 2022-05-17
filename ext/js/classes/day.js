@@ -78,12 +78,13 @@ class Day {
 
         this.#hideContentInArray(uniqueListToHide);
         this.#showContentInArray(toShow);
+        if (this.#hiddenCount != null) {
+            this.#hiddenCount.state.count = uniqueListToHide.length;
+            this.#hiddenCount.state.changed = (!(this.#todaysContentList.length == 0))
+                && ((this.#numOfHiddenContent != uniqueListToHide.length) || (this.#numOfShownContent != toShow.length));
 
-        this.#hiddenCount.state.count = uniqueListToHide.length;
-        this.#hiddenCount.state.changed = (!(this.#todaysContentList.length == 0))
-            && ((this.#numOfHiddenContent != uniqueListToHide.length) || (this.#numOfShownContent != toShow.length));
-
-        this.#numOfHiddenContent = uniqueListToHide.length;
+            this.#numOfHiddenContent = uniqueListToHide.length;
+        }
         this.#numOfShownContent = toShow.length;
     }
 

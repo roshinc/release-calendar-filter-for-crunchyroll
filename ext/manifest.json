@@ -6,6 +6,7 @@
   "icons": {
     "128": "images/icon.png"
   },
+  "options_page": "options/options.html",
   "permissions": [
     "storage"
   ],
@@ -25,6 +26,13 @@
       "use_dynamic_url": true
     }
   ],
+  "action": {
+    "default_icon": {
+      "32": "images/icon.png"
+    },
+    "default_popup": "popup/index.html",
+    "default_title": "Disable/enable parts of added UI"
+  },
   "content_scripts": [
     {
       "matches": [

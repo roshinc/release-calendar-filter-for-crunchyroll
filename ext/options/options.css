@@ -1,0 +1,76 @@
+#logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#logo-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 40px;
+    align-items: center;
+}
+
+#title-small-text {
+    font-style: italic;
+}
+
+.orange-text {
+    color: #F78C24;
+}
+
+#page-title {
+    color: black;
+    letter-spacing: .2rem;
+    text-transform: uppercase;
+}
+
+.screenshot {
+    width: 96%;
+    margin: 2%;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.one {
+    grid-column: 1 / 3;
+    grid-row: 1;
+}
+
+.two {
+    grid-column: 2 / 4;
+    grid-row: 1 / 3;
+}
+
+.three {
+    grid-column: 1;
+    grid-row: 2 / 5;
+}
+
+.four {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.five {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+.six {
+    grid-column: 3;
+    grid-row: 4;
+}

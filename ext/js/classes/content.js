@@ -11,11 +11,14 @@ class Content {
   #inQueue;
   #isDub;
   #dubLanguage;
-  #topEpisodeName;
-  #topEpisodeURL;
-  #thumbnailURL;
-  #seasonURL;
+  /* 
+   #topEpisodeName;
+   #topEpisodeURL;
+   #thumbnailURL;
+   #seasonURL;
+   
   popOverJson;
+  */
 
   constructor(content) {
     this.#createID();
@@ -75,7 +78,7 @@ class Content {
 
   #parseContent(content) {
     const releaseArticle = content.querySelector('article.js-release');
-    const featuredEpArticle = releaseArticle.querySelector('article.js-featured-episode');
+    //const featuredEpArticle = releaseArticle.querySelector('article.js-featured-episode');
 
     const releaseArticleDataset = releaseArticle.dataset;
     // disabled for local testing
@@ -115,7 +118,7 @@ class Content {
     // season name
     const seasonH1 = releaseArticle.querySelector("h1.season-name");
     const seasonUrl = seasonH1.querySelector("a");
-    this.#seasonURL = seasonUrl.href;
+    //this.#seasonURL = seasonUrl.href;
     this.#seasonTitle = seasonUrl.querySelector('cite').textContent;
 
     // dub info
