@@ -10,10 +10,8 @@ const saveFilter = (filter) => {
 
 
 const restoreFilter = (callbackMethod, modifyUI = true) => {
-    chrome.storage.sync.get(['filter'], function (result) {
-        console.log('Value currently is ' + result);
-        console.log(result);
-        if (result['filter']) {
+    chrome.storage.sync.get({ filter: null }, function (items) {
+        if (items.filter != null) {
             callbackMethod(result['filter'], modifyUI);
         }
     });

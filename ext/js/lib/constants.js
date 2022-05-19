@@ -20,5 +20,8 @@ const CRRS_FILTER_MENU_LOCK_BTN_ID = "cr-rs-filter-menu-lock-filters";
 // Hold filter object
 let crrsFilter;
 
+// Hold toggle for reflow
+let reflowEnabled;
+
 // Hidden count class
 const CRRS_HIDDEN_COUNT_CLASS_NAME = "cr-rs-filter-hidden-count";

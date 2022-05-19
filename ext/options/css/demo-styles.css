@@ -1,0 +1,195 @@
+.days {
+    line-height: 1.5;
+    color: #a09895;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+    list-style: none;
+    display: table;
+    width: 100%;
+}
+
+.day {
+    background-color: #F2F2F2;
+    line-height: 1.5;
+    color: #a09895;
+    list-style: none;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    display: table-cell;
+    width: 13.7%;
+    box-sizing: border-box;
+    min-width: 8.125rem;
+    padding: .3125rem;
+    vertical-align: top;
+}
+
+.day.active {
+    background-color: white;
+    -webkit-text-size-adjust: 100%;
+    --cr-rc-main-accent-color: #F78C24;
+    --cr-rc-main-gray-color: #cecaca;
+    --cr-rc-main-font-size: 0.8125rem;
+    --cr-rc-switch-height: 17px;
+    --cr-rc-switch-inner-circle-size: 13px;
+    line-height: 1.5;
+    color: #a09895;
+    list-style: none;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    display: table-cell;
+    padding: .3125rem;
+    vertical-align: top;
+    width: 17.8%;
+    box-sizing: border-box;
+    min-width: 10.625rem;
+}
+
+.calendar-day {
+    -webkit-text-size-adjust: 100%;
+    --cr-rc-main-accent-color: #F78C24;
+    --cr-rc-main-gray-color: #cecaca;
+    --cr-rc-main-font-size: 0.8125rem;
+    --cr-rc-switch-height: 17px;
+    --cr-rc-switch-inner-circle-size: 13px;
+    line-height: 1.5;
+    color: #a09895;
+    list-style: none;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    min-height: 6rem;
+}
+
+.day-switcher {
+    line-height: 1.5;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    background-color: transparent;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: #363231;
+}
+
+.day-date {
+    list-style: none;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: default;
+    color: #363231;
+    display: block;
+    padding: 1.15em 0 1.9em 0;
+    line-height: 1;
+    text-align: center;
+}
+
+.specific-date {
+    -webkit-text-size-adjust: 100%;
+    --cr-rc-main-accent-color: #F78C24;
+    --cr-rc-main-gray-color: #cecaca;
+    --cr-rc-main-font-size: 0.8125rem;
+    --cr-rc-switch-height: 17px;
+    --cr-rc-switch-inner-circle-size: 13px;
+    list-style: none;
+    cursor: default;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    vertical-align: baseline;
+    height: 1.05rem;
+    font-family: Verdana, 'Lucida Grande', sans-serif;
+    font-size: .7rem;
+    line-height: 1.5;
+    color: #a09895;
+}
+
+.active .specific-date {
+    display: none;
+}
+
+.active .day-name {
+    -webkit-text-size-adjust: 100%;
+    --cr-rc-main-accent-color: #F78C24;
+    --cr-rc-main-gray-color: #cecaca;
+    --cr-rc-main-font-size: 0.8125rem;
+    --cr-rc-switch-height: 17px;
+    --cr-rc-switch-inner-circle-size: 13px;
+    list-style: none;
+    color: #363231;
+    text-align: center;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-style: inherit;
+    vertical-align: baseline;
+    font-weight: 700;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-transform: uppercase;
+    font-size: .95rem;
+    line-height: 1;
+    margin: .7rem 0 .35rem 0;
+}
+
+.day-name {
+    -webkit-text-size-adjust: 100%;
+    --cr-rc-main-accent-color: #F78C24;
+    --cr-rc-main-gray-color: #cecaca;
+    --cr-rc-main-font-size: 0.8125rem;
+    --cr-rc-switch-height: 17px;
+    --cr-rc-switch-inner-circle-size: 13px;
+    list-style: none;
+    color: #363231;
+    text-align: center;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-style: inherit;
+    vertical-align: baseline;
+    font-weight: 700;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+    font-size: .95rem;
+    line-height: 1;
+}
+
+.cr-rs-filter-hidden-count {
+    cursor: default;
+}
+
+
+.rs-cr-end-button {
+    cursor: default;
+}

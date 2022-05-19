@@ -2,15 +2,20 @@
 <html>
 
 <head>
-  <title>My Test Extension Options</title>
-  <link rel="stylesheet" href="options.css">
-  <link rel="stylesheet" href="css2.css">
+  <title>Release Calendar Filter for crunchyroll</title>
+  <link rel="stylesheet" href="./css/normalize.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/fontello.css">
+  <link rel="stylesheet" href="../css/fontello-codes.css">
+  <link rel="stylesheet" href="./css/options.css">
+  <link rel="stylesheet" href="./css/demo-styles.css">
+  <link rel="stylesheet" href="./css/roboto.css">
 </head>
 
 <body>
   <div id="logo-container">
     <div id="logo">
-      <img src="../images/icon.png" />
+      <img src="./images/icon.svg" />
       <span id="logo-text">
         <span>Release Calendar Filter</span>
         <span id="title-small-text">for <span class="orange-text">crunchyroll</span></span>
@@ -21,35 +26,368 @@
     </div>
   </div>
 
-  <h3>The Filter UI Component</h3>
-  <img src="../images/filter-ui.png" class="screenshot" />
+  <section class="option-section">
+    <header class="option-section-header">
+      <h3 class="option-section-title">The Filter UI Component</h3>
+    </header>
+    <figure class="screenshot">
+      <div id="cr-rs-filter-menu" class="cr-rs-class border-and-glow">
+        <label for="cr-rs-filter-menu-show-dubs" class="cr-rs-class rs-cr-toggle-container disabled-in-js">Show Dubs
+          <span for="cr-rs-filter-menu-show-dubs" class="cr-rs-class rs-cr-toggle-switch">
+            <input id="cr-rs-filter-menu-show-dubs" type="checkbox" class="cr-rs-class rs-cr-toggle-input"
+              checked="true" data-np-invisible="1" data-np-checked="1" disabled>
+            <span class="cr-rs-class rs-cr-toggle-slider">
+            </span>
+          </span>
+        </label>
+        <div aria-hidden="true" class="cr-rs-class cr-rs-filter-vertical-divider">
 
-  <div class="wrapper">
-    <div class="one">One</div>
-    <div class="two">Two</div>
-    <div class="three">Three</div>
-    <div class="four">Four</div>
-    <div class="five">Five</div>
-    <div class="six">Six</div>
-  </div>
+        </div>
+        <div id="cr-rs-filter-menu-pick-dubs" class="cr-rs-class">
+          <p class="cr-rs-class">Enable Dubs for</p><span class="cr-rs-class">
+            <label for="cr-rs-filter-menu-pick-dubs-lang-english" class="cr-rs-class">
+              <input id="cr-rs-filter-menu-pick-dubs-lang-english" type="checkbox"
+                class="cr-rs-class rs-cr-checkbox-input" disabled>
+              <span class="cr-rs-class rs-cr-checkbox-inner-span">English</span>
+            </label>
+          </span>
+          <span class="cr-rs-class">
+            <label for="cr-rs-filter-menu-pick-dubs-lang-spanish" class="cr-rs-class">
+              <input id="cr-rs-filter-menu-pick-dubs-lang-spanish" type="checkbox"
+                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
+                disabled>
+              <span class="cr-rs-class rs-cr-checkbox-inner-span">
+                Spanish
+              </span>
+            </label>
+          </span>
+          <span class="cr-rs-class"><label for="cr-rs-filter-menu-pick-dubs-lang-french" class="cr-rs-class">
+              <input id="cr-rs-filter-menu-pick-dubs-lang-french" type="checkbox"
+                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
+                disabled>
+              <span class="cr-rs-class rs-cr-checkbox-inner-span">
+                French
+              </span>
+            </label>
+          </span>
+          <span class="cr-rs-class">
+            <label for="cr-rs-filter-menu-pick-dubs-lang-german" class="cr-rs-class">
+              <input id="cr-rs-filter-menu-pick-dubs-lang-german" type="checkbox"
+                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
+                disabled>
+              <span class="cr-rs-class rs-cr-checkbox-inner-span">
+                German
+              </span>
+            </label>
+          </span>
+          <span class="cr-rs-class">
+            <label for="cr-rs-filter-menu-pick-dubs-lang-portuguese" class="cr-rs-class">
+              <input id="cr-rs-filter-menu-pick-dubs-lang-portuguese" type="checkbox"
+                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
+                disabled>
+              <span class="cr-rs-class rs-cr-checkbox-inner-span">
+                Portuguese
+              </span>
+            </label>
+          </span>
+          <span class="cr-rs-class">
+            <label for="cr-rs-filter-menu-pick-dubs-lang-others" class="cr-rs-class">
+              <input id="cr-rs-filter-menu-pick-dubs-lang-others" type="checkbox"
+                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
+                disabled>
+              <span class="cr-rs-class rs-cr-checkbox-inner-span">
+                Others
+              </span>
+            </label>
+          </span>
+        </div>
+        <div aria-hidden="true" class="cr-rs-class cr-rs-filter-vertical-divider">
+        </div>
+        <div class="cr-rs-class rs-cr-radio-group">
+          <span class="cr-rs-class switch-holder-text">In Queue:</span>
+          <div class="cr-rs-class rs-cr-radio-button-group">
+            <input type="radio" id="cr-rs-filter-menu-in-queue-toggle-only" name="in-queue-switch" value="only"
+              class="cr-rs-class rs-cr-radio-button-input" data-np-invisible="1" data-np-checked="1" disabled>
+            <label for="cr-rs-filter-menu-in-queue-toggle-only" title="Only"
+              class="cr-rs-class rs-cr-radio-button-label">
+              Only
+            </label>
+            <input type="radio" id="cr-rs-filter-menu-in-queue-toggle-show" name="in-queue-switch" value="show"
+              class="cr-rs-class rs-cr-radio-button-input" checked="true" data-np-invisible="1" data-np-checked="1"
+              disabled>
+            <label for="cr-rs-filter-menu-in-queue-toggle-show" title="Show"
+              class="cr-rs-class rs-cr-radio-button-label">
+              Show
+            </label>
+            <input type="radio" id="cr-rs-filter-menu-in-queue-toggle-hide" name="in-queue-switch" value="hide"
+              class="cr-rs-class rs-cr-radio-button-input" data-np-invisible="1" data-np-checked="1" disabled>
+            <label for="cr-rs-filter-menu-in-queue-toggle-hide" title="Hide"
+              class="cr-rs-class rs-cr-radio-button-label">
+              Hide
+            </label>
+          </div>
+        </div>
+        <div aria-hidden="true" class="cr-rs-class cr-rs-filter-vertical-divider"></div>
+        <div class="cr-rs-class rs-cr-radio-group">
+          <span class="cr-rs-class switch-holder-text">Permiere:</span>
+          <div class="cr-rs-class rs-cr-radio-button-group">
+            <input type="radio" id="cr-rs-filter-menu-premier-toggle-only" name="permiere-switch" value="only"
+              class="cr-rs-class rs-cr-radio-button-input" data-np-invisible="1" data-np-checked="1" disabled>
+            <label for="cr-rs-filter-menu-premier-toggle-only" title="Only"
+              class="cr-rs-class rs-cr-radio-button-label">
+              Only
+            </label>
+            <input type="radio" id="cr-rs-filter-menu-premier-toggle-show" name="permiere-switch" value="show"
+              class="cr-rs-class rs-cr-radio-button-input" checked="true" data-np-invisible="1" data-np-checked="1"
+              disabled>
+            <label for="cr-rs-filter-menu-premier-toggle-show" title="Show"
+              class="cr-rs-class rs-cr-radio-button-label">
+              Show
+            </label>
+            <input type="radio" id="cr-rs-filter-menu-premier-toggle-hide" name="permiere-switch" value="hide"
+              class="cr-rs-class rs-cr-radio-button-input" data-np-invisible="1" data-np-checked="1" disabled>
+            <label for="cr-rs-filter-menu-premier-toggle-hide" title="Hide"
+              class="cr-rs-class rs-cr-radio-button-label">
+              Hide
+            </label>
+          </div>
+        </div>
+        <div class="cr-rs-class rs-cr-end-button-group">
+          <button id="cr-rs-filter-menu-lock-filters" title="Save Filters" aria-label="Save Filters"
+            class="cr-rs-class rs-cr-end-button" disabled>
+            <i class="fontello-icon icon-locked rs-cr-locked"></i>
+          </button>
+          <button title="Reset Filters" aria-label="Reset Filters" class="cr-rs-class rs-cr-end-button" disabled>
+            <i class="fontello-icon icon-reset rs-cr-locked">
+            </i>
+          </button>
+        </div>
+      </div>
+      <figcaption>
+        Injected UI element that provides you the ability to apply various filters on release calendar. This example
+        will illustrate the option changes you made after you save.
+      </figcaption>
+    </figure>
+    <div class="option">
+      <h4 class="option-title">Disable/Enable Filter UI Element</h4>
+      <p class="option-blurb">
+        The extension adds the filter element (shown above) to let you apply filters to the shows on release calendar.
+        If you have a filter that you always use, you can lock the filter and then disable the UI. The filters (as long
+        as it is locked) will still filter shows even if the UI is hidden.
+      </p>
+      <p id="show-filter-note" class="option-note"></p>
+      <label for="show-filter-input" class="cr-rs-class rs-cr-toggle-container">
+        Show Filter Element
+        <span for="show-filter-input" class="cr-rs-class rs-cr-toggle-switch">
+          <input id="show-filter-input" type="checkbox" class="cr-rs-class rs-cr-toggle-input" checked="true"
+            data-np-invisible="1" data-np-checked="1">
+          <span class="cr-rs-class rs-cr-toggle-slider">
+          </span>
+        </span>
+      </label>
+    </div>
+  </section>
 
-  Favorite color:
-  <select id="color">
-    <option value="red">red</option>
-    <option value="green">green</option>
-    <option value="blue">blue</option>
-    <option value="yellow">yellow</option>
-  </select>
+  <!-- <hr class="option-section-break" /> -->
 
-  <label>
-    <input type="checkbox" id="like">
-    I like colors.
-  </label>
+  <section class="option-section">
+    <header class="option-section-header">
+      <h3 class="option-section-title">The Hidden Count UI Component</h3>
+    </header>
+    <figure class="screenshot">
+      <ol class="days border-and-glow">
+        <li class="day ">
+          <section class="calendar-day">
+            <a class="day-switcher">
+              <header class="day-date js-day-header" data-ga-date="2022-05-16-Mon">
+                <div class="specific-date">
+                  <time datetime="2022-05-16T00:00:00-04:00">
+                    5/16
+                  </time>
+                </div>
 
-  <div id="status"></div>
-  <button id="save">Save</button>
+                <h1 class="day-name">
+                  <time datetime="2022-05-16T00:00:00-04:00">
+                    Mon
+                  </time>
+                </h1>
+                <div class="cr-rs-class cr-rs-filter-hidden-count changed" caldom="">2 Hidden</div>
+              </header>
+            </a>
+          </section>
+        </li>
+        <li class="day ">
+          <section class="calendar-day">
+            <a class="day-switcher">
+              <header class="day-date js-day-header" data-ga-date="2022-05-17-Tue">
+                <div class="specific-date">
+                  <time datetime="2022-05-17T00:00:00-04:00">
+                    5/17
+                  </time>
+                </div>
 
-  <script src="options.js"></script>
+                <h1 class="day-name">
+                  <time datetime="2022-05-17T00:00:00-04:00">
+                    Tue
+                  </time>
+                </h1>
+                <div class="cr-rs-class cr-rs-filter-hidden-count changed" caldom="">12 Hidden</div>
+              </header>
+            </a>
+          </section>
+        </li>
+        <li class="day active today">
+          <section class="calendar-day">
+            <a class="day-switcher">
+              <header class="day-date js-day-header" data-ga-date="2022-05-18-Wed">
+                <div class="specific-date">
+                  <time datetime="2022-05-18T00:00:00-04:00">
+                    5/18
+                  </time>
+                </div>
+
+                <h1 class="day-name">
+                  <time datetime="2022-05-18T00:00:00-04:00">
+                    Today
+                  </time>
+                </h1>
+                <div class="cr-rs-class cr-rs-filter-hidden-count changed" caldom="">2 Hidden</div>
+              </header>
+            </a>
+          </section>
+        </li>
+        <li class="day ">
+          <section class="calendar-day">
+            <a class="day-switcher">
+              <header class="day-date js-day-header" data-ga-date="2022-05-19-Thu">
+                <div class="specific-date">
+                  <time datetime="2022-05-19T00:00:00-04:00">
+                    5/19
+                  </time>
+                </div>
+
+                <h1 class="day-name">
+                  <time datetime="2022-05-19T00:00:00-04:00">
+                    Thu
+                  </time>
+                </h1>
+                <div class="cr-rs-class cr-rs-filter-hidden-count" caldom="">0 Hidden</div>
+              </header>
+            </a>
+          </section>
+        </li>
+        <li class="day ">
+          <section class="calendar-day">
+            <a class="day-switcher">
+              <header class="day-date js-day-header" data-ga-date="2022-05-20-Fri">
+                <div class="specific-date">
+                  <time datetime="2022-05-20T00:00:00-04:00">
+                    5/20
+                  </time>
+                </div>
+
+                <h1 class="day-name">
+                  <time datetime="2022-05-20T00:00:00-04:00">
+                    Fri
+                  </time>
+                </h1>
+                <div class="cr-rs-class cr-rs-filter-hidden-count" caldom="">0 Hidden</div>
+              </header>
+            </a>
+          </section>
+        </li>
+        <li class="day ">
+          <section class="calendar-day">
+            <a class="day-switcher">
+              <header class="day-date js-day-header" data-ga-date="2022-05-21-Sat">
+                <div class="specific-date">
+                  <time datetime="2022-05-21T00:00:00-04:00">
+                    5/21
+                  </time>
+                </div>
+
+                <h1 class="day-name">
+                  <time datetime="2022-05-21T00:00:00-04:00">
+                    Sat
+                  </time>
+                </h1>
+                <div class="cr-rs-class cr-rs-filter-hidden-count" caldom="">0 Hidden</div>
+              </header>
+            </a>
+          </section>
+        </li>
+        <li class="day ">
+          <section class="calendar-day">
+            <a class="day-switcher">
+              <header class="day-date js-day-header" data-ga-date="2022-05-22-Sun">
+                <div class="specific-date">
+                  <time datetime="2022-05-22T00:00:00-04:00">
+                    5/22
+                  </time>
+                </div>
+
+                <h1 class="day-name">
+                  <time datetime="2022-05-22T00:00:00-04:00">
+                    Sun
+                  </time>
+                </h1>
+                <div class="cr-rs-class cr-rs-filter-hidden-count" caldom="">0 Hidden</div>
+              </header>
+            </a>
+          </section>
+        </li>
+      </ol>
+      <figcaption>
+        Injected UI element (the '# Hidden' part) that shows the number of shows hidden by the filters that you picked.
+        This example will illustrate the option changes you made after you save.
+      </figcaption>
+    </figure>
+    <div class="option">
+      <h4 class="option-title">Disable/Enable Hidden Count Reflow</h4>
+      <p class="option-blurb">
+        The extension preforms a <a href="https://developer.mozilla.org/en-US/docs/Glossary/Reflow" target="_blank"
+          rel="noopener noreferrer"> reflow</a> in order to show you the orange flash whenever the hidden count changes
+        (shown above) after the first time. The highlight will still happen the first load because that does not require
+        a reflow. The number of shows hidden will still update even if this is disabled.
+      </p>
+      <label for="reflow-hcount-input" class="cr-rs-class rs-cr-toggle-container">
+        Reflow Hidden Count Elements
+        <span for="reflow-hcount-input" class="cr-rs-class rs-cr-toggle-switch">
+          <input id="reflow-hcount-input" type="checkbox" class="cr-rs-class rs-cr-toggle-input" checked="true"
+            data-np-invisible="1" data-np-checked="1">
+          <span class="cr-rs-class rs-cr-toggle-slider">
+          </span>
+        </span>
+      </label>
+    </div>
+
+    <hr class="option-section-break" />
+
+    <div class="option">
+      <h4 class="option-title">Disable/Enable Hidden Count UI Element</h4>
+      <p class="option-blurb">
+        The extension adds the '# Hidden' element (shown above) to convey how many shows are hidden when you apply
+        filters. The filters will still hide shows even if this is disabled.
+      </p>
+      <label for="show-hcount-input" class="cr-rs-class rs-cr-toggle-container">
+        Show Hidden Count Elements
+        <span for="show-hcount-input" class="cr-rs-class rs-cr-toggle-switch">
+          <input id="show-hcount-input" type="checkbox" class="cr-rs-class rs-cr-toggle-input" checked="true"
+            data-np-invisible="1" data-np-checked="1">
+          <span class="cr-rs-class rs-cr-toggle-slider">
+          </span>
+        </span>
+      </label>
+    </div>
+  </section>
+
+  <section class="button-group">
+    <button id="save">Save</button>
+    <button id="resore-defaults">Restore Defaults</button>
+    <div id="status"></div>
+  </section>
+
+  <script src="./js/options.js"></script>
 </body>
 
 </html>

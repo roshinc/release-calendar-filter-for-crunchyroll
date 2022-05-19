@@ -59,6 +59,7 @@ p.premium-message {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+  justify-content: center;
 }
 
 /* || MEDIA QUERIES */
@@ -175,7 +176,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   flex-direction: row;
   flex-wrap: nowrap;
   /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
-  align-items: stretch;
+  align-items: center;
   column-gap: 1px;
 }
 
