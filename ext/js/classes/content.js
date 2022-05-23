@@ -129,6 +129,12 @@ class Content {
       this.#seasonTitle = found[1];
     }
 
+    // progress bar
+    const currentProgress = releaseArticle.querySelector('progress');
+    //if (currentProgress.value > 0) {
+    createProgressBar(releaseArticle, currentProgress.value);
+    //}
+
 
     // Set id
     content.id = this.#createID(releaseArticleDataset.slug, releaseArticleDataset.episodeNum, this.#isDub, this.#dubLanguage);

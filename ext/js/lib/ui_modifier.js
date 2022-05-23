@@ -87,6 +87,36 @@ const createHiddenCount = (elementToAttachTo) => {
 
 };
 
+const createProgressBar = (elementToAttachTo, progressAmount) => {
+
+  const PROGRESS_CLASS = "cr-rs-progress-on-closed";
+  const PROGRESS_WRAPPING_DIV_CLASS = "cr-rs-progress-wraper-on-closed";
+  const PROGRESS_DIV_CLASS = "cr-rs-progress-inner-on-closed";
+
+  // **1. The wraping progress element **
+  let progressElem = _("+progress")
+    .addClass([CRRS_CLASS, PROGRESS_CLASS])
+    .attr("value", progressAmount)
+    .attr("max", "100");
+
+  let innerProgressWrapperDiv = _("+div")
+    .addClass([CRRS_CLASS, PROGRESS_WRAPPING_DIV_CLASS]);
+
+  let innerProgressDiv = _("+div")
+    .addClass([CRRS_CLASS, PROGRESS_DIV_CLASS])
+    .css({
+      width: `${progressAmount}%`
+    }).text(`Progress: ${progressAmount}%`);
+
+  // Connect elements
+  innerProgressWrapperDiv.append(innerProgressDiv);
+  progressElem.append(innerProgressWrapperDiv);
+
+  // Add to container
+  _(elementToAttachTo, progressElem);
+
+}
+
 
 /**
  * Create a UI element with a custom checkbox 
