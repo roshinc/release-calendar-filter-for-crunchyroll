@@ -1,6 +1,9 @@
 const saveFilter = (filter) => {
     const filterHolder = {};
     filterHolder["filter"] = filter;
+    // console.log(filterHolder);
+    // localStorage.setItem('filter', JSON.stringify(filterHolder));
+    // console.log(localStorage);
     chrome.storage.sync.set(filterHolder, function () {
         console.log('Value is set to ');
         console.log(filter);
@@ -10,9 +13,23 @@ const saveFilter = (filter) => {
 
 
 const restoreFilter = (callbackMethod, modifyUI = true) => {
-    chrome.storage.sync.get({ filter: null }, function (items) {
+    // const filterstr = localStorage.getItem('filter');
+    // console.log(filterstr);
+    // const parsedFilter = JSON.parse(filterstr);
+    // console.log(parsedFilter);
+    // if (filterstr) {
+    //     callbackMethod(parsedFilter["filter"], modifyUI);
+    // }
+    // const t7 = performance.now();
+    // console.log(`Call to restoreFilter took ${t7 - t6} milliseconds.`);
+
+    chrome.storage.sync.get({
+        filter: null
+    }, function (items) {
         if (items.filter != null) {
-            callbackMethod(result['filter'], modifyUI);
+            callbackMethod(items.filter, modifyUI);
+            const t7 = performance.now();
+            console.log(`Call to restoreFilter took ${t7 - t6} milliseconds.`);
         }
     });
 }

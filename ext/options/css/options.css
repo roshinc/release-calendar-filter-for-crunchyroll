@@ -1,6 +1,19 @@
 /* || GENERAL STYLES */
+:root {
+    --options-primary-text-color: var(--cr-rc-main-text-color);
+    --options-bc-color: var(--cr-rc-main-color);
+    --options-orange: var(--cr-rc-main-accent-color);
+    --options-gray: var(--cr-rc-main-gray-color);
+    --options-blue: #258BD2;
+    --options-glow: #FDFDFD;
+
+    --draculatheme-current-line: #44475a;
+}
+
 body {
     font-family: 'Roboto Condensed', sans-serif;
+    background-color: var(--options-bc-color);
+    color: var(--options-primary-text-color);
 }
 
 /* || LOGO STYLES */
@@ -37,7 +50,6 @@ body {
 }
 
 #page-title {
-    color: black;
     letter-spacing: .2rem;
     text-transform: uppercase;
 }
@@ -46,13 +58,17 @@ body {
     line-height: 1.5;
     font-family: Helvetica, Arial, "Helvetica Neue", sans-serif;
     font-size: .69rem;
-    color: #363231;
+    color: currentColor;
     display: block;
+}
+
+.screenshot figcaption {
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 .border-and-glow {
     border: var(--cr-rc-main-accent-color) dotted .01rem;
-    box-shadow: 0 0 20px #F2F2F2;
+    box-shadow: 0 0 20px var(--options-glow);
 }
 
 .option-section {
@@ -101,12 +117,32 @@ body {
 }
 
 .button-group button {
-    background-color: white;
-    color: black;
+    background-color: var(--options-bc-color);
+    color: currentColor;
     border: 2px solid var(--cr-rc-main-accent-color);
 }
 
 .button-group button:hover {
     background-color: var(--cr-rc-main-accent-color);
-    color: white;
+    color: var(--options-bc-color);
+}
+
+/* unvisited link */
+a:link {
+    color: var(--options-blue);
+}
+
+/* visited link */
+a:visited {
+    color: var(--options-blue);
+}
+
+/* mouse over link */
+a:hover {
+    color: var(--options-orange);
+}
+
+/* selected link */
+a:active {
+    color: var(--options-orange);
 }

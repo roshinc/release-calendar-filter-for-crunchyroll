@@ -26,7 +26,7 @@ window.onload = function () {
     crrsFilter = new Filter(week);
     const t5 = performance.now();
     console.log(`Call to new Filter took ${t5 - t4} milliseconds.`);
-
+    t6 = performance.now();
     restoreFilter(restoreFilterAndUI, items.showFilter);
 
   });

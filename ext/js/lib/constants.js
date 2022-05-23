@@ -25,3 +25,5 @@ let reflowEnabled;
 
 // Hidden count class
 const CRRS_HIDDEN_COUNT_CLASS_NAME = "cr-rs-filter-hidden-count";
+
+let t6;

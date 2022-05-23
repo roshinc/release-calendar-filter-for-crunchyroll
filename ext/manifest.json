@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Release Calendar Helper for Crunchyroll",
+  "name": "Release Calendar Filter for Crunchyroll",
   "description": "A filter for the Release/Simulcast Calendar on Crunchyroll.",
   "version": "1.0.0",
   "icons": {
@@ -17,7 +17,8 @@
         "font/*"
       ],
       "extension_ids": [
-        "obpphalkbgbbdennbifedaleahjcfmfh"
+        "obpphalkbgbbdennbifedaleahjcfmfh",
+        "epkclcbkefpikbpopcpjjlbajhnglged"
       ],
       "matches": [
         "https://www.crunchyroll.com/*",

@@ -15,8 +15,48 @@ p.premium-message {
 /* || GENERAL STYLES */
 
 :root {
+  --cr-rc-main-color: #FFFFFF;
   --cr-rc-main-accent-color: #F78C24;
   --cr-rc-main-gray-color: #cecaca;
+  --cr-rc-main-text-color: #000000;
+
+  /* solarized light */
+  /* base 2*/
+  /* --cr-rc-main-color: #eee8d5; */
+  /* --cr-rc-main-accent-color: #F78C24; */
+  /* base 3 */
+  /* --cr-rc-main-gray-color: rgba(160, 152, 149, .75); */
+  /* base 00 */
+  /* --cr-rc-main-text-color: #657b83; */
+
+  /* solarized dark */
+  /* base 02*/
+  /* --cr-rc-main-color: #073642;
+  --cr-rc-main-accent-color: #F78C24; */
+  /* base 3 */
+  /* --cr-rc-main-gray-color: rgba(95, 103, 106, .75); */
+  /* base 00 */
+  /* --cr-rc-main-text-color: #839496; */
+
+  /* dracula */
+  /* base 02*/
+  /* --cr-rc-main-color: #282a36; */
+  /* --cr-rc-main-accent-color: #F78C24; */
+  /* base 3 */
+  /* --cr-rc-main-gray-color: #44475a; */
+  /* base 00 */
+  /* --cr-rc-main-text-color: #6272a4; */
+
+  /* dark */
+  /* base 02*/
+  /* --cr-rc-main-color: #181A1B; */
+  /* --cr-rc-main-accent-color: #F78C24; */
+  /* base 3 */
+  /* --cr-rc-main-gray-color: #3B3B3B; */
+  /* base 00 */
+  /* --cr-rc-main-text-color: #C7C3BB; */
+
+  --cr-rc-secondry-text-color: #a09895;
 
   --cr-rc-main-font-size: .8125rem;
 
@@ -41,7 +81,7 @@ p.premium-message {
   .premium-message' and '.premium-message' 
   */
 
-  background-color: #FFFFFF;
+  background-color: var(--cr-rc-main-color);
   border-radius: 0.25rem;
 
   cursor: default;
@@ -51,7 +91,7 @@ p.premium-message {
   font-size: var(--cr-rc-main-font-size);
   font-weight: 400;
   line-height: 1.5em;
-  text-shadow: 0 0 0.077em rgb(54 50 49 / 50%);
+  text-shadow: 0 0 0.077em transparent;
 
   padding: 0.9em 1em;
 
@@ -68,7 +108,7 @@ p.premium-message {
 
   #cr-rs-filter-menu.cr-rs-class {
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 0.541em;
   }
 
   .cr-rs-filter-vertical-divider {
@@ -132,7 +172,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   left: 2px;
   bottom: 2px;
   border-radius: 50%;
-  background-color: white;
+  background-color: var(--cr-rc-main-color);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -194,7 +234,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 .rs-cr-checkbox-inner-span {
   cursor: pointer;
   font-size: var(--cr-rc-main-font-size);
-  color: black;
+  color: var(--cr-rc-main-text-color);
 }
 
 /* Checkbox un-checked style */
@@ -219,7 +259,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   background-size: 15px;
   border-radius: 2px;
   background-color: var(--cr-rc-main-accent-color);
-  color: white;
+  color: var(--cr-rc-main-color);
 }
 
 /* Adding a dotted border around the active tabbed-into checkbox */
@@ -281,14 +321,14 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 }
 
 .rs-cr-radio-button-label {
-  background-color: white;
-  color: black;
+  background-color: var(--cr-rc-main-color);
+  color: var(--cr-rc-main-text-color);
   font-size: var(--cr-rc-main-font-size);
   line-height: 1;
   text-align: center;
   padding: 4px 8px;
   margin-right: -1px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--cr-rc-main-gray-color);
   transition: all 0.1s ease-in-out;
 }
 
@@ -298,7 +338,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 
 .rs-cr-radio-button-group input:checked+.rs-cr-radio-button-label {
   background-color: var(--cr-rc-main-accent-color);
-  color: white;
+  color: var(--cr-rc-main-color);
 }
 
 .rs-cr-radio-button-label:first-of-type {
@@ -344,7 +384,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 }
 
 .rs-cr-end-button {
-  background-color: rgba(127, 127, 127, 0);
+  background-color: transparent;
   border: none;
   text-align: center;
   text-decoration: none;
@@ -438,7 +478,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   font-family: Verdana, 'Lucida Grande', sans-serif;
   font-size: .7rem;
   line-height: 1.5;
-  color: #a09895;
+  color: var(--cr-rc-secondry-text-color);
 }
 
 .cr-rs-filter-hidden-count.changed {
