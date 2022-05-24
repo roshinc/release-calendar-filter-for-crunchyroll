@@ -131,9 +131,10 @@ class Content {
 
     // progress bar
     const currentProgress = releaseArticle.querySelector('progress');
-    //if (currentProgress.value > 0) {
+    // if (currentProgress.value > 0) {
+    console.log("prog");
     createProgressBar(releaseArticle, currentProgress.value);
-    //}
+    // }
 
 
     // Set id

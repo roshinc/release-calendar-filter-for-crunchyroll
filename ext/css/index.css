@@ -497,57 +497,37 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 }
 
 /* || PROGRESS BAR */
+/* .day.active .cr-rs-progress-on-closed {
+  display: none;
+} */
 
 .cr-rs-progress-on-closed {
-  list-style: none;
-  font-weight: inherit;
-  font-style: inherit;
-  cursor: pointer;
-  font-family: Verdana, "Lucida Grande", sans-serif;
-  font-size: .6875rem;
-  line-height: 1.3;
-  vertical-align: baseline;
+  /* Reset the default appearance */
+  -webkit-appearance: none;
   appearance: none;
+
   width: 100%;
   height: .25rem;
   display: block;
   margin-top: .4375rem;
-  border: none;
-  border-radius: .125rem;
+
   background-color: #f4f2f2;
-  color: orange;
-}
 
-.cr-rs-progress-wraper-on-closed {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  font-weight: inherit;
-  font-style: inherit;
-  font-size: 100%;
-  font-family: inherit;
-  vertical-align: baseline;
-  height: .25rem;
-  border-radius: .125rem;
-  background: #eaeaea;
   overflow: hidden;
+  border: solid black 1px;
+  border-radius: .125rem;
 }
 
-.cr-rs-progress-inner-on-closed {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  font-weight: inherit;
-  font-style: inherit;
-  font-size: 100%;
-  font-family: inherit;
-  vertical-align: baseline;
-  height: .25rem;
-  border-radius: .125rem;
-  background: #f78c25;
-  text-indent: 100%;
-  white-space: nowrap;
-  width: 100%;
+.cr-rs-progress-on-closed::-webkit-progress-bar {
+  background-color: #f4f2f2;
+}
+
+.cr-rs-progress-on-closed::-webkit-progress-value {
+  background: orange;
+}
+
+.cr-rs-progress-on-closed::-moz-progress-bar {
+  background-color: red;
+
+  border-radius: 20px;
 }

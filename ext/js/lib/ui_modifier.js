@@ -99,18 +99,18 @@ const createProgressBar = (elementToAttachTo, progressAmount) => {
     .attr("value", progressAmount)
     .attr("max", "100");
 
-  let innerProgressWrapperDiv = _("+div")
-    .addClass([CRRS_CLASS, PROGRESS_WRAPPING_DIV_CLASS]);
+  // let innerProgressWrapperDiv = _("+div")
+  //   .addClass([CRRS_CLASS, PROGRESS_WRAPPING_DIV_CLASS]);
 
-  let innerProgressDiv = _("+div")
-    .addClass([CRRS_CLASS, PROGRESS_DIV_CLASS])
-    .css({
-      width: `${progressAmount}%`
-    }).text(`Progress: ${progressAmount}%`);
+  // let innerProgressDiv = _("+div")
+  //   .addClass([CRRS_CLASS, PROGRESS_DIV_CLASS])
+  //   .css({
+  //     width: `${progressAmount}%`
+  //   }).text(`Progress: ${progressAmount}%`);
 
-  // Connect elements
-  innerProgressWrapperDiv.append(innerProgressDiv);
-  progressElem.append(innerProgressWrapperDiv);
+  // // Connect elements
+  // innerProgressWrapperDiv.append(innerProgressDiv);
+  // progressElem.append(innerProgressWrapperDiv);
 
   // Add to container
   _(elementToAttachTo, progressElem);
