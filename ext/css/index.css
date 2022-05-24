@@ -93,6 +93,8 @@ p.premium-message {
   line-height: 1.5em;
   text-shadow: 0 0 0.077em transparent;
 
+  width: 100%;
+
   padding: 0.9em 1em;
 
   /* Helpful link for flex: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
@@ -497,16 +499,16 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 }
 
 /* || PROGRESS BAR */
-/* .day.active .cr-rs-progress-on-closed {
+.day.active .cr-rs-progress-on-closed {
   display: none;
-} */
+}
 
 .cr-rs-progress-on-closed {
   /* Reset the default appearance */
   -webkit-appearance: none;
   appearance: none;
 
-  width: 100%;
+  width: 70%;
   height: .25rem;
   display: block;
   margin-top: .4375rem;
@@ -514,7 +516,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   background-color: #f4f2f2;
 
   overflow: hidden;
-  border: solid black 1px;
+  border: solid var(--cr-rc-main-gray-color) .01rem;
   border-radius: .125rem;
 }
 
@@ -526,8 +528,8 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
   background: orange;
 }
 
-.cr-rs-progress-on-closed::-moz-progress-bar {
+/* .cr-rs-progress-on-closed::-moz-progress-bar {
   background-color: red;
 
   border-radius: 20px;
-}
+} */
