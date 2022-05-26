@@ -1,4 +1,6 @@
-class Day {
+import Content from "./content";
+
+export default class Day {
 
     #today;
     #todaysContentList = [];
@@ -99,16 +101,4 @@ class Day {
             content.show();
         });
     }
-
-    // hideDubs() {
-    //     this.#todaysDubsList.forEach((content, index) => {
-    //         content.hide();
-    //     });
-    // }
-
-    // showDubs() {
-    //     this.#todaysDubsList.forEach((content, index) => {
-    //         content.show();
-    //     });
-    // }
 }

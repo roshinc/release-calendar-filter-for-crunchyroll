@@ -1,4 +1,7 @@
-class Week {
+import Day from "./day";
+import { createHiddenCount } from "../lib/ui_modifier";
+
+export default class Week {
 
     #weekStart;
     #daysOfTheWeek = [];

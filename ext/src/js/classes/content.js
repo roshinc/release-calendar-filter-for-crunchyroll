@@ -1,4 +1,6 @@
-class Content {
+import { createProgressBar } from "../lib/ui_modifier";
+
+export default class Content {
   static #regexp = /^(.*) (?:\(([A-Z][a-z]+) Dub\))$/;
   static #id_prefix = "cr-rs-content-";
   #id;
@@ -78,19 +80,9 @@ class Content {
 
   #parseContent(content) {
     const releaseArticle = content.querySelector('article.js-release');
-    //const featuredEpArticle = releaseArticle.querySelector('article.js-featured-episode');
 
     const releaseArticleDataset = releaseArticle.dataset;
-    // disabled for local testing
-    // fetch(releaseArticleDataset.popoverUrl, {
-    //   method: 'get'
-    // }).then(
-    //   r => r.json()
-    // ).then(function (data) {
-    //   this.popOverJson = data;
-    // }).catch(function (err) {
-    //   // Error :(
-    // });
+
 
     this.#episodesAvailable = releaseArticleDataset.episodeNum;
     this.#multiEpisode = this.#episodesAvailable.includes('-');
@@ -100,9 +92,6 @@ class Content {
     let time = new Date();
     time.setTime(Date.parse(releaseArticle.querySelector('time.available-time').dateTime));
     this.#dateTime = time;
-
-    // //availability div
-    // const availabilityDiv = releaseArticle.querySelector('.availability');
 
     // queue flag
     if (releaseArticle.querySelector('.queue-flag.queued')) {
@@ -121,7 +110,6 @@ class Content {
     // season name
     const seasonH1 = releaseArticle.querySelector("h1.season-name");
     const seasonUrl = seasonH1.querySelector("a");
-    //this.#seasonURL = seasonUrl.href;
     this.#seasonTitle = seasonUrl.querySelector('cite').textContent;
 
     // dub info
@@ -135,90 +123,12 @@ class Content {
     // progress bar
     const currentProgress = releaseArticle.querySelector('progress');
     if (currentProgress.value > 0) {
-    console.log("prog");
-    createProgressBar(releaseArticle, currentProgress.value);
+      createProgressBar(releaseArticle, currentProgress.value);
     }
 
 
     // Set id
     content.id = this.#createID(releaseArticleDataset.slug, releaseArticleDataset.episodeNum, this.#isDub, this.#dubLanguage);
-
-    /**
-     * <li>
-    <article class="release js-release " data-episode-num="1-12" data-group-id="277376" data-popover-url="/simulcastcalendar/popover/26494" data-slug="my-roommate-is-a-cat" itemscope="" itemtype="https://schema.org/TVSeason">
-          <time datetime="2022-04-19T12:00:00-04:00" class="available-time">12:00pm</time>
-  
-                <div class="premiere-flag">
-          Premiere
-        </div>
-      
-          <div>
-        <div class="queue-flag " group_id="277376">
-          <svg viewBox="0 0 48 48">
-            <title>In Queue</title>
-            <use xlink:href="/i/svg/simulcastcalendar/calendar_icons.svg#cr_bookmark"></use>
-          </svg>
-        </div>
-  
-        <h1 class="season-name">
-          <a class="js-season-name-link" href="https://www.crunchyroll.com/my-roommate-is-a-cat" itemprop="url">
-            <cite itemprop="name">My Roommate is a Cat (English Dub)</cite>
-          </a>
-        </h1>
-      </div>
-  
-          <div class="availability">
-        
-  
-    
-    <a class="available-episode-link js-episode-link-available" href="https://www.crunchyroll.com/my-roommate-is-a-cat/episode-1-an-encounter-with-the-unknown-843288">
-                  Episodes 1-12
-                 Available
-      
-    </a>
-      </div>
-  
-          
-        <article class="featured-episode js-featured-episode " data-episode-num="1" itemprop="episode" itemscope="" itemtype="https://schema.org/TVEpisode">
-      <meta content="2022-04-19T12:00:00-04:00" itemprop="datePublished">
-  
-          <a class="episode-info js-episode-info" href="https://www.crunchyroll.com/my-roommate-is-a-cat/episode-1-an-encounter-with-the-unknown-843288" itemprop="url">
-                      <div class="episode-label">
-            Premiere
-          </div>
-  
-          <meta content="1" itemprop="episodeNumber">
-        
-                <div class="thumbnail-container js-episode-thumbnail">
-    <svg class="play-icon" viewBox="0 0 48 48">
-      <title>Play Video</title>
-      <use xlink:href="/i/svg/simulcastcalendar/calendar_icons.svg#cr_play_transparent"></use>
-    </svg>
-  
-    <img class="thumbnail" src="https://img1.ak.crunchyroll.com/i/spire1-tmb/5bf5c268b0cc27f155c7cbae4d0e2fe71547052555_thumb.jpg" alt="" itemprop="image">
-  
-        <svg class="premium-flag" viewBox="0 0 48 48">
-        <title>Premium Only</title>
-        <use xlink:href="/i/svg/simulcastcalendar/calendar_icons.svg#cr_crown"></use>
-      </svg>
-    </div>
-  
-  <progress value="0" max="100">
-      <div class="progress-bar">
-      <div class="progress" style="width: 0%;">
-        Progress: 0%
-      </div>
-    </div>
-  </progress>
-    <h1 class="episode-name">
-      <cite itemprop="name">An Encounter with the Unknown</cite>
-    </h1>
-            </a>
-    </article>
-    </article>
-  </li>
-     */
-    //console.log(content);
   }
 
   /**

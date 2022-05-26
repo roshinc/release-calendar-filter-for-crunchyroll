@@ -1,3 +1,16 @@
+import _ from "../vendors/caldom.min.mjs.js";
+
+import Filter from "../classes/filter";
+import preference from "../classes/pref";
+
+import {
+  CRRS_FILTER_MENU_DIV_ID, CRRS_CLASS, CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, CRRS_FILTER_MENU_PICK_DUBS_DIV_ID, CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
+  CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_LOCK_BTN_ID, CRRS_HIDDEN_COUNT_CLASS_NAME
+} from "./constants";
+import { handleShowDubsToggle, handleDubPickerCheckbox, handleQueueRadioGroup, handlePremiereRadioGroup, handelLockBtn, handelResetBtn } from "./event_handler";
+
+
+
 /**
  * Create a UI element with a checkbox styled as a toggle switch
  * 
@@ -62,14 +75,14 @@ const createVerticalDivider = (elementToAttachTo) => {
  * 
  * @param {HTMLElement} elementToAttachTo element the div should append to
  */
-const createHiddenCount = (elementToAttachTo) => {
+export const createHiddenCount = (elementToAttachTo) => {
   let hiddenCount = _().react(
     {},
     {
       render: state => {
         let response = _("+div", `${state.count} Hidden`)
           .addClass([CRRS_CLASS, CRRS_HIDDEN_COUNT_CLASS_NAME]);
-        if (state.changed) {
+        if (state.changed && preference.reflowEnabled) {
           response.addClass(["changed"]);
         }
 
@@ -87,7 +100,7 @@ const createHiddenCount = (elementToAttachTo) => {
 
 };
 
-const createProgressBar = (elementToAttachTo, progressAmount) => {
+export const createProgressBar = (elementToAttachTo, progressAmount) => {
 
   const PROGRESS_CLASS = "cr-rs-progress-on-closed";
   const PROGRESS_WRAPPING_DIV_CLASS = "cr-rs-progress-wraper-on-closed";
@@ -98,19 +111,6 @@ const createProgressBar = (elementToAttachTo, progressAmount) => {
     .addClass([CRRS_CLASS, PROGRESS_CLASS])
     .attr("value", progressAmount)
     .attr("max", "100");
-
-  // let innerProgressWrapperDiv = _("+div")
-  //   .addClass([CRRS_CLASS, PROGRESS_WRAPPING_DIV_CLASS]);
-
-  // let innerProgressDiv = _("+div")
-  //   .addClass([CRRS_CLASS, PROGRESS_DIV_CLASS])
-  //   .css({
-  //     width: `${progressAmount}%`
-  //   }).text(`Progress: ${progressAmount}%`);
-
-  // // Connect elements
-  // innerProgressWrapperDiv.append(innerProgressDiv);
-  // progressElem.append(innerProgressWrapperDiv);
 
   // Add to container
   _(elementToAttachTo, progressElem);
@@ -251,7 +251,7 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo,
  * 
  * @param {HTMLElement} elementToAttachTo the element to append the menu to
  */
-const createInlineMenu = (elementToAttachTo) => {
+export const createInlineMenu = (elementToAttachTo) => {
 
   let containerDiv = _("+div")
     .attr("id", CRRS_FILTER_MENU_DIV_ID)
@@ -294,14 +294,12 @@ const createInlineMenu = (elementToAttachTo) => {
 
 
   // ---- Add Toggle Switch for showing in queue only ----
-  //createToggleSwtich("In Queue Only", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID + "q", containerDiv, false);
   addRadioButtonGroup("In Queue:", "in-queue-toggle", CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, containerDiv, handleQueueRadioGroup);
 
   // ---- Add Vertical Divider ---- 
   createVerticalDivider(containerDiv);
 
   // ---- Add Toggle Switch for showing in queue only ----
-  //createToggleSwtich("Permiere Only", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID + "p", containerDiv, false);
   addRadioButtonGroup("Permiere:", "premier-toggle", CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME, containerDiv, handlePremiereRadioGroup);
 
   // ---- Add End Button Group ---- 
@@ -386,14 +384,12 @@ const handleUIChangesOnSaveStatus = (status, icon) => {
 }
 
 
-const lockFilters = (status, lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID}`), icon = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID} i`)) => {
+export const lockFilters = (status, lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID}`), icon = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID} i`)) => {
   if (status) {
     //lock
-    console.log("TODO: lock filters");
     handleUIChangesOnSaveStatus(true, icon);
     lockBtn.data("isLocked", "true");
   } else {
-    console.log("TODO: unlock filters");
     handleUIChangesOnSaveStatus(false, icon);
     lockBtn.data("isLocked", "false");
   }

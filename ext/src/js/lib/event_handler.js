@@ -1,4 +1,16 @@
-const handleShowDubsToggle = (event) => {
+import _ from "../vendors/caldom.min.mjs.js";
+
+import preference from "../classes/pref";
+
+import { reflowHiddenCount } from "./utils";
+import {
+    CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, CRRS_FILTER_MENU_PICK_DUBS_DIV_ID,
+    CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME
+} from "./constants";
+import { lockFilters } from "./ui_modifier";
+import { clearSavedFilter, saveFilter } from "./data_store";
+
+export const handleShowDubsToggle = (event) => {
     reflowHiddenCount();
     const isChecked = event.target.checked;
 
@@ -6,20 +18,20 @@ const handleShowDubsToggle = (event) => {
 
     if (isChecked) {
         dubPickers.each((elem, i) => {
-            //TODO: Show all dubs
-            crrsFilter.showAllDubs();
+            //Show all dubs
+            preference.crrsFilter.showAllDubs();
             elem.checked = true;
         });
     } else {
         dubPickers.each((elem, i) => {
-            //TODO: Hide all dubs
-            crrsFilter.hideAllDubs();
+            //Hide all dubs
+            preference.crrsFilter.hideAllDubs();
             elem.checked = false;
         });
     }
 };
 
-const handleDubPickerCheckbox = (event) => {
+export const handleDubPickerCheckbox = (event) => {
     reflowHiddenCount();
     let target = _(event.target);
     const isChecked = target.elem.checked;
@@ -32,55 +44,55 @@ const handleDubPickerCheckbox = (event) => {
 
     if (isChecked) {
         dubToggle.elem.checked = true;
-        crrsFilter.showDubsOf(langsToShow);
+        preference.crrsFilter.showDubsOf(langsToShow);
     } else {
         if (dubPicked.length < 1) {
             dubToggle.elem.checked = false;
-            //TODO: Hide all dubs
-            crrsFilter.hideAllDubs();
+            //Hide all dubs
+            preference.crrsFilter.hideAllDubs();
         } else {
             let show = Array.from(dubPicked).flatMap(cb => {
                 return _(cb).data("lang");
             });
-            crrsFilter.showDubsOf(show);
+            preference.crrsFilter.showDubsOf(show);
         }
 
     }
 
 };
 
-const handleQueueRadioGroup = (event) => {
+export const handleQueueRadioGroup = (event) => {
     reflowHiddenCount();
     let selectedValue = document.querySelector(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]:checked`).value;
 
     switch (selectedValue) {
         case 'only':
-            crrsFilter.showInQueueOnly();
+            preference.crrsFilter.showInQueueOnly();
             break;
         case 'show':
-            crrsFilter.showInQueue();
+            preference.crrsFilter.showInQueue();
             break;
         case 'hide':
-            crrsFilter.hideInQueue();
+            preference.crrsFilter.hideInQueue();
             break;
         default:
             throw `unknow selection ${selectedValue}.`;
     }
 }
 
-const handlePremiereRadioGroup = (event) => {
+export const handlePremiereRadioGroup = (event) => {
     reflowHiddenCount();
     let selectedValue = document.querySelector(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]:checked`).value;
 
     switch (selectedValue) {
         case 'only':
-            crrsFilter.showPermiereOnly();
+            preference.crrsFilter.showPermiereOnly();
             break;
         case 'show':
-            crrsFilter.showPermiere();
+            preference.crrsFilter.showPermiere();
             break;
         case 'hide':
-            crrsFilter.hidePermiere();
+            preference.crrsFilter.hidePermiere();
             break;
         default:
             throw `unknow selection ${selectedValue}.`;
@@ -88,7 +100,7 @@ const handlePremiereRadioGroup = (event) => {
 }
 
 
-const handelLockBtn = (event) => {
+export const handelLockBtn = (event) => {
     reflowHiddenCount();
 
     let icon, lock;
@@ -111,13 +123,13 @@ const handelLockBtn = (event) => {
         lockFilters(false, lock, icon);
     } else {
         //lock
-        saveFilter(crrsFilter.createJson());
+        saveFilter(preference.crrsFilter.createJson());
         lockFilters(true, lock, icon);
     }
 
 }
 
-const handelResetBtn = (event) => {
+export const handelResetBtn = (event) => {
     reflowHiddenCount();
     let dubToggle = _(document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID));
     dubToggle.elem.checked = true;
@@ -148,19 +160,19 @@ const handelResetBtn = (event) => {
 
     clearSavedFilter();
     lockFilters(false);
-    crrsFilter.reset()
+    preference.crrsFilter.reset()
 
 }
 
-const restoreFilterAndUI = (savedFilter, modifyUI) => {
-    if (savedFilter == crrsFilter.createJson()) {
+export const restoreFilterAndUI = (savedFilter, modifyUI) => {
+    if (savedFilter == preference.crrsFilter.createJson()) {
         return;
     }
 
     reflowHiddenCount();
 
     if (!modifyUI) {
-        crrsFilter.restore(savedFilter);
+        preference.crrsFilter.restore(savedFilter);
     } else {
         const hideAllDubs = savedFilter["hideAllDub"];
         let dubToggle = document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID);
@@ -222,7 +234,7 @@ const restoreFilterAndUI = (savedFilter, modifyUI) => {
                 break;
             }
         }
-        crrsFilter.restore(savedFilter);
+        preference.crrsFilter.restore(savedFilter);
 
         lockFilters(true);
     }

@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Release Calendar Filter for Crunchyroll",
+  "description": "A filter for the Release/Simulcast Calendar on Crunchyroll.",
+  "version": "1.0.1",
+  "icons": {
+    "128": "images/icon.png"
+  },
+  "options_page": "options/options.html",
+  "permissions": [
+    "storage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/checkmark.svg",
+        "fonts/*"
+      ],
+      "extension_ids": [
+        "obpphalkbgbbdennbifedaleahjcfmfh",
+        "epkclcbkefpikbpopcpjjlbajhnglged"
+      ],
+      "matches": [
+        "https://www.crunchyroll.com/*",
+        "http://localhost:5500/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.crunchyroll.com/simulcastcalendar*",
+        "http://localhost:5500/*"
+      ],
+      "run_at": "document_idle",
+      "css": [
+        "css/fontello.css",
+        "css/index.css"
+      ],
+      "js": [
+        "js/bundle.js"
+      ]
+    }
+  ]
+}

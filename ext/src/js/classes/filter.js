@@ -1,4 +1,4 @@
-class Filter {
+export default class Filter {
 
     #weekContent;
 
@@ -25,7 +25,6 @@ class Filter {
     }
 
     restore(savedJson) {
-        //this.#weekContent = weekContent;
 
         this.#hideAllDubs = savedJson["hideAllDub"];
         this.#dubsShown = savedJson["dubsShown"];
@@ -89,7 +88,7 @@ class Filter {
             this.#showSomeDubs = false;
             this.#dubsShown = [];
 
-            //TODO: Hide all dubs
+            //Hide all dubs
             // console.log("TODO: Hide all dubs");
             this.#show([]);
             // console.log("Done hiding");
@@ -103,8 +102,8 @@ class Filter {
             this.#showSomeDubs = false;
             this.#dubsShown = this.#dubsLangListInternal;
 
-            //TODO: Show all dubs
-            // console.log("TODO: Show all dubs");
+            //Show all dubs
+            //console.log("Show all dubs");
             this.#show([]);
             // console.log("Done showing");
         }
