@@ -20,8 +20,7 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.crunchyroll.com/simulcastcalendar*",
-        "*://localhost/*"
+        "*://*.crunchyroll.com/simulcastcalendar*"
       ],
       "run_at": "document_idle",
       "css": [
@@ -33,11 +32,5 @@
         "js/bundle.js"
       ]
     }
-  ],
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "ext@roshin.dev",
-      "strict_min_version": "42.0"
-    }
-  }
+  ]
 }

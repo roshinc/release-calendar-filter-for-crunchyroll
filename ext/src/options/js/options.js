@@ -1,16 +1,18 @@
+import "./vendors/browser-polyfill.min.js";
+import _ from "./vendors/caldom.min.mjs.js"
 let INTERVAL_ID;
 let MENU_HTML;
 
-// Saves options to chrome.storage
+// Saves options to browser.storage
 const save_options = () => {
     let showFilter = document.getElementById('show-filter-input').checked;
     let reflowHCount = document.getElementById('reflow-hcount-input').checked;
     let showHCount = document.getElementById('show-hcount-input').checked;
-    chrome.storage.sync.set({
+    browser.storage.sync.set({
         showFilter: showFilter,
         reflowHCount: reflowHCount,
         showHCount: showHCount,
-    }, function () {
+    }).then(() => {
         // Update status to let user know options were saved.
         const status = document.getElementById('status');
         status.textContent = 'Options saved.';
@@ -23,15 +25,15 @@ const save_options = () => {
 }
 
 // Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
+// stored in browser.storage.
 const restore_options = () => {
 
-    chrome.storage.sync.get({
+    browser.storage.sync.get({
         showFilter: true,
         reflowHCount: true,
         showHCount: true,
         filter: null,
-    }, function (items) {
+    }).then((items) => {
         document.getElementById('show-filter-input').checked = items.showFilter;
         document.getElementById('reflow-hcount-input').checked = items.reflowHCount;
         document.getElementById('show-hcount-input').checked = items.showHCount;
