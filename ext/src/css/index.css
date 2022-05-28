@@ -533,11 +533,9 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 }
 
 .cr-rs-progress-on-closed::-webkit-progress-value {
-  background: orange;
+  background: var(--cr-rc-main-accent-color);
 }
 
-/* .cr-rs-progress-on-closed::-moz-progress-bar {
-  background-color: red;
-
-  border-radius: 20px;
-} */
+.cr-rs-progress-on-closed::-moz-progress-bar {
+  background: var(--cr-rc-main-accent-color);
+}
