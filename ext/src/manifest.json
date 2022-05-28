@@ -30,7 +30,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.crunchyroll.com/simulcastcalendar*",
+        "*://*.crunchyroll.com/simulcastcalendar*",
         "http://localhost:5500/*"
       ],
       "run_at": "document_idle",
