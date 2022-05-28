@@ -4,7 +4,7 @@
 [![Mozilla Add-on](https://img.shields.io/amo/v/8f010de3-24bd-4bdf-9317-f6498684d29d?color=orange&label=Firefox%20Addon&logo=Firefox&logoColor=orange&style=flat-square)](https://addons.mozilla.org/en-US/firefox/addon/release-calendar-filter-for-cr/)
 
 <p align="center">
-  ![Logo; A calendar going through a filter cone](/promo/icon.svg?raw=true&sanitize=true)
+  <img width="460" height="300" alt="Logo; A calendar going through a filter cone" src="/promo/icon.svg?raw=true&sanitize=true">
 </p>
 
 ## Building The Extension Localy
