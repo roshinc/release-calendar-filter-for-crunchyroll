@@ -5,9 +5,9 @@
 import preference from "./classes/pref";
 import Week from "./classes/week";
 import Filter from "./classes/filter";
-import { createInlineMenu } from "./lib/ui_modifier";
+import { createInlineMenu, lockFilters, restoreUI } from "./lib/ui_modifier";
 import { restorePreference } from "./lib/data_store";
-import { restoreFilterAndUI } from "./lib/event_handler"
+import { reflowHiddenCount } from "./lib/utils";
 
 window.onload = function () {
 
@@ -28,7 +28,18 @@ window.onload = function () {
       preference.crrsFilter = new Filter(week);
 
       // restore filter
-      restoreFilterAndUI(items.filter, items.showFilter);
+      if (items.filter != null) {
+        if (items.filter != preference.crrsFilter.createJson()) {
+          reflowHiddenCount();
+          // modify ui only if the filter is shown
+          if (items.showFilter) {
+            restoreUI(items.filter);
+          }
+          preference.crrsFilter.restore(items.filter);
+        }
+        // if the filter is not null, the ui should show as locked
+        lockFilters(true);
+      }
 
     });
 
