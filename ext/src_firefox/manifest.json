@@ -6,7 +6,10 @@
   "icons": {
     "128": "images/icon.png"
   },
-  "options_page": "options/options.html",
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
   "permissions": [
     "storage"
   ],
@@ -26,6 +29,7 @@
         "css/index.css"
       ],
       "js": [
+        "js/static/ff_fix.js",
         "js/bundle.js"
       ]
     }

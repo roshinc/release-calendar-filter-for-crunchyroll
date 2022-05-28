@@ -1,18 +1,12 @@
 /*
  * All JS in this file will be run on any pages that match the pattern defined in manifest.
  */
-
 import preference from "../../src/js/classes/pref";
 import Week from "../../src/js/classes/week";
 import Filter from "../../src/js/classes/filter";
 import { createInlineMenu, lockFilters, restoreUI } from "../../src/js/lib/ui_modifier";
 import { restorePreference } from "../../src/js/lib/data_store";
 import { reflowHiddenCount } from "../../src/js/lib/utils";
-
-//firefox addon has a bug(?) where it can't get window
-window.requestAnimationFrame = window.requestAnimationFrame.bind(window);
-window.cancelAnimationFrame = window.cancelAnimationFrame.bind(window);
-window.addEventListener = window.addEventListener.bind(window);
 
 // window.onload = function () {
 

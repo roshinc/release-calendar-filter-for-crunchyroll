@@ -68,6 +68,7 @@ export default [{
                 { src: 'src/fonts', dest: 'dist_firefox' },
                 { src: 'src/images', dest: 'dist_firefox' },
                 { src: 'src/options', dest: 'dist_firefox' },
+                { src: 'src_firefox/js/static', dest: 'dist_firefox/js' },
                 { src: 'src_firefox/manifest.json', dest: 'dist_firefox' },
             ]
         }),
