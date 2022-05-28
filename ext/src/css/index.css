@@ -62,6 +62,14 @@ p.premium-message {
 
   --cr-rc-switch-height: 17px;
   --cr-rc-switch-inner-circle-size: 13px;
+
+  --cr-rc-checkmark-svg: url('chrome-extension://__MSG_@@extension_id__/images/checkmark.svg');
+}
+
+@supports (-moz-appearance:none) {
+  :root {
+    --cr-rc-checkmark-svg: url('moz-extension://__MSG_@@extension_id__/images/checkmark.svg');
+  }
 }
 
 .cr-rs-hide {
@@ -254,7 +262,7 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 /* Checked checkbox style (in this case the background is red) */
 .rs-cr-checkbox-input:checked+.rs-cr-checkbox-inner-span:before {
   /* NOTE: Replace the url with a path to an SVG of a checkmark to get a checkmark icon */
-  background-image: url('chrome-extension://__MSG_@@extension_id__/images/checkmark.svg');
+  background-image: var(--cr-rc-checkmark-svg);
   background-repeat: no-repeat;
   background-position: center;
   /* The size of the checkmark icon, you may/may not need this */
