@@ -1,11 +1,9 @@
+:root {}
+
 @font-face {
   font-family: 'fontello';
-  src: url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.eot?40184825');
-  src: url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.eot?40184825#iefix') format('embedded-opentype'),
-    url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.woff2?40184825') format('woff2'),
-    url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.woff?40184825') format('woff'),
-    url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.ttf?40184825') format('truetype'),
-    url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.svg?40184825#fontello') format('svg');
+  src: url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.woff2?40184825') format('woff2');
+  src: url('moz-extension://__MSG_@@extension_id__/fonts/fontello.woff2?40184825') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
