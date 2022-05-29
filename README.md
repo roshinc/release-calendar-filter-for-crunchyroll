@@ -7,6 +7,16 @@
   <img width="460" height="300" alt="Logo; A calendar going through a filter cone" src="/promo/icon.svg?raw=true&sanitize=true">
 </p>
 
+<br/>
+<p align="center">Release/Simulcast Calendar Helper for Crunchyroll is filter for the Release/Simulcast Calendar on Crunchyroll. It aim to make finding somthing to watch using the Release Calendar and adds UI elements to acomplish that. </p>
+<br>
+<hr>
+<br>
+
+<p align="center">
+  <img alt="Logo; A calendar going through a filter cone" src="promo/GIFs/Overview.gif">
+</p>
+
 ## Building The Extension Localy
 
 1. Run `npm install` in the folder to install dependencies
