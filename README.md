@@ -81,5 +81,5 @@ After completing the above steps, you should see the developer, unpacked version
 
 This extension uses the following external libraries:
 
-1. [CalDom](https://github.com/dumijay/CalDOM/)
-2. [WebExtension `browser` API Polyfill](https://github.com/mozilla/webextension-polyfill/)
+- [CalDOM](https://github.com/dumijay/CalDOM/)
+- [WebExtension `browser` API Polyfill](https://github.com/mozilla/webextension-polyfill/)
