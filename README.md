@@ -17,6 +17,46 @@
   <img alt="Logo; A calendar going through a filter cone" src="promo/GIFs/Overview.gif">
 </p>
 
+## Added UI elements
+
+### The Filter element
+
+<p align="center">
+  <img alt="PNG of the filter" src="promo/filter.png">
+</p>
+
+Using the filter element you can:
+
+- Toggle visibility for all dubbed episodes on the calendar.
+- Toggle visibility for dubbed episodes in a specific language.
+- Include, show only, or hide episodes that are 'In Queue' (if logged in)
+- Include, show only, or hide episodes that are premiering.
+- You can combine any of the above to see what you want to see.
+
+You can also lock filters! So, your choices are applied automatically when you go back to the release calendar or browse another week.
+
+In the options page you can also hide this element, if the filter are locked they will still be applied.
+
+### The Hidden Count elements
+
+<p align="center">
+  <img alt="GIF of some hidden count elements chaging" src="promo/GIFs/HiddenCount.gif">
+</p>
+
+This element displays the episodes that are hidden for all the days. When the count get changed there is a short animation to indicate that there was a change.
+
+Both the animation and the element itself can be hidden in the extensions's option page.
+
+### The Smaller Progress elements
+
+<p align="center">
+  <img alt="PNG of some hidden count elements changing" src="promo/small_progress.png">
+</p>
+
+By default Crunchroll only shows watch progress on episodes on the selected day. This extention add a watch progress bar to all episodes on all days. To not clutter the UI too much this is only shown on episodes when the watch progress is > 0.
+
+---
+
 ## Building The Extension Localy
 
 1. Run `npm install` in the folder to install dependencies
