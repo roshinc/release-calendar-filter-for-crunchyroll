@@ -1,7 +1,7 @@
 # Release/Simulcast Calendar Helper for Crunchyroll
 
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/epkclcbkefpikbpopcpjjlbajhnglged?color=orange&label=Chrome%20Extension&logo=Google%20Chrome&logoColor=orange&style=flat-square)](https://chrome.google.com/webstore/detail/epkclcbkefpikbpopcpjjlbajhnglged)
-[![Mozilla Add-on](https://img.shields.io/amo/v/8f010de3-24bd-4bdf-9317-f6498684d29d?color=orange&label=Firefox%20Addon&logo=Firefox&logoColor=orange&style=flat-square)](https://addons.mozilla.org/en-US/firefox/addon/release-calendar-filter-for-cr/)
+[![Mozilla Add-on](https://img.shields.io/amo/v/release-calendar-filter-for-cr?color=orange&label=Firefox%20Addon&logo=Firefox&logoColor=orange&style=flat-square)](https://addons.mozilla.org/en-US/firefox/addon/release-calendar-filter-for-cr/)
 
 <p align="center">
   <img width="460" height="300" alt="Logo; A calendar going through a filter cone" src="/promo/icon.svg?raw=true&sanitize=true">
