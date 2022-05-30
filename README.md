@@ -8,7 +8,7 @@
 </p>
 
 <br/>
-<p align="center">Release/Simulcast Calendar Helper for Crunchyroll is filter for the Release/Simulcast Calendar on Crunchyroll. It aim to make finding somthing to watch using the Release Calendar and adds UI elements to acomplish that. </p>
+<p align="center">Release/Simulcast Calendar Helper for Crunchyroll is filter for the Release/Simulcast Calendar on Crunchyroll. It aims to make finding something to watch using the Release Calendar easier and adds UI elements to accomplish that. </p>
 <br>
 <hr>
 <br>
@@ -25,7 +25,7 @@
   <img alt="PNG of the filter" src="promo/filter.png">
 </p>
 
-Using the filter element you can:
+Using the filter element, you can:
 
 - Toggle visibility for all dubbed episodes on the calendar.
 - Toggle visibility for dubbed episodes in a specific language.
@@ -35,7 +35,7 @@ Using the filter element you can:
 
 You can also lock filters! So, your choices are applied automatically when you go back to the release calendar or browse another week.
 
-In the options page you can also hide this element, if the filter are locked they will still be applied.
+In the options page you can also hide this element, if the filter is locked it will still be applied.
 
 ### The Hidden Count elements
 
@@ -43,9 +43,9 @@ In the options page you can also hide this element, if the filter are locked the
   <img alt="GIF of some hidden count elements chaging" src="promo/GIFs/HiddenCount.gif">
 </p>
 
-This element displays the episodes that are hidden for all the days. When the count get changed there is a short animation to indicate that there was a change.
+This element displays the episodes that are hidden for all the days. When the count changes there is a short animation to indicate that there was a change.
 
-Both the animation and the element itself can be hidden in the extensions's option page.
+Both the animation and the element itself can be hidden in the extension’s option page.
 
 ### The Smaller Progress elements
 
@@ -53,29 +53,29 @@ Both the animation and the element itself can be hidden in the extensions's opti
   <img alt="PNG of some hidden count elements changing" src="promo/small_progress.png">
 </p>
 
-By default Crunchroll only shows watch progress on episodes on the selected day. This extention add a watch progress bar to all episodes on all days. To not clutter the UI too much this is only shown on episodes when the watch progress is > 0.
+By default, Crunchyroll only shows watch progress on episodes on the selected day. This extension add a watch progress bar to all episodes on all days. To not clutter the UI too much this is only shown on episodes when the watch progress is > 0.
 
 ---
 
-## Building The Extension Localy
+## Building The Extension Locally
 
 1. Run `npm install` in the folder to install dependencies
 2. Run `npm run build` to generate the distribution directories
 
-## Running The Extension Localy (in Firefox)
+## Running The Extension Locally (in Firefox)
 
 3. Navigate to `about:debugging#/runtime/this-firefox` in your browser
-4. Click `Load Temporay Add-on...`
+4. Click `Load Temporary Add-on...`
 5. Select the `/dist_firefox` folder in this directory
 
-## Running The Extension Localy (in Google Chrome)
+## Running The Extension Locally (in Google Chrome)
 
 3. Navigate to `chrome://extensions` in your browser
 4. Ensure `Developer mode` is `enabled` (top right)
 5. Click `Load unpacked` in the top left
 6. Select the `/dist` folder in this directory
 
-After completing the above steps, you should see the developer, unpacked version appear in your extension list. To trigger the extension, simply go to `https://www.crunchyroll.com/simulcastcalendar`.
+After completing the above steps, you should see the developer, unpacked version appears in your extension list. To trigger the extension, simply go to `https://www.crunchyroll.com/simulcastcalendar`.
 
 ## External Libraries
 
