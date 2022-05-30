@@ -22,7 +22,7 @@
 ### The Filter element
 
 <p align="center">
-  <img alt="PNG of the filter" src="promo/filter.png">
+  <img alt="PNG of the filter" src="promo/Screenshots/filter.png">
 </p>
 
 Using the filter element, you can:
@@ -50,7 +50,7 @@ Both the animation and the element itself can be hidden in the extension’s opt
 ### The Smaller Progress elements
 
 <p align="center">
-  <img alt="PNG of some hidden count elements changing" src="promo/small_progress.png">
+  <img alt="PNG of some hidden count elements changing" src="promo/Screenshots/small_progress.png">
 </p>
 
 By default, Crunchyroll only shows watch progress on episodes on the selected day. This extension add a watch progress bar to all episodes on all days. To not clutter the UI too much this is only shown on episodes when the watch progress is > 0.
@@ -59,7 +59,7 @@ By default, Crunchyroll only shows watch progress on episodes on the selected da
 
 ## Building The Extension Locally
 
-1. Run `npm install` in the folder to install dependencies
+1. Inside the `/ext` directory, run `npm install` in the folder to install dependencies
 2. Run `npm run build` to generate the distribution directories
 
 ## Running The Extension Locally (in Firefox)
