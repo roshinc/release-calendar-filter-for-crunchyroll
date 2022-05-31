@@ -1,7 +1,10 @@
 export default class Filter {
 
+    static #jsonVersion = 2;
+
     #weekContent;
 
+    #hideAllSubs;
     #hideAllDubs;
     #showSomeDubs;
     #dubsShown;
@@ -26,6 +29,12 @@ export default class Filter {
 
     restore(savedJson) {
 
+        // undefined is version 1
+        // const savedVersion = savedJson["version"];
+
+        this.#hideAllSubs = savedJson["hideAlSubs"] == undefined ? false : true;
+        console.log(this.#hideAllSubs);
+
         this.#hideAllDubs = savedJson["hideAllDub"];
         this.#dubsShown = savedJson["dubsShown"];
 
@@ -48,6 +57,7 @@ export default class Filter {
     }
 
     #setDefaults() {
+        this.#hideAllSubs = false;
         this.#hideAllDubs = false;
         this.#showSomeDubs = false;
         this.#dubsShown = [];
@@ -57,9 +67,14 @@ export default class Filter {
         this.#showPremiere = true;
         this.#showOnlyPremiere = false;
     }
-
+    /** 
+     * @returns {JSON} JSON for this filter that can
+     *  be used to save state.
+     */
     createJson() {
         let jsonArray = {};
+        jsonArray["version"] = Filter.#jsonVersion;
+        jsonArray["hideAllSubs"] = this.#hideAllSubs;
         jsonArray["hideAllDub"] = this.#hideAllDubs;
         jsonArray["dubsShown"] = this.#dubsShown;
 
@@ -77,7 +92,31 @@ export default class Filter {
     }
 
     #show(dubsToShow) {
-        this.#weekContent.show(this.#hideAllDubs, dubsToShow, !this.#showInQueue, this.#showOnlyInQueue, !this.#showPremiere, this.#showOnlyPremiere);
+        this.#weekContent.show(this.#hideAllSubs, this.#hideAllDubs, dubsToShow, !this.#showInQueue, this.#showOnlyInQueue, !this.#showPremiere, this.#showOnlyPremiere);
+    }
+
+    hideAllSubs() {
+        if (!this.#hideAllSubs) {
+
+            this.#hideAllSubs = true;
+
+            //Show all dubs
+            //console.log("Show all subs");
+            this.#show([]);
+            // console.log("Done showing");
+        }
+    }
+
+    showAllSubs() {
+        if (this.#hideAllSubs) {
+
+            this.#hideAllSubs = false;
+
+            //Show all dubs
+            //console.log("Show all subs");
+            this.#show([]);
+            // console.log("Done showing");
+        }
     }
 
     hideAllDubs() {
@@ -120,8 +159,8 @@ export default class Filter {
             this.#hideAllDubs = false;
             this.#showSomeDubs = true;
             // actions
-            let toShow = intersection.filter(x => !this.#dubsShown.includes(x));
-            let toHide = this.#dubsShown.filter(x => !intersection.includes(x));
+            // let toShow = intersection.filter(x => !this.#dubsShown.includes(x));
+            // let toHide = this.#dubsShown.filter(x => !intersection.includes(x));
 
             //console.log("TODO: Show dubs of");
             //console.log("To Show: " + toShow);

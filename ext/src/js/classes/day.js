@@ -5,6 +5,7 @@ export default class Day {
     #today;
     #todaysContentList = [];
     #todaysDubsList = [];
+    #todaysSubsList = [];
     #todaysInQueue = [];
     #todaysPermiere = [];
 
@@ -27,6 +28,9 @@ export default class Day {
             if (aContent.isDubed) {
                 this.#todaysDubsList.push(aContent);
             }
+            if (!aContent.isDubed) {
+                this.#todaysSubsList.push(aContent);
+            }
             if (aContent.isInQueue) {
                 this.#todaysInQueue.push(aContent);
             }
@@ -36,8 +40,12 @@ export default class Day {
         });
     }
 
-    show(hideAllDubs, allowedDubs, hideInQueue, showInQueueOnly, hidePermiere, showPermiereOnly) {
+    show(hideAllSubs, hideAllDubs, allowedDubs, hideInQueue, showInQueueOnly, hidePermiere, showPermiereOnly) {
         let hiddenContent = [];
+
+        if (hideAllSubs) {
+            hiddenContent.push.apply(hiddenContent, this.#todaysSubsList);
+        }
 
         if (hideAllDubs) {
             hiddenContent.push.apply(hiddenContent, this.#todaysDubsList);

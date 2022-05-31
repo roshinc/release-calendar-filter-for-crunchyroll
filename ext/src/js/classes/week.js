@@ -20,9 +20,9 @@ export default class Week {
         });
     }
 
-    show(hideAllDubs, allowedDubs, hideInQueue, showInQueueOnly, hidePermiere, showPermiereOnly) {
+    show(hideAllSubs, hideAllDubs, allowedDubs, hideInQueue, showInQueueOnly, hidePermiere, showPermiereOnly) {
         this.#daysOfTheWeek.forEach((day, index) => {
-            day.show(hideAllDubs, allowedDubs, hideInQueue, showInQueueOnly, hidePermiere, showPermiereOnly);
+            day.show(hideAllSubs, hideAllDubs, allowedDubs, hideInQueue, showInQueueOnly, hidePermiere, showPermiereOnly);
         });
     }
 
