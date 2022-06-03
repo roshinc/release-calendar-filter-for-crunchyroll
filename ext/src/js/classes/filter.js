@@ -1,21 +1,71 @@
 export default class Filter {
 
+    /** 
+     * Holds the version of json that will be generated
+     */
     static #jsonVersion = 2;
 
+    /**
+     * Holds A {Week} object for current filter
+    */
     #weekContent;
 
+    /** 
+     * if {true} all subs should be hidden, 
+     * if {false} all subs should be shown
+    */
     #hideAllSubs;
+    /** 
+     * if {true} all dubs should be hidden, 
+     * if {false} dubs should be shown 
+     * but can be limited with additional flags.
+    */
     #hideAllDubs;
+    /** 
+     * if {true} only dubs for the langs in 
+     * {dubsShown} should be shown, 
+     * if {false} this flag 
+     * should be ignored.
+    */
     #showSomeDubs;
+    /**
+     * {Array} of dubs to be shown.
+    */
     #dubsShown;
 
+    /**
+    * {Array} of known dub langs. 'Others' should always be present.
+    */
     static #dubsLangList = ["English", "Spanish", "French", "German", "Portuguese", "Others"];
     #dubsLangListInternal = ["english", "spanish", "french", "german", "portuguese", "others"];
+    /**
+    * {Array} of dub langs options shown on the UI. 'Others' should always be present.
+    */
+    static #dubsLangOptionsList = ["English", "Spanish", "French", "German", "Portuguese", "Others"];
+    #dubsLangOptionsListInternal = ["english", "spanish", "french", "german", "portuguese", "others"];
 
+    /** 
+    * if {true} in queue should be shown 
+    * but can be limited with additional flags.
+    * if {false} all in queue should be hidden.
+    */
     #showInQueue;
+    /** 
+    * if {true} only in queue should be shown, 
+    * if {false} this flag should be ignored.
+    */
     #showOnlyInQueue;
 
+    /** 
+    * if {true} premiere should be shown 
+    * but can be limited with additional flags.
+    * if {false} all premiere should be hidden.
+    */
     #showPremiere;
+    /** 
+    * if {true} only in premiere should be shown, 
+    * if {false} this flag should be ignored.
+    */
     #showOnlyPremiere;
 
     /**
@@ -45,7 +95,7 @@ export default class Filter {
         this.#showOnlyPremiere = savedJson["showOnlyPremiere"];
 
         if (!this.#showSomeDubs) {
-            this.#show([]);
+            this.#show();
         } else {
             this.#show(this.#dubsShown);
         }
@@ -53,7 +103,7 @@ export default class Filter {
 
     reset() {
         this.#setDefaults();
-        this.#show([]);
+        this.#show();
     }
 
     #setDefaults() {
@@ -91,69 +141,100 @@ export default class Filter {
         return Filter.#dubsLangList;
     }
 
-    #show(dubsToShow) {
+    #show(dubsToShow = []) {
         this.#weekContent.show(this.#hideAllSubs, this.#hideAllDubs, dubsToShow, !this.#showInQueue, this.#showOnlyInQueue, !this.#showPremiere, this.#showOnlyPremiere);
     }
 
-    hideAllSubs() {
+    /*
+    Senarios for dubbed and subbed content.
+    Default: Show All Subs and Dubs
+    Hide: Show All Subs and No Dubs
+    Show: Show All Subs and Wanted Dubs
+    Only: Show Wanted Dubs and no Subs
+
+    | Subs | Dubs | Valid |         Method               |
+    |  H   |  H   |   N   |           -                  |
+    |  S   |  S   |   Y   | showAllSubsAndWantedDubs     |
+    |  H   |  S   |   Y   | hideAllSubsAndShowWantedDubs |
+    |  S   |  H   |   Y   | showAllSubsAndHideAllDubs    |
+    */
+
+    /**
+    * This will hide all subs and show wanted 
+    * (all, if needed) dubs
+    */
+    hideAllSubsAndShowWantedDubs(listToShow) {
+        //If the subs are not hidden, hide them
         if (!this.#hideAllSubs) {
-
             this.#hideAllSubs = true;
+        }
+        //If the dubs are not shown, show them
+        if (this.#hideAllDubs && !this.#showSomeDubs) {
+            // set properties for showing some dubs
+            this.#setShowDubsOfProperties(listToShow);
+        }
 
-            //Show all dubs
-            //console.log("Show all subs");
-            this.#show([]);
-            // console.log("Done showing");
+        //apply filter
+        if (!this.#showSomeDubs) {
+            this.#show();
+        } else {
+            this.#show(this.#dubsShown);
         }
     }
 
-    showAllSubs() {
+    /**
+     * This will show all subs and wanted 
+     * (all, if needed) dubs
+     */
+    showAllSubsAndWantedDubs(listToShow) {
+        //if the subs are hidden, shown them
         if (this.#hideAllSubs) {
-
             this.#hideAllSubs = false;
+        }
 
-            //Show all dubs
-            //console.log("Show all subs");
-            this.#show([]);
-            // console.log("Done showing");
+        //If the dubs are not shown, show them
+        if (this.#hideAllDubs && !this.#showSomeDubs) {
+            // set properties for showing some dubs
+            this.#setShowDubsOfProperties(listToShow);
+        }
+
+        //apply filter
+        if (!this.#showSomeDubs) {
+            this.#show();
+        } else {
+            this.#show(this.#dubsShown);
         }
     }
-
-    hideAllDubs() {
+    /**
+    * This will show all subs and hide 
+    * all dubs
+    */
+    showAllSubsAndHideAllDubs() {
+        // if the dubs are shown, hide them
         if (!this.#hideAllDubs || this.#showSomeDubs) {
 
 
             this.#hideAllDubs = true;
             this.#showSomeDubs = false;
             this.#dubsShown = [];
-
-            //Hide all dubs
-            // console.log("TODO: Hide all dubs");
-            this.#show([]);
-            // console.log("Done hiding");
         }
+        //if the subs are hidden, shown them
+        if (this.#hideAllSubs) {
+            this.#hideAllSubs = false;
+        }
+
+        //apply filter
+        this.#show();
     }
 
-    showAllDubs() {
-        if (this.#hideAllDubs || this.#showSomeDubs) {
-
-            this.#hideAllDubs = false;
-            this.#showSomeDubs = false;
-            this.#dubsShown = this.#dubsLangListInternal;
-
-            //Show all dubs
-            //console.log("Show all dubs");
-            this.#show([]);
-            // console.log("Done showing");
-        }
-    }
-
-    showDubsOf(listToShow) {
+    #setShowDubsOfProperties(listToShow) {
         let allDubs = this.#dubsLangListInternal;
         let intersection = allDubs.filter(x => listToShow.includes(x));
 
         if (intersection.length == this.#dubsLangListInternal.length) {
-            this.showAllDubs();
+            this.#hideAllDubs = false;
+            this.#showSomeDubs = false;
+            this.#dubsShown = [];
         }
         else if (intersection.length > 0) {
             this.#hideAllDubs = false;
@@ -167,10 +248,16 @@ export default class Filter {
             //console.log("To Hide: " + toHide);
 
             this.#dubsShown = intersection;
-            this.#show(this.#dubsShown);
         } else {
-            this.hideAllDubs();
+            this.#hideAllDubs = false;
+            this.#showSomeDubs = false;
         }
+    }
+
+    showDubsOf(listToShow) {
+        console.log("show dub of called");
+        this.#setShowDubsOfProperties(listToShow);
+        this.#show(this.#dubsShown);
     }
 
     hideInQueue() {

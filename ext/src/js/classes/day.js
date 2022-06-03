@@ -50,7 +50,7 @@ export default class Day {
         if (hideAllDubs) {
             hiddenContent.push.apply(hiddenContent, this.#todaysDubsList);
         } else {
-            // console.log(allowedDubs);
+            console.log(allowedDubs);
             if (allowedDubs.length > 0) {
                 this.#todaysDubsList.forEach((content, index) => {
                     if (!allowedDubs.includes(content.dubLang.toLowerCase())) {
