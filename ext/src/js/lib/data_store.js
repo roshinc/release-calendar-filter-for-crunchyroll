@@ -1,5 +1,5 @@
 // enable usage of browser. namespace
-import "../vendors/browser-polyfill.min"
+import "webextension-polyfill/dist/browser-polyfill.min"
 
 /**
  * Saves the given filter json to sync
