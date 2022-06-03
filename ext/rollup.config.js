@@ -4,6 +4,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 import copy from 'rollup-plugin-copy'
 import strip from '@rollup/plugin-strip';
 import prettier from 'rollup-plugin-prettier';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default [{
     input: 'src/js/contentScript.js',
@@ -14,13 +15,20 @@ export default [{
     plugins: [
         clear({
             // required, point out which directories should be clear.
-            targets: ['dist'],
+            targets: ['dist/'],
             // optional, whether clear the directores when rollup recompile on --watch mode.
             watch: true, // default: false
         }),
-        strip({
-            debugger: true
+        nodeResolve({
+            browser: true,
+
+            // Add this line for development config, omit for
+            // production config
+            //exportConditions: ['development'],
         }),
+        // strip({
+        //     debugger: true
+        // }),
         prettier({
             tabWidth: 2,
             singleQuote: false,
@@ -50,9 +58,16 @@ export default [{
     plugins: [
         clear({
             // required, point out which directories should be clear.
-            targets: ['dist_firefox'],
+            targets: ['dist_firefox/'],
             // optional, whether clear the directores when rollup recompile on --watch mode.
             watch: true, // default: false
+        }),
+        nodeResolve({
+            browser: true,
+
+            // Add this line for development config, omit for
+            // production config
+            exportConditions: ['development'],
         }),
         strip({
             debugger: true
