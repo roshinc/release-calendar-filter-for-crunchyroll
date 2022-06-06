@@ -1,7 +1,27 @@
 import "./vendors/browser-polyfill.min.js";
 import _ from "./vendors/caldom.min.mjs.js"
+// import './vendors/petite-vue.iife.js'
+
 let INTERVAL_ID;
 let MENU_HTML;
+
+function CRCheckbox(props) {
+    return {
+        $template: '#cr-checkbox-template',
+        count: props.initialCount,
+        inc() {
+            this.count++
+        }
+    }
+}
+
+
+const renderQuickPickOptions = () => {
+    PetiteVue.createApp({
+        dubsLangListInternal: ["english", "spanish", "portuguese", "french", "german", "arabic", "italian", "russian"],
+        CRCheckbox
+    }).mount('#quick-select-options')
+};
 
 // Saves options to browser.storage
 const save_options = () => {
@@ -50,7 +70,10 @@ const restore_defaults = () => {
     save_options();
 }
 
-document.addEventListener('DOMContentLoaded', restore_options);
+document.addEventListener('DOMContentLoaded', () => {
+    restore_options();
+    renderQuickPickOptions();
+});
 document.getElementById('save').addEventListener('click',
     save_options);
 document.getElementById('resore-defaults').addEventListener('click',

@@ -186,6 +186,27 @@
         </span>
       </label>
     </div>
+    <hr class="option-section-break" />
+    <div class="option">
+      <h4 class="option-title">Quick Select Dub Languages</h4>
+      <p class="option-blurb">
+        In the filter element (shown above) the options under "Enable Dubs for" let you quickly pick the languages of
+        the dubs you want to see or hide. Only 5 languages can be displayed as options for Quick Select. The selection
+        below is for the options displayed under "Enable Dubs for":
+      </p>
+      <p id="show-filter-note" class="option-note"></p>
+      <span class="cr-rs-class" id="quick-select-options">
+        <template id="cr-checkbox-template">
+          <label for="cr-rs-filter-menu-pick-dubs-lang-english" class="cr-rs-class">
+            <input id="cr-rs-filter-menu-pick-dubs-lang-english" type="checkbox"
+              class="cr-rs-class rs-cr-checkbox-input" checked="true">
+            <span class="cr-rs-class rs-cr-checkbox-inner-span">English</span>
+          </label>
+        </template>
+        <cr-checkbox id="english-cb" data-text="English" checked></cr-checkbox>
+        <cr-checkbox id="spanish-cb" data-text="Spanish" checked></cr-checkbox>
+      </span>
+    </div>
   </section>
 
   <!-- <hr class="option-section-break" /> -->
@@ -385,6 +406,8 @@
     <button id="resore-defaults">Restore Defaults</button>
     <div id="status"></div>
   </section>
+  <script src="./js/vendors/petite-vue.iife.js"></script>
+  <script type="module" src="./js/components/CRCheckbox.js"></script>
   <script type="module" src="./js/options.js"></script>
 </body>
 

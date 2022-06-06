@@ -1,13 +1,16 @@
-import _ from "../vendors/caldom.min.mjs.js";
+import _ from "caldom/dist/caldom.min.mjs";
 
 import Filter from "../classes/filter";
 import preference from "../classes/pref";
 
 import {
-  CRRS_FILTER_MENU_DIV_ID, CRRS_CLASS, CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, CRRS_FILTER_MENU_PICK_DUBS_DIV_ID, CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
-  CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_LOCK_BTN_ID, CRRS_HIDDEN_COUNT_CLASS_NAME
+  CRRS_FILTER_MENU_DIV_ID, CRRS_CLASS, CRRS_FILTER_MENU_PICK_DUBS_DIV_ID, CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
+  CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME, CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
+  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
+  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX, CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX,
+  CRRS_FILTER_MENU_LOCK_BTN_ID, CRRS_HIDDEN_COUNT_CLASS_NAME
 } from "./constants";
-import { handleShowDubsToggle, handleDubPickerCheckbox, handleQueueRadioGroup, handlePremiereRadioGroup, handelLockBtn, handelResetBtn } from "./event_handler";
+import { handleDubbedRadioGroup, handleDubPickerCheckbox, handleQueueRadioGroup, handlePremiereRadioGroup, handelLockBtn, handelResetBtn } from "./event_handler";
 
 
 
@@ -232,11 +235,11 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo,
   let buttonGroupRadioContainer = _("+div")
     .addClass([CRRS_CLASS, RADIO_BUTTON_GROUP_CLASS]);
 
-  const radioOptions = ["Only", "Show", "Hide"];
+  const radioOptions = [CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE];
 
   for (let radioOption of radioOptions) {
     // console.log(radioOption);
-    if (radioOption === "Show") {
+    if (radioOption === CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE) {
       addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, eventHandlerMethod, true);
     } else {
       addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, eventHandlerMethod, false);
@@ -258,7 +261,9 @@ export const createInlineMenu = (elementToAttachTo) => {
     .addClass(CRRS_CLASS);
 
   // ---- Add Toggle Switch for showing all dub ----
-  createToggleSwtich("Show Dubs", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, containerDiv, handleShowDubsToggle, true);
+  //createToggleSwtich("Show Dubs", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, containerDiv, handleShowDubsToggle, true);
+  // ---- Add Toggle Switch for showing in queue only ----
+  addRadioButtonGroup("Dubbed:", "dubbed-toggle", CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME, containerDiv, handleDubbedRadioGroup);
 
 
   // ---- Add Vertical Divider ---- 
@@ -357,13 +362,12 @@ const handleUIChangesOnSaveStatus = (status, icon) => {
   const END_BUTTON_LOCKED_CLASS = "rs-cr-locked";
   const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
 
-  let dubToggle = _(`#${CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID}`);
   if (status) {
 
     icon.removeClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]).addClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]);
 
-    dubToggle.attr("disabled", status);
-    dubToggle.parent(1).addClass("disabled-in-js");
+    _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).attr("disabled", status);
+
     _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).attr("disabled", status);
 
     _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).attr("disabled", status);
@@ -372,8 +376,7 @@ const handleUIChangesOnSaveStatus = (status, icon) => {
   } else {
     icon.removeClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]).addClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]);
 
-    dubToggle.elem.removeAttribute("disabled");
-    dubToggle.parent(1).removeClass("disabled-in-js");
+    _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).each(function (elem, i) { elem.removeAttribute("disabled") });
 
     _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).each(function (elem, i) { elem.removeAttribute("disabled") });
 
@@ -397,12 +400,27 @@ export const lockFilters = (status, lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID
 
 export const restoreUI = (savedFilter) => {
   const hideAllDubs = savedFilter["hideAllDub"];
-  let dubToggle = document.getElementById(CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID);
-  dubToggle.checked = !hideAllDubs;
+  const hideAllSubs = savedFilter["hideAllSubs"];
+
+  let indexToPick;
+  if (hideAllSubs) {
+    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
+  } else if (hideAllDubs) {
+    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
+  }
+
+  let dubGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`);
+
+  for (const [i, elem] of dubGroup.entries()) {
+    if (i == indexToPick) {
+      elem.checked = true;
+      break;
+    }
+
+  }
 
   let dubPickers = document.querySelectorAll(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
   const dubsShown = savedFilter["dubsShown"];
-  console.log(dubToggle);
   console.log(dubsShown);
   // if no dubs are shown uncheck all the langs
   if (hideAllDubs) {
@@ -422,11 +440,11 @@ export const restoreUI = (savedFilter) => {
   const showInQueue = savedFilter["showInQueue"];
   const showOnlyInQueue = savedFilter["showOnlyInQueue"];
 
-  let indexToPick;
+  indexToPick;
   if (showOnlyInQueue) {
-    indexToPick = 0;
+    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
   } else if (!showInQueue && !showOnlyInQueue) {
-    indexToPick = 2;
+    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
   }
 
   let queueGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`);
@@ -442,11 +460,11 @@ export const restoreUI = (savedFilter) => {
   const showPremiere = savedFilter["showPremiere"];
   const showOnlyPremiere = savedFilter["showOnlyPremiere"];
 
-  indexToPick = 1;
+  indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX;
   if (showOnlyPremiere) {
-    indexToPick = 0;
+    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
   } else if (!showOnlyPremiere && !showPremiere) {
-    indexToPick = 2;
+    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
   }
 
   let premiereGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`);

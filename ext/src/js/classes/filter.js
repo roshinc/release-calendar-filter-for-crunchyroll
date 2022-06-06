@@ -36,13 +36,18 @@ export default class Filter {
     /**
     * {Array} of known dub langs. 'Others' should always be present.
     */
-    static #dubsLangList = ["English", "Spanish", "French", "German", "Portuguese", "Others"];
-    #dubsLangListInternal = ["english", "spanish", "french", "german", "portuguese", "others"];
+    static #dubsLangList = ["English", "Spanish", "Portuguese", "French", "German", "Arabic", "Italian", "Russian"];
+    #dubsLangListInternal = ["english", "spanish", "portuguese", "french", "german", "arabic", "italian", "russian"];
     /**
     * {Array} of dub langs options shown on the UI. 'Others' should always be present.
     */
-    static #dubsLangOptionsList = ["English", "Spanish", "French", "German", "Portuguese", "Others"];
-    #dubsLangOptionsListInternal = ["english", "spanish", "french", "german", "portuguese", "others"];
+    static #dubsLangOptionsList = ["English", "Spanish", "Portuguese", "French", "Others"];
+    #dubsLangOptionsListInternal = ["english", "spanish", "portuguese", "french", "others"];
+    /**
+     * {Array} of what Other langs are based on shown UI options
+     */
+    static #dubsLangOptionsOtherList = ["German", "Arabic", "Italian", "Russian"];
+    #dubsLangOptionsOtherListInternal = ["german", "arabic", "italian", "russian"];
 
     /** 
     * if {true} in queue should be shown 
@@ -81,6 +86,12 @@ export default class Filter {
 
         // undefined is version 1
         // const savedVersion = savedJson["version"];
+
+        Filter.#dubsLangOptionsList = jsonArray["dubsLangOptionsList"];
+        this.#dubsLangOptionsListInternal = jsonArray["dubsLangOptionsListInternal"];
+
+        Filter.#dubsLangOptionsOtherList = jsonArray["dubsLangOptionsOtherList"];
+        this.#dubsLangOptionsOtherListInternal = jsonArray["dubsLangOptionsOtherListInternal"];
 
         this.#hideAllSubs = savedJson["hideAlSubs"] == undefined ? false : true;
         console.log(this.#hideAllSubs);
@@ -124,6 +135,13 @@ export default class Filter {
     createJson() {
         let jsonArray = {};
         jsonArray["version"] = Filter.#jsonVersion;
+
+        jsonArray["dubsLangOptionsList"] = Filter.#dubsLangOptionsList;
+        jsonArray["dubsLangOptionsListInternal"] = this.#dubsLangOptionsListInternal;
+
+        jsonArray["dubsLangOptionsOtherList"] = Filter.#dubsLangOptionsOtherList;
+        jsonArray["dubsLangOptionsOtherListInternal"] = this.#dubsLangOptionsOtherListInternal;
+
         jsonArray["hideAllSubs"] = this.#hideAllSubs;
         jsonArray["hideAllDub"] = this.#hideAllDubs;
         jsonArray["dubsShown"] = this.#dubsShown;
@@ -139,6 +157,18 @@ export default class Filter {
 
     static dubLangs() {
         return Filter.#dubsLangList;
+    }
+
+    /**
+     * Sets the dub options shown on the UI
+     * @param {Array} dubOptions 
+     */
+    static setDubLangs(dubOptions) {
+        if (dubOptions && dubOptions > 0) {
+            this.#dubsLangOptionsList = dubOptions;
+            Filter.#dubsLangOptionsList = dubOptions;
+            this.#dubsLangOptionsOtherList = this.#dubsLangList.filter(x => !dubOptions.includes(x));
+        }
     }
 
     #show(dubsToShow = []) {
