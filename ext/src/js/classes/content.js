@@ -4,6 +4,7 @@ export default class Content {
   static #regexp = /^(.*) (?:\(([A-Z][a-z]+) Dub\))$/;
   static #id_prefix = "cr-rs-content-";
   #id;
+  #contentIndex;
   #dateTime;
   #showTitle;
   #seasonTitle;
@@ -22,8 +23,9 @@ export default class Content {
   popOverJson;
   */
 
-  constructor(content) {
-    this.#createID();
+  constructor(content, index) {
+    //this.#createID(index);
+    this.#contentIndex = index;
     this.#parseContent(content);
   }
 
@@ -143,9 +145,9 @@ export default class Content {
   #createID(contentSlug, episodesAvalible, isDubbed, dubLang) {
     if (isDubbed) {
       let dubLangLower = dubLang.toLowerCase();
-      this.#id = `${Content.#id_prefix}${contentSlug}-${episodesAvalible}-${dubLangLower}`
+      this.#id = `${Content.#id_prefix}${contentSlug}-${episodesAvalible}-${dubLangLower}-${this.#dateTime.getDay()}-${this.#contentIndex}`
     } else {
-      this.#id = `${Content.#id_prefix}${contentSlug}-${episodesAvalible}`
+      this.#id = `${Content.#id_prefix}${contentSlug}-${episodesAvalible}-${this.#contentIndex}-${this.#dateTime.getDay()}-${this.#contentIndex}`
     }
 
     return this.#id;

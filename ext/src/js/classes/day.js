@@ -23,7 +23,7 @@ export default class Day {
         const todaysContent = Array.from(content);
         // console.log(content);
         todaysContent.forEach((content, index) => {
-            const aContent = new Content(content);
+            const aContent = new Content(content, index);
             this.#todaysContentList[index] = aContent;
             if (aContent.isDubed) {
                 this.#todaysDubsList.push(aContent);
