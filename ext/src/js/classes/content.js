@@ -1,7 +1,7 @@
 import { createProgressBar } from "../lib/ui_modifier";
 
 export default class Content {
-  static #regexp = /^(.*) (?:\(([A-Z][a-z]+) Dub\))$/;
+  static #regexp = /^(.*) (?:\(([A-Z][a-z]+) Dub\)?)$/;
   static #id_prefix = "cr-rs-content-";
   #id;
   #contentIndex;
