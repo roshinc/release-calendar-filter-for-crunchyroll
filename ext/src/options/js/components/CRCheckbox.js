@@ -2,6 +2,12 @@
 import _ from "../vendors/caldom.min.mjs.js";
 
 class CRCheckbox extends HTMLElement {
+
+  #elemId = "cr-checkbox-input-";
+  #fakeCheckSpan;
+  #customCheckboxInput;
+
+
   constructor() {
     // Always call super first in constructor
     super();
@@ -24,14 +30,13 @@ class CRCheckbox extends HTMLElement {
     const CHECKBOX_INPUT_CLASS = "rs-cr-checkbox-input";
     const CHECKBOX_INNER_SPAN_CLASS = "rs-cr-checkbox-inner-span";
 
-    const elementId = `cr-checkbox-input-${this.getAttribute('id')}`;
 
     // **1. The wraping span element **
     let customCheckboxSpan = _("+span")
       .addClass(CRRS_CLASS);
     // **2. The input element **
-    let customCheckboxInput = _("+input")
-      .attr("id", elementId)
+    this.#customCheckboxInput = _("+input")
+      .attr("id", this.#elemId)
       .attr("type", "checkbox")
       .on("change", this.#propagateEvent)
       .addClass([CRRS_CLASS, CHECKBOX_INPUT_CLASS]);
@@ -43,20 +48,19 @@ class CRCheckbox extends HTMLElement {
     // }
 
     if (this.hasAttribute('checked')) {
-      customCheckboxInput.attr("checked", true);
+      this.#customCheckboxInput.attr("checked", true);
     }
     // **3. The inner span element **
-    let fakeCheckSpan = _("+span")
+    this.#fakeCheckSpan = _("+span")
       .addClass([CRRS_CLASS, CHECKBOX_INNER_SPAN_CLASS])
-      .text(this.getAttribute('data-text'));
+      .text("this.getAttribute('data-text')");
 
     // **4. The label element **
     let customCheckboxLabel = _("+label")
-      .attr("for", elementId)
-      //.text(labelText)
+      .attr("for", this.#elemId)
       .addClass(CRRS_CLASS);
-    customCheckboxLabel.append(customCheckboxInput);
-    customCheckboxLabel.append(fakeCheckSpan);
+    customCheckboxLabel.append(this.#customCheckboxInput);
+    customCheckboxLabel.append(this.#fakeCheckSpan);
 
     // Connect elements
     customCheckboxSpan.append([customCheckboxLabel]);
@@ -67,8 +71,44 @@ class CRCheckbox extends HTMLElement {
     // Element functionality written in here
   }
 
+  connectedCallback() {
+    console.log('Custom square element added to page.');
+    console.log(this.shadowRoot.querySelector('.rs-cr-checkbox-inner-span'));
+    this.#fakeCheckSpan.text(this.getAttribute('data-text'));
+    console.log(_(this).data('data-handler'));
+    this.#customCheckboxInput.on("change", _(this).data('data-handler'));
+  }
+
+  disconnectedCallback() {
+    console.log('Custom square element removed from page.');
+  }
+
+  adoptedCallback() {
+    console.log('Custom square element moved to new page.');
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    console.log(name);
+    if (name == 'data-group') {
+      this.#elemId = `cr-checkbox-input-${this.getAttribute('data-group')}`;
+    }
+    if (name == 'data-text') {
+      this.#elemId = `${this.#elemId}-${this.getAttribute('data-text').toLocaleLowerCase()}`;
+      //_(this.getElementsByClassName('rs-cr-checkbox-inner-span')).text(this.getAttribute('data-text'));
+    }
+  }
+
   #propagateEvent = (event) => {
     console.log(event);
+    const checkEvent = new CustomEvent("check", {
+      bubbles: true,
+      cancelable: false,
+      composed: true,
+      detail: {
+        event: event
+      }
+    });
+    this.dispatchEvent(checkEvent);
   }
 }
 

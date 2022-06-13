@@ -5,23 +5,23 @@ import _ from "./vendors/caldom.min.mjs.js"
 let INTERVAL_ID;
 let MENU_HTML;
 
-function CRCheckbox(props) {
-    return {
-        $template: '#cr-checkbox-template',
-        count: props.initialCount,
-        inc() {
-            this.count++
-        }
-    }
+
+
+const handleCheckbox = (event) => {
+    console.log("in options");
+    console.log(event);
 }
 
 
 const renderQuickPickOptions = () => {
-    PetiteVue.createApp({
-        dubsLangListInternal: ["english", "spanish", "portuguese", "french", "german", "arabic", "italian", "russian"],
-        CRCheckbox
-    }).mount('#quick-select-options')
-};
+    const languages = ["English", "Spanish", "Portuguese", "French", "German", "Arabic", "Italian", "Russian"];
+
+    for (let language of languages) {
+        let customCheckbox = _("+cr-checkbox")
+            .attr("data-group", "quick-pick-cbs").attr("data-text", language).data("data-handler", handleCheckbox).on("check", handleCheckbox);
+        _("#quick-select-options", customCheckbox);
+    }
+}
 
 // Saves options to browser.storage
 const save_options = () => {

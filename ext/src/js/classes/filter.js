@@ -87,13 +87,13 @@ export default class Filter {
         // undefined is version 1
         // const savedVersion = savedJson["version"];
 
-        Filter.#dubsLangOptionsList = jsonArray["dubsLangOptionsList"];
-        this.#dubsLangOptionsListInternal = jsonArray["dubsLangOptionsListInternal"];
+        Filter.#dubsLangOptionsList = savedJson["dubsLangOptionsList"];
+        this.#dubsLangOptionsListInternal = savedJson["dubsLangOptionsListInternal"];
 
-        Filter.#dubsLangOptionsOtherList = jsonArray["dubsLangOptionsOtherList"];
-        this.#dubsLangOptionsOtherListInternal = jsonArray["dubsLangOptionsOtherListInternal"];
+        Filter.#dubsLangOptionsOtherList = savedJson["dubsLangOptionsOtherList"];
+        this.#dubsLangOptionsOtherListInternal = savedJson["dubsLangOptionsOtherListInternal"];
 
-        this.#hideAllSubs = savedJson["hideAlSubs"] == undefined ? false : true;
+        this.#hideAllSubs = savedJson["hideAllSubs"] == undefined ? false : true;
         console.log(this.#hideAllSubs);
 
         this.#hideAllDubs = savedJson["hideAllDub"];
