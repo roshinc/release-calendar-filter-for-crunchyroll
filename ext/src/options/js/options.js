@@ -21,6 +21,12 @@ const renderQuickPickOptions = () => {
             .attr("data-group", "quick-pick-cbs").attr("data-text", language).data("data-handler", handleCheckbox).on("check", handleCheckbox);
         _("#quick-select-options", customCheckbox);
     }
+    const availableLanguages = document.getElementById('available-languages');
+    languages.forEach(language => {
+        const option = document.createElement('li');
+        option.textContent = language;
+        availableLanguages.appendChild(option);
+    });
 }
 
 // Saves options to browser.storage
@@ -184,3 +190,146 @@ const showHiddenCount = () => {
         element.classList.remove("cr-rs-hide");
     });
 };
+
+
+/** Add logic for the language boxes */
+// Get the "Available Languages" and "Shown Languages" combo boxes
+const availableLanguages = document.getElementById('available-languages');
+const shownLanguages = document.getElementById('shown-languages');
+
+console.log(availableLanguages);
+console.log('shownLanguages');
+
+// Add a click event listener to the options in both combo boxes
+availableLanguages.addEventListener('click', event => {
+    console.log('click');
+    console.log(event.target.tagName);
+    if (event.target.tagName === 'LI') {
+        const selectedOption = event.target;
+        selectedOption.classList.toggle('selected');
+    }
+});
+shownLanguages.addEventListener('click', event => {
+    if (event.target.tagName === 'LI') {
+        const selectedOption = event.target;
+        selectedOption.classList.toggle('selected');
+    }
+});
+
+// Get the "Add" and "Remove" buttons
+const addButton = document.getElementById('add-language');
+const removeButton = document.getElementById('remove-language');
+
+// Add an option from the "Available Languages" combo box to the "Shown Languages" combo box
+addButton.addEventListener('click', () => {
+    const selectedLanguages = shownLanguages.querySelectorAll('.selected').length;
+    const totalLanguages = shownLanguages.querySelectorAll('li').length;
+    if (selectedLanguages + totalLanguages > 4) {
+        const errorMessage = document.createElement('p');
+        errorMessage.textContent = 'You can only add up to 5 languages.';
+        errorMessage.classList.add('error-message');
+        buttons.appendChild(errorMessage);
+        setTimeout(() => {
+            errorMessage.remove();
+        }, 3000);
+    } else {
+        const selectedOptions = availableLanguages.querySelectorAll('.selected');
+        selectedOptions.forEach(option => {
+            shownLanguages.appendChild(option);
+            option.classList.remove('selected');
+        })
+    }
+
+    // Disable the "Add" button if no options are selected in the "Available Languages" combo box
+    addButton.disabled = !availableLanguages.querySelector('.selected');
+});
+
+// Remove an option from the "Shown Languages" combo box
+removeButton.addEventListener('click', () => {
+    const selectedOptions = shownLanguages.querySelectorAll('.selected');
+    selectedOptions.forEach(option => {
+        availableLanguages.appendChild(option);
+        option.classList.remove('selected');
+    });
+
+    // Disable the "Remove" button if no options are selected in the "Shown Languages" combo box
+    removeButton.disabled = !shownLanguages.querySelector('.selected');
+});
+
+// Disable the "Remove" button if no options are selected in the "Shown Languages" combo box
+removeButton.disabled = !shownLanguages.querySelector('.selected');
+
+// Disable the "Add" button if no options are selected in the "Available Languages" combo box
+addButton.disabled = !availableLanguages.querySelector('.selected');
+
+// Enable the "Add" button when the "Available Languages" combo box is focused or an item is selected in it
+availableLanguages.addEventListener('focus', () => {
+    addButton.disabled = false;
+});
+availableLanguages.addEventListener('click', () => {
+    addButton.disabled = false;
+});
+
+// Enable the "Remove" button when the "Shown Languages" combo box is focused or an item is selected in it
+shownLanguages.addEventListener('focus', () => {
+    removeButton.disabled = false;
+});
+
+shownLanguages.addEventListener('click', () => {
+    removeButton.disabled = false;
+});
+
+availableLanguages.addEventListener('focus', () => {
+    shownLanguages.querySelectorAll('.selected').forEach(option => {
+        option.classList.remove('selected');
+    });
+});
+availableLanguages.addEventListener('click', () => {
+    removeButton.disabled = true;
+    shownLanguages.querySelectorAll('.selected').forEach(option => {
+        option.classList.remove('selected');
+    });
+});
+
+shownLanguages.addEventListener('focus', () => {
+    availableLanguages.querySelectorAll('.selected').forEach(option => {
+        option.classList.remove('selected');
+    });
+});
+shownLanguages.addEventListener('click', () => {
+    addButton.disabled = true;
+    availableLanguages.querySelectorAll('.selected').forEach(option => {
+        option.classList.remove('selected');
+    });
+});
+
+/** Add logic for the other option in the "Shown Languages" combo box */
+const othersOption = document.createElement('li');
+othersOption.textContent = 'Others';
+othersOption.classList.add('others');
+shownLanguages.appendChild(othersOption);
+
+const othersExplanation = document.createElement('p');
+othersExplanation.textContent = 'The "Others" option refers to all the languages in "Available Languages" that are not in "Shown Languages".';
+othersExplanation.classList.add('others-explanation');
+
+document.body.appendChild(othersExplanation);
+
+addButton.addEventListener('click', updateOthersExplanation);
+removeButton.addEventListener('click', updateOthersExplanation);
+
+function updateOthersExplanation() {
+    const shownLanguageOptions = shownLanguages.querySelectorAll('li:not(.others)');
+    const availableLanguageOptions = availableLanguages.querySelectorAll('li');
+    const shownLanguageValues = Array.from(shownLanguageOptions).map((option) => option.textContent);
+    const availableLanguageValues = Array.from(availableLanguageOptions).map((option) => option.textContent);
+    const otherLanguageValues = availableLanguageValues.filter((value) => !shownLanguageValues.includes(value));
+    if (otherLanguageValues.length === 0) {
+        othersExplanation.textContent = 'The "Others" option does not refer to any languages.';
+    } else if (otherLanguageValues.length === 1) {
+        othersExplanation.textContent = `The "Others" option refers to the ${otherLanguageValues[0]} language.`;
+    } else {
+        const otherLanguageValuesString = otherLanguageValues.slice(0, -1).join(', ') + ' and ' + otherLanguageValues[otherLanguageValues.length - 1];
+        othersExplanation.textContent = `The "Others" option refers to the ${otherLanguageValuesString} languages.`;
+    }
+}

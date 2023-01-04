@@ -3,6 +3,7 @@
     --options-primary-text-color: var(--cr-rc-main-text-color);
     --options-bc-color: var(--cr-rc-main-color);
     --options-orange: var(--cr-rc-main-accent-color);
+    --options-light-orange: rgba(247, 140, 36, 0.8);
     --options-gray: var(--cr-rc-main-gray-color);
     --options-blue: #258BD2;
     --options-glow: #FDFDFD;
@@ -123,7 +124,14 @@ body {
     border: 2px solid var(--cr-rc-main-accent-color);
 }
 
-.button-group button:hover {
+/* style disabled buttons */
+.button-group button:disabled {
+    background-color: var(--options-bc-color);
+    color: var(--options-gray);
+    border: 2px solid var(--options-gray);
+}
+
+.button-group button:not([disabled]):hover {
     background-color: var(--cr-rc-main-accent-color);
     color: var(--options-bc-color);
 }
@@ -146,4 +154,111 @@ a:hover {
 /* selected link */
 a:active {
     color: var(--options-orange);
+}
+
+/* style the language boxes div*/
+#language-boxes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    row-gap: 10px;
+    margin-top: -2rem;
+    margin-bottom: 1rem;
+}
+
+/* style the language boxes */
+.language-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1px;
+    row-gap: 1px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* style the language boxes title */
+.language-box-title {
+    margin-bottom: 0.5em;
+}
+
+/* style the language ul to look like a combobox */
+.combo-box {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 2px solid var(--cr-rc-main-accent-color);
+    border-radius: 5px;
+    width: 10em;
+    height: 10em;
+    overflow-y: scroll;
+    position: relative;
+}
+
+/* style the language li to look like a combobox option */
+.combo-box li {
+    padding: 0.5em;
+    border-bottom: 1px solid var(--cr-rc-main-accent-color);
+    background-color: var(--options-bc-color);
+    color: currentColor;
+    cursor: pointer;
+}
+
+/* style the language li to look like a combobox option when hovered */
+.combo-box li:hover {
+    background-color: var(--options-light-orange);
+    color: var(--options-bc-color);
+}
+
+/* style the language li to look like a combobox option when selected */
+.combo-box li.selected {
+    background-color: var(--cr-rc-main-accent-color);
+    color: var(--options-bc-color);
+    border-bottom: 1px solid var(--options-glow);
+}
+
+.combo-box li.selected:hover {
+    background-color: var(--options-light-orange);
+    color: var(--options-bc-color);
+}
+
+/* style for the "add" and "remove" buttons */
+.language-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    row-gap: 10px;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+}
+
+.language-button {
+    width: 6em;
+}
+
+#add-language:after {
+    content: '\2192';
+    /* Unicode character for right arrow */
+    margin-left: 5px;
+}
+
+#remove-language:before {
+    content: '\2190';
+    /* Unicode character for left arrow */
+    margin-right: 5px;
+}
+
+.others {
+    pointer-events: none;
+    color: #999;
+}
+
+.others-explanation {
+    font-style: italic;
+    color: #777;
 }
