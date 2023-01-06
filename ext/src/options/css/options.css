@@ -193,18 +193,23 @@ a:active {
     border: 2px solid var(--cr-rc-main-accent-color);
     border-radius: 5px;
     width: 10em;
-    height: 10em;
+    height: 13.4em;
     overflow-y: scroll;
     position: relative;
+    text-align: center;
 }
 
 /* style the language li to look like a combobox option */
 .combo-box li {
     padding: 0.5em;
-    border-bottom: 1px solid var(--cr-rc-main-accent-color);
     background-color: var(--options-bc-color);
     color: currentColor;
     cursor: pointer;
+}
+
+/* style the language lit to have a bottom border except for the last li */
+.combo-box li:not(:last-child) {
+    border-bottom: 1px solid var(--cr-rc-main-accent-color);
 }
 
 /* style the language li to look like a combobox option when hovered */
@@ -235,6 +240,12 @@ a:active {
     row-gap: 10px;
     margin-top: 4rem;
     margin-bottom: 1rem;
+}
+
+/* style the error message note */
+#lang-select-note .error-message {
+    color: var(--options-red);
+    text-align: center;
 }
 
 .language-button {
