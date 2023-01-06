@@ -270,6 +270,7 @@ a:active {
 }
 
 .others-explanation {
+    text-align: center;
     font-style: italic;
     color: #777;
 }

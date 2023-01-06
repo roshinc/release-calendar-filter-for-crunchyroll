@@ -56,7 +56,7 @@ const renderQuickPickOptions = (savedShownLanguages) => {
     });
     /** Add logic for the other option in the "Shown Languages" combo box */
     const othersOption = document.createElement('li');
-    othersOption.textContent = 'Others';
+    othersOption.textContent = 'Others*';
     othersOption.classList.add('others');
     shownLanguagesElem.appendChild(othersOption);
 }
@@ -349,12 +349,11 @@ shownLanguages.addEventListener('click', () => {
 });
 
 
+// Logic for the "Others" option explanation
 
-const othersExplanation = document.createElement('p');
-othersExplanation.textContent = 'The "Others" option refers to all the languages in "Available Languages" that are not in "Shown Languages".';
+const othersExplanation = document.getElementById("others-explanation");
+othersExplanation.textContent = '*The "Others" option refers to all the languages in "Available Languages" that are not in "Shown Languages".';
 othersExplanation.classList.add('others-explanation');
-
-document.body.appendChild(othersExplanation);
 
 addButton.addEventListener('click', updateOthersExplanation);
 removeButton.addEventListener('click', updateOthersExplanation);
@@ -366,11 +365,11 @@ function updateOthersExplanation() {
     const availableLanguageValues = Array.from(availableLanguageOptions).map((option) => option.textContent);
     const otherLanguageValues = availableLanguageValues.filter((value) => !shownLanguageValues.includes(value));
     if (otherLanguageValues.length === 0) {
-        othersExplanation.textContent = 'The "Others" option does not refer to any languages.';
+        othersExplanation.textContent = '*The "Others" option does not refer to any languages.';
     } else if (otherLanguageValues.length === 1) {
-        othersExplanation.textContent = `The "Others" option refers to the ${otherLanguageValues[0]} language.`;
+        othersExplanation.textContent = `*The "Others" option refers to the ${otherLanguageValues[0]} language.`;
     } else {
         const otherLanguageValuesString = otherLanguageValues.slice(0, -1).join(', ') + ' and ' + otherLanguageValues[otherLanguageValues.length - 1];
-        othersExplanation.textContent = `The "Others" option refers to the ${otherLanguageValuesString} languages.`;
+        othersExplanation.textContent = `*The "Others" option refers to the ${otherLanguageValuesString} languages.`;
     }
 }
