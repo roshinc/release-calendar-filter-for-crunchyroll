@@ -1,5 +1,5 @@
-
-import _ from "../vendors/caldom.min.mjs.js";
+// Vendor: CalDOM
+import _ from "caldom/dist/caldom.min.mjs";
 
 class CRCheckbox extends HTMLElement {
 

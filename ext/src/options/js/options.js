@@ -1,6 +1,16 @@
-import "./vendors/browser-polyfill.min.js";
-import _ from "./vendors/caldom.min.mjs.js"
-// import './vendors/petite-vue.iife.js'
+// enable usage of browser. namespace
+import "webextension-polyfill/dist/browser-polyfill.min"
+// Vendor: CalDOM
+import _ from "caldom/dist/caldom.min.mjs";
+
+import {
+    ALL_DUB_LANGUAGES, DEFAULT_DUB_LANGUAGES,
+} from "../../js/lib/constants";
+
+import "./components/CRCheckbox";
+
+import { initializeEventListenersForQuickDubs } from "./lib/quick_dubs_options"
+
 
 let INTERVAL_ID;
 let MENU_HTML;
@@ -14,10 +24,9 @@ const handleCheckbox = (event) => {
 
 
 const renderQuickPickOptions = (savedShownLanguages) => {
-    const allLanguages = ["Arabic", "Castilian", "English", "English-IN", "French", "German", "Hindi", "Italian", "Portuguese", "Russian", "Spanish"];
-
+    const allLanguages = ALL_DUB_LANGUAGES;
     //create a default list of languages to show that is English, Spanish, French, German, and Italian
-    const defaultShownLanguages = ["English", "Spanish", "French", "German", "Italian"];
+    const defaultShownLanguages = DEFAULT_DUB_LANGUAGES;
 
     // default selected languages to the defaultShownLanguages
     const shownLanguagesList = savedShownLanguages.length == 0 ? defaultShownLanguages : savedShownLanguages;
@@ -127,6 +136,7 @@ const restore_defaults = () => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    initializeEventListenersForQuickDubs();
     restore_options();
 });
 
