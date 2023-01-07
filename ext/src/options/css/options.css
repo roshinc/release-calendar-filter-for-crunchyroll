@@ -213,7 +213,7 @@ a:active {
 }
 
 /* style the language li to look like a combobox option when hovered */
-.combo-box li:hover {
+.combo-box li:not([disabled]):hover {
     background-color: var(--options-light-orange);
     color: var(--options-bc-color);
 }
@@ -225,9 +225,14 @@ a:active {
     border-bottom: 1px solid var(--options-glow);
 }
 
-.combo-box li.selected:hover {
+.combo-box li:not([disabled]).selected:hover {
     background-color: var(--options-light-orange);
     color: var(--options-bc-color);
+}
+
+.combo-box li[disabled] {
+    color: #ccc;
+    cursor: not-allowed;
 }
 
 /* style for the "add" and "remove" buttons */

@@ -14,9 +14,13 @@ const handleCheckbox = (event) => {
 
 
 const renderQuickPickOptions = (savedShownLanguages) => {
-    const allLanguages = ["English", "Spanish", "Portuguese", "French", "German", "Arabic", "Italian", "Russian"];
-    // default selected languages to the first 5 languages
-    const shownLanguagesList = savedShownLanguages.length == 0 ? allLanguages.slice(0, 5) : savedShownLanguages;
+    const allLanguages = ["Arabic", "Castilian", "English", "English-IN", "French", "German", "Hindi", "Italian", "Portuguese", "Russian", "Spanish"];
+
+    //create a default list of languages to show that is English, Spanish, French, German, and Italian
+    const defaultShownLanguages = ["English", "Spanish", "French", "German", "Italian"];
+
+    // default selected languages to the defaultShownLanguages
+    const shownLanguagesList = savedShownLanguages.length == 0 ? defaultShownLanguages : savedShownLanguages;
 
     // remaining languages are the ones that are not in languages
     const availableLanguagesList = allLanguages.filter(language => !shownLanguagesList.includes(language));
@@ -57,6 +61,7 @@ const renderQuickPickOptions = (savedShownLanguages) => {
     /** Add logic for the other option in the "Shown Languages" combo box */
     const othersOption = document.createElement('li');
     othersOption.textContent = 'Others*';
+    othersOption.id = 'others-option';
     othersOption.classList.add('others');
     shownLanguagesElem.appendChild(othersOption);
 }
@@ -108,20 +113,48 @@ const restore_options = () => {
         setUISateOfMenu(items.showFilter, items.filter != null);
         setUIStateOfHiddenCount(items.reflowHCount, items.showHCount);
         renderQuickPickOptions(items.savedShownLanguages);
+        setUIStateOfQuickPickOptions(items.filter != null);
     });
 }
+
 
 const restore_defaults = () => {
     document.getElementById('show-filter-input').checked = true;
     document.getElementById('reflow-hcount-input').checked = true;
     document.getElementById('show-hcount-input').checked = true;
-
+    renderQuickPickOptions([]);
     save_options();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     restore_options();
 });
+
+const setUIStateOfQuickPickOptions = (isMenuLocked) => {
+    if (isMenuLocked) {
+        // Disable the available languages options
+        const availableLanguagesElem = document.getElementById('available-languages');
+        availableLanguagesElem.querySelectorAll('li').forEach(language => {
+            //add disabled attribute
+            language.setAttribute('disabled', true);
+        });
+        // Disable the shown languages options
+        const shownLanguagesElem = document.getElementById('shown-languages');
+        shownLanguagesElem.querySelectorAll('li').forEach(language => {
+            //add disabled attribute
+            language.setAttribute('disabled', true);
+        });
+        // Disable the add button
+        document.getElementById('add-language').setAttribute('disabled', true);
+        // Disable the remove button
+        document.getElementById('remove-language').setAttribute('disabled', true);
+
+        //Add the note about the locked filter
+        document.getElementById('lang-select-note').textContent = "Your filter is locked, to change the languages return here after you go to the Release Calendar and unlock the filter. ";
+
+    }
+}
+
 document.getElementById('save').addEventListener('click',
     save_options);
 document.getElementById('resore-defaults').addEventListener('click',
@@ -136,6 +169,8 @@ document.getElementById('reflow-hcount-input').addEventListener('click', (event)
         document.getElementById('show-hcount-input').checked = event.target.checked;
     }
 });
+
+
 
 const setUISateOfMenu = (show, hideable) => {
     if (show) {
@@ -232,144 +267,3 @@ const showHiddenCount = () => {
         element.classList.remove("cr-rs-hide");
     });
 };
-
-
-/** Add logic for the language boxes */
-// Get the "Available Languages" and "Shown Languages" combo boxes
-const availableLanguages = document.getElementById('available-languages');
-const shownLanguages = document.getElementById('shown-languages');
-
-console.log(availableLanguages);
-console.log('shownLanguages');
-
-// Add a click event listener to the options in both combo boxes
-availableLanguages.addEventListener('click', event => {
-    console.log('click');
-    console.log(event.target.tagName);
-    if (event.target.tagName === 'LI') {
-        const selectedOption = event.target;
-        selectedOption.classList.toggle('selected');
-    }
-});
-shownLanguages.addEventListener('click', event => {
-    if (event.target.tagName === 'LI') {
-        const selectedOption = event.target;
-        selectedOption.classList.toggle('selected');
-    }
-});
-
-// Get the "Add" and "Remove" buttons
-const addButton = document.getElementById('add-language');
-const removeButton = document.getElementById('remove-language');
-
-//Get the note div
-const note = document.getElementById('lang-select-note');
-
-// Add an option from the "Available Languages" combo box to the "Shown Languages" combo box
-addButton.addEventListener('click', () => {
-    const selectedLanguages = shownLanguages.querySelectorAll('.selected').length;
-    const totalLanguages = shownLanguages.querySelectorAll('li').length;
-    if (selectedLanguages + totalLanguages > 5) {
-        const errorMessage = document.createElement('p');
-        errorMessage.textContent = 'You can only add up to 5 languages. To add more, remove some first.';
-        errorMessage.classList.add('error-message');
-        note.appendChild(errorMessage);
-        setTimeout(() => {
-            errorMessage.remove();
-        }, 5000);
-    } else {
-        const selectedOptions = availableLanguages.querySelectorAll('.selected');
-        selectedOptions.forEach(option => {
-            shownLanguages.appendChild(option);
-            option.classList.remove('selected');
-        });
-    }
-
-    // Disable the "Add" button if no options are selected in the "Available Languages" combo box
-    addButton.disabled = !availableLanguages.querySelector('.selected');
-});
-
-// Remove an option from the "Shown Languages" combo box
-removeButton.addEventListener('click', () => {
-    const selectedOptions = shownLanguages.querySelectorAll('.selected');
-    selectedOptions.forEach(option => {
-        availableLanguages.appendChild(option);
-        option.classList.remove('selected');
-    });
-
-    // Disable the "Remove" button if no options are selected in the "Shown Languages" combo box
-    removeButton.disabled = !shownLanguages.querySelector('.selected');
-});
-
-// Disable the "Remove" button if no options are selected in the "Shown Languages" combo box
-removeButton.disabled = !shownLanguages.querySelector('.selected');
-
-// Disable the "Add" button if no options are selected in the "Available Languages" combo box
-addButton.disabled = !availableLanguages.querySelector('.selected');
-
-// Enable the "Add" button when the "Available Languages" combo box is focused or an item is selected in it
-availableLanguages.addEventListener('focus', () => {
-    addButton.disabled = false;
-});
-availableLanguages.addEventListener('click', () => {
-    addButton.disabled = false;
-});
-
-// Enable the "Remove" button when the "Shown Languages" combo box is focused or an item is selected in it
-shownLanguages.addEventListener('focus', () => {
-    removeButton.disabled = false;
-});
-
-shownLanguages.addEventListener('click', () => {
-    removeButton.disabled = false;
-});
-
-availableLanguages.addEventListener('focus', () => {
-    shownLanguages.querySelectorAll('.selected').forEach(option => {
-        option.classList.remove('selected');
-    });
-});
-availableLanguages.addEventListener('click', () => {
-    removeButton.disabled = true;
-    shownLanguages.querySelectorAll('.selected').forEach(option => {
-        option.classList.remove('selected');
-    });
-});
-
-shownLanguages.addEventListener('focus', () => {
-    availableLanguages.querySelectorAll('.selected').forEach(option => {
-        option.classList.remove('selected');
-    });
-});
-shownLanguages.addEventListener('click', () => {
-    addButton.disabled = true;
-    availableLanguages.querySelectorAll('.selected').forEach(option => {
-        option.classList.remove('selected');
-    });
-});
-
-
-// Logic for the "Others" option explanation
-
-const othersExplanation = document.getElementById("others-explanation");
-othersExplanation.textContent = '*The "Others" option refers to all the languages in "Available Languages" that are not in "Shown Languages".';
-othersExplanation.classList.add('others-explanation');
-
-addButton.addEventListener('click', updateOthersExplanation);
-removeButton.addEventListener('click', updateOthersExplanation);
-
-function updateOthersExplanation() {
-    const shownLanguageOptions = shownLanguages.querySelectorAll('li:not(.others)');
-    const availableLanguageOptions = availableLanguages.querySelectorAll('li');
-    const shownLanguageValues = Array.from(shownLanguageOptions).map((option) => option.textContent);
-    const availableLanguageValues = Array.from(availableLanguageOptions).map((option) => option.textContent);
-    const otherLanguageValues = availableLanguageValues.filter((value) => !shownLanguageValues.includes(value));
-    if (otherLanguageValues.length === 0) {
-        othersExplanation.textContent = '*The "Others" option does not refer to any languages.';
-    } else if (otherLanguageValues.length === 1) {
-        othersExplanation.textContent = `*The "Others" option refers to the ${otherLanguageValues[0]} language.`;
-    } else {
-        const otherLanguageValuesString = otherLanguageValues.slice(0, -1).join(', ') + ' and ' + otherLanguageValues[otherLanguageValues.length - 1];
-        othersExplanation.textContent = `*The "Others" option refers to the ${otherLanguageValuesString} languages.`;
-    }
-}
