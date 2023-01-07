@@ -33,4 +33,4 @@ export const CRRS_HIDDEN_COUNT_CLASS_NAME = "cr-rs-filter-hidden-count";
 
 // Constants for the filter menu quick pick dubs
 export const ALL_DUB_LANGUAGES = ["Arabic", "Castilian", "English", "English-IN", "French", "German", "Hindi", "Italian", "Portuguese", "Russian", "Spanish"];
-export const DEFAULT_DUB_LANGUAGES = ["English", "Spanish", "French", "German", "Italian"];
+export const DEFAULT_DUB_LANGUAGES = ["English", "Spanish", "French", "German"];
