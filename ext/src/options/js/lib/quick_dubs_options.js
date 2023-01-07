@@ -41,8 +41,8 @@ export const initializeEventListenersForQuickDubs = () => {
     addButton.addEventListener('click', () => {
         const selectedLanguages = shownLanguages.querySelectorAll('.selected').length;
         const totalLanguages = shownLanguages.querySelectorAll('li').length;
-        if (selectedLanguages + totalLanguages > 5) {
-            const errorMessage = 'You can only add up to 5 languages. To add something else, remove some first.';
+        if (selectedLanguages + totalLanguages > 4) {
+            const errorMessage = 'You can only add up to 4 languages. To add something else, remove some first.';
             addNoteWithTimeout(note, errorMessage, 5000);
         } else {
             const selectedOptions = availableLanguages.querySelectorAll('.selected');
