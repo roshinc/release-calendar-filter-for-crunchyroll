@@ -1,3 +1,4 @@
+import { ALL_DUB_LANGUAGES } from "../lib/constants";
 export default class Filter {
 
     /** 
@@ -34,20 +35,9 @@ export default class Filter {
     #dubsShown;
 
     /**
-    * {Array} of known dub langs. 'Others' should always be present.
-    */
-    static #dubsLangList = ["English", "Spanish", "Portuguese", "French", "German", "Arabic", "Italian", "Russian"];
-    #dubsLangListInternal = ["english", "spanish", "portuguese", "french", "german", "arabic", "italian", "russian"];
-    /**
     * {Array} of dub langs options shown on the UI. 'Others' should always be present.
-    */
-    static #dubsLangOptionsList = ["English", "Spanish", "Portuguese", "French", "Others"];
-    #dubsLangOptionsListInternal = ["english", "spanish", "portuguese", "french", "others"];
-    /**
-     * {Array} of what Other langs are based on shown UI options
-     */
-    static #dubsLangOptionsOtherList = ["German", "Arabic", "Italian", "Russian"];
-    #dubsLangOptionsOtherListInternal = ["german", "arabic", "italian", "russian"];
+    */;
+    #dubsLangOptionsListInternal = [];
 
     /** 
     * if {true} in queue should be shown 
@@ -77,9 +67,12 @@ export default class Filter {
      * 
      * @param {Week} weekContent the content object
      */
-    constructor(weekContent) {
+    constructor(weekContent, savedShownLanguages) {
         this.#setDefaults();
         this.#weekContent = weekContent;
+        this.setDubLangs(savedShownLanguages);
+        console.log("In filter constructor");
+        console.log(this.#dubsLangOptionsListInternal);
     }
 
     restore(savedJson) {
@@ -87,11 +80,8 @@ export default class Filter {
         // undefined is version 1
         // const savedVersion = savedJson["version"];
 
-        Filter.#dubsLangOptionsList = savedJson["dubsLangOptionsList"];
-        this.#dubsLangOptionsListInternal = savedJson["dubsLangOptionsListInternal"];
 
-        Filter.#dubsLangOptionsOtherList = savedJson["dubsLangOptionsOtherList"];
-        this.#dubsLangOptionsOtherListInternal = savedJson["dubsLangOptionsOtherListInternal"];
+        this.#dubsLangOptionsListInternal = savedJson["dubsLangOptionsListInternal"];
 
         this.#hideAllSubs = savedJson["hideAllSubs"] == undefined ? false : true;
         console.log(this.#hideAllSubs);
@@ -136,11 +126,7 @@ export default class Filter {
         let jsonArray = {};
         jsonArray["version"] = Filter.#jsonVersion;
 
-        jsonArray["dubsLangOptionsList"] = Filter.#dubsLangOptionsList;
         jsonArray["dubsLangOptionsListInternal"] = this.#dubsLangOptionsListInternal;
-
-        jsonArray["dubsLangOptionsOtherList"] = Filter.#dubsLangOptionsOtherList;
-        jsonArray["dubsLangOptionsOtherListInternal"] = this.#dubsLangOptionsOtherListInternal;
 
         jsonArray["hideAllSubs"] = this.#hideAllSubs;
         jsonArray["hideAllDub"] = this.#hideAllDubs;
@@ -155,20 +141,19 @@ export default class Filter {
         return jsonArray;
     }
 
-    static dubLangs() {
-        return Filter.#dubsLangList;
-    }
-
     /**
      * Sets the dub options shown on the UI
      * @param {Array} dubOptions 
      */
-    static setDubLangs(dubOptions) {
-        if (dubOptions && dubOptions > 0) {
-            this.#dubsLangOptionsList = dubOptions;
-            Filter.#dubsLangOptionsList = dubOptions;
-            this.#dubsLangOptionsOtherList = this.#dubsLangList.filter(x => !dubOptions.includes(x));
+    setDubLangs(dubOptions) {
+        console.log("In setDubLangs");
+        console.log(dubOptions);
+        if (dubOptions && dubOptions.length > 0) {
+            console.log("In if");
+            this.#dubsLangOptionsListInternal = dubOptions.map(x => x.toLocaleLowerCase());
         }
+        console.log(this.#dubsLangOptionsListInternal);
+        console.log("Out setDubLangs");
     }
 
     #show(dubsToShow = []) {
@@ -258,10 +243,22 @@ export default class Filter {
     }
 
     #setShowDubsOfProperties(listToShow) {
-        let allDubs = this.#dubsLangListInternal;
-        let intersection = allDubs.filter(x => listToShow.includes(x));
+        const allDubs = ALL_DUB_LANGUAGES.map(x => x.toLocaleLowerCase());
+        const otherDubs = allDubs.filter(x => !this.#dubsLangOptionsListInternal.includes(x));
 
-        if (intersection.length == this.#dubsLangListInternal.length) {
+        // If the list to show has 'others' in it, add all the other dubs to the list
+        if (listToShow.includes("others")) {
+            listToShow = listToShow.concat(otherDubs);
+            allDubs.push("others");
+        }
+
+        let intersection = allDubs.filter(x => listToShow.includes(x));
+        console.log("All Dubs: " + allDubs);
+        console.log("Other Dubs: " + otherDubs);
+        console.log("List to show: " + listToShow);
+        console.log("Intersection: " + intersection);
+
+        if (intersection.length == allDubs.length) {
             this.#hideAllDubs = false;
             this.#showSomeDubs = false;
             this.#dubsShown = [];
@@ -282,7 +279,8 @@ export default class Filter {
             this.#hideAllDubs = false;
             this.#showSomeDubs = false;
         }
-    }
+        console.log("dubsShown: " + this.#dubsShown);
+    };
 
     showDubsOf(listToShow) {
         console.log("show dub of called");
