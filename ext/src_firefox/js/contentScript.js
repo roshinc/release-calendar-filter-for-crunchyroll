@@ -14,7 +14,7 @@ import { reflowHiddenCount } from "../../src/js/lib/utils";
 restorePreference()
   .then((items) => {
     if (items.showFilter) {
-      createInlineMenu(document.querySelector("header.simulcast-calendar-header"));
+      createInlineMenu(document.querySelector("header.simulcast-calendar-header"), items.savedShownLanguages);
     }
 
     // if reflow is enabbled or not
@@ -23,8 +23,11 @@ restorePreference()
     // parse week
     let week = new Week(document.querySelectorAll(".day"), items.showHCount);
 
+    // get saved show languages for dubs
+    preference.savedLanguages = items.savedShownLanguages;
+
     // global filter holder
-    preference.crrsFilter = new Filter(week);
+    preference.crrsFilter = new Filter(week, preference.savedLanguages);
 
     // restore filter
     if (items.filter != null) {
