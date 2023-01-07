@@ -2,20 +2,31 @@
  * @fileoverview This file contains the functions that are used to initialize the event listeners for the "Quick Dubs" options page.
  */
 
+import {
+    ALL_DUB_LANGUAGES, DEFAULT_DUB_LANGUAGES,
+} from "../../../js/lib/constants";
+
+const AVAILABLE_LANGUAGES_COMBO_ID = 'available-languages';
+const SHOWN_LANGUAGES_COMBO_ID = 'shown-languages';
+
+const ADD_BUTTON_ID = 'add-language';
+const REMOVE_BUTTON_ID = 'remove-language';
+
+
 /**
  * Initializes the event listeners for the "Quick Dubs" options section.
  */
 export const initializeEventListenersForQuickDubs = () => {
     // Get the "Available Languages" and "Shown Languages" combo boxes
-    const availableLanguages = document.getElementById('available-languages');
+    const availableLanguages = document.getElementById(AVAILABLE_LANGUAGES_COMBO_ID);
     const isAvailableLanguagesDisabled = availableLanguages.hasAttribute('disabled');
 
-    const shownLanguages = document.getElementById('shown-languages');
+    const shownLanguages = document.getElementById(SHOWN_LANGUAGES_COMBO_ID);
     const isShownLanguagesDisabled = shownLanguages.hasAttribute('disabled');
 
     // Get the "Add" and "Remove" buttons
-    const addButton = document.getElementById('add-language');
-    const removeButton = document.getElementById('remove-language');
+    const addButton = document.getElementById(ADD_BUTTON_ID);
+    const removeButton = document.getElementById(REMOVE_BUTTON_ID);
 
     // Get the note div
     const note = document.getElementById('lang-select-note');
@@ -143,7 +154,7 @@ const initializeComboBoxes = (comoboxElement, isDisabled, unakinComboBox, akinBu
         // Enable the "akinButton" button when the "comoboxElement" combo box has an item is selected in it
         // disable the "unakinButton" button
         // and remove the "selected" class from the options in the "unakinComboBox" combo box
-        if (!isDisabled) {
+        if (!(isDisabled || comoboxElement.hasAttribute('disabled'))) {
             enableSelectionForCombo(akinButton, unakinButton, unakinComboBox);
         }
     });
@@ -151,7 +162,7 @@ const initializeComboBoxes = (comoboxElement, isDisabled, unakinComboBox, akinBu
     // disable the "unakinButton" button
     // and remove the "selected" class from the options in the "unakinComboBox" combo box
     comoboxElement.addEventListener('focus', () => {
-        if (!isDisabled) {
+        if (!(isDisabled || comoboxElement.hasAttribute('disabled'))) {
             enableSelectionForCombo(akinButton, unakinButton, unakinComboBox);
         }
     });
@@ -232,4 +243,161 @@ const updateOthersExplanation = (shownLanguages, availableLanguages) => {
         const otherLanguageValuesString = otherLanguageValues.slice(0, -1).join(', ') + ' and ' + otherLanguageValues[otherLanguageValues.length - 1];
         othersExplanation.textContent = `*The "Others" option refers to the ${otherLanguageValuesString} languages.`;
     }
+}
+
+/**
+ * Renders the quick pick options for the "Shown Languages" and "Available Languages" combo boxes and in the filter UI.
+ * 
+ * @param {Array} savedShownLanguages 
+ */
+export const renderQuickPickOptions = (savedShownLanguages) => {
+    const allLanguages = ALL_DUB_LANGUAGES;
+    //create a default list of languages to show that is English, Spanish, French, German, and Italian
+    const defaultShownLanguages = DEFAULT_DUB_LANGUAGES;
+
+    // default selected languages to the defaultShownLanguages
+    const shownLanguagesList = savedShownLanguages.length == 0 ? defaultShownLanguages : savedShownLanguages;
+
+    // remaining languages are the ones that are not in languages
+    const availableLanguagesList = allLanguages.filter(language => !shownLanguagesList.includes(language));
+
+    // Create the checkbox in the filter UI
+    renderCheckboxesInFilterUI(shownLanguagesList);
+
+
+    // Create the available languages options
+    const availableLanguagesElem = document.getElementById(AVAILABLE_LANGUAGES_COMBO_ID);
+    // Clear the available languages options
+    availableLanguagesElem.innerHTML = "";
+    addOptionstoComboBox(availableLanguagesElem, availableLanguagesList);
+
+    // Create the shown languages options
+    const shownLanguagesElem = document.getElementById(SHOWN_LANGUAGES_COMBO_ID);
+    // Clear the shown languages options
+    shownLanguagesElem.innerHTML = "";
+    // Add the shown languages options
+    addOptionstoComboBox(shownLanguagesElem, shownLanguagesList);
+
+    /** Add logic for the other option in the "Shown Languages" combo box */
+    const othersOption = document.createElement('li');
+    othersOption.textContent = 'Others*';
+    othersOption.id = 'others-option';
+    othersOption.classList.add('others');
+    shownLanguagesElem.appendChild(othersOption);
+};
+
+/**
+ * Renders the checkboxes in the filter UI.
+ * @param {Array} shownLanguagesList 
+ */
+const renderCheckboxesInFilterUI = (shownLanguagesList) => {
+    const targetElem = _("#quick-pick-dubs-checkboxes");
+    // if the fiter UI is not rendered, return
+    if (targetElem.elem == undefined) {
+        return;
+    }
+    // Clear the shown languages checkboxes
+    targetElem.html("");
+    // Create the shown languages checkboxes
+    for (let language of shownLanguagesList) {
+        let customCheckbox = _("+cr-checkbox")
+            .attr("data-group", "quick-pick-cbs").attr("data-text", language).attr("checked", true).attr("disabled", "true").data("data-handler", handleCheckboxInFilterUI).on("check", handleCheckboxInFilterUI);
+        _("#quick-pick-dubs-checkboxes", customCheckbox);
+    }
+
+    // Create the checkbox for the "Others" option
+    let othersCustomCheckbox = _("+cr-checkbox").attr("data-group", "quick-pick-cbs").attr("data-text", "Others").attr("disabled", "true").attr("checked", false).data("data-handler", handleCheckboxInFilterUI).on("check", handleCheckboxInFilterUI);
+    _("#quick-pick-dubs-checkboxes", othersCustomCheckbox);
+};
+
+/**
+ * Adds the given array of options to the given combo box.
+ * 
+ * @param {HTMLUListElement} comboBox 
+ * @param {Array} options 
+ */
+const addOptionstoComboBox = (comboBox, options) => {
+    // Add the remaining languages options
+    options.forEach(language => {
+        const option = document.createElement('li');
+        option.textContent = language;
+        comboBox.appendChild(option);
+    });
+};
+
+/**
+ * Placeholder function for the checkbox in the filter UI.
+ * @param {Event} event 
+ */
+const handleCheckboxInFilterUI = (event) => {
+    console.log("in options");
+    console.log(event);
+}
+
+/**
+ * Disables the quick pick options when the menu is locked.
+ * 
+ * @param {boolean} isMenuLocked 
+ */
+const setUIStateOfQuickPickOptions = (isMenuLocked) => {
+    if (isMenuLocked) {
+        // Disable the available languages options
+        const availableLanguagesElem = document.getElementById(AVAILABLE_LANGUAGES_COMBO_ID);
+        availableLanguagesElem.setAttribute('disabled', true);
+        availableLanguagesElem.querySelectorAll('li').forEach(language => {
+            //add disabled attribute
+            language.setAttribute('disabled', true);
+        });
+
+        // Disable the shown languages options
+        const shownLanguagesElem = document.getElementById(SHOWN_LANGUAGES_COMBO_ID);
+        shownLanguagesElem.setAttribute('disabled', true);
+        shownLanguagesElem.querySelectorAll('li').forEach(language => {
+            //add disabled attribute
+            language.setAttribute('disabled', true);
+        });
+
+        // Disable the add button
+        document.getElementById(ADD_BUTTON_ID).setAttribute('disabled', true);
+        // Disable the remove button
+        document.getElementById(REMOVE_BUTTON_ID).setAttribute('disabled', true);
+
+        //Add the note about the locked filter
+        document.getElementById('lang-select-note').textContent = "Your filter is locked, to change the languages return here after you go to the Release Calendar and unlock the filter. ";
+
+    }
+}
+
+/**
+ * Does the rendering of the quick pick options amd sets the UI state of the quick pick options.
+ * 
+ * @param {Array} shownLanguagesList The list of languages that are shown in the filter UI.
+ * @param {boolean} isMenuLocked Whether the menu is locked or not.
+ */
+export const resoreQuickPickOptions = (shownLanguagesList, isMenuLocked) => {
+    renderQuickPickOptions(shownLanguagesList);
+    setUIStateOfQuickPickOptions(isMenuLocked);
+};
+
+/**
+ * Gets an Array of the languages that are shown in the filter UI.
+ * @returns {Array} the list of languages that are shown in the filter UI.
+ */
+export const getListOfShownLanguages = () => {
+    const shownLanguagesElem = document.getElementById(SHOWN_LANGUAGES_COMBO_ID);
+    const shownLanguagesList = [];
+    shownLanguagesElem.querySelectorAll('li:not(.others)').forEach(language => {
+        shownLanguagesList.push(language.textContent);
+    });
+    return shownLanguagesList;
+}
+
+/**
+ * 
+ * @returns {boolean} true if the quick pick options are disabled, false otherwise.
+ */
+export const isQuickDubsOptionsDisabled = () => {
+    // Both combo boxes would be disabled so we can just check one
+    const shownLanguagesElem = document.getElementById(SHOWN_LANGUAGES_COMBO_ID);
+    return shownLanguagesElem.hasAttribute('disabled');
 }
