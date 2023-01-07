@@ -8,7 +8,7 @@ import {
   CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME, CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
   CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
   CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX, CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX,
-  CRRS_FILTER_MENU_LOCK_BTN_ID, CRRS_HIDDEN_COUNT_CLASS_NAME
+  CRRS_FILTER_MENU_LOCK_BTN_ID, CRRS_HIDDEN_COUNT_CLASS_NAME, DEFAULT_DUB_LANGUAGES
 } from "./constants";
 import { handleDubbedRadioGroup, handleDubPickerCheckbox, handleQueueRadioGroup, handlePremiereRadioGroup, handelLockBtn, handelResetBtn } from "./event_handler";
 
@@ -254,7 +254,7 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo,
  * 
  * @param {HTMLElement} elementToAttachTo the element to append the menu to
  */
-export const createInlineMenu = (elementToAttachTo) => {
+export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
 
   let containerDiv = _("+div")
     .attr("id", CRRS_FILTER_MENU_DIV_ID)
@@ -282,7 +282,10 @@ export const createInlineMenu = (elementToAttachTo) => {
 
   dubSelectionDiv.append([dubSelectionText]);
 
-  const languages = Filter.dubLangs();
+  // Default to DEFAULT_DUB_LANGUAGES constant if no saved languages
+  const languages = savedShownLanguages && savedShownLanguages.length > 0 ? savedShownLanguages : DEFAULT_DUB_LANGUAGES;
+  //Append the "Others" option
+  languages.push("Others");
 
   for (let language of languages) {
     let map = [];
