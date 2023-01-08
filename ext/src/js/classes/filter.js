@@ -80,21 +80,25 @@ export default class Filter {
         // undefined is version 1
         // const savedVersion = savedJson["version"];
 
+        console.log("In restore");
+        console.log(savedJson);
 
         this.#dubsLangOptionsListInternal = savedJson["dubsLangOptionsListInternal"];
 
-        this.#hideAllSubs = savedJson["hideAllSubs"] == undefined ? false : true;
+        console.log("hideAllSubs " + savedJson["hideAllSubs"]);
+        this.#hideAllSubs = savedJson["hideAllSubs"];
         console.log(this.#hideAllSubs);
 
         this.#hideAllDubs = savedJson["hideAllDub"];
         this.#dubsShown = savedJson["dubsShown"];
+        this.#showSomeDubs = this.#dubsShown != null && this.#dubsShown.length > 0;
 
         this.#showInQueue = savedJson["showInQueue"];
         this.#showOnlyInQueue = savedJson["showOnlyInQueue"];
 
         this.#showPremiere = savedJson["showPremiere"];
         this.#showOnlyPremiere = savedJson["showOnlyPremiere"];
-
+        console.log("Show some dubs: " + this.#showSomeDubs);
         if (!this.#showSomeDubs) {
             this.#show();
         } else {
