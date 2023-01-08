@@ -1,20 +1,21 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "rollup --config",
     "dev": "rollup --config --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-strip": "^2.1.0",
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-strip": "^3.0.2",
     "caldom": "^1.0.7",
-    "prettier": "^2.6.2",
-    "rollup": "^2.74.1",
+    "prettier": "^2.8.2",
+    "rollup": "^3.9.1",
     "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-copy": "^3.4.0",
-    "rollup-plugin-prettier": "^2.2.2",
-    "rollup-plugin-visualizer": "^5.6.0",
-    "webextension-polyfill": "^0.9.0"
+    "rollup-plugin-prettier": "^3.0.0",
+    "rollup-plugin-visualizer": "^5.9.0",
+    "webextension-polyfill": "^0.10.0"
   }
 }

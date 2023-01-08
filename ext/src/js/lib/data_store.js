@@ -29,6 +29,7 @@ export const restorePreference = () => {
         showFilter: true,
         reflowHCount: true,
         showHCount: true,
+        savedShownLanguages: [],
     });
 }
 

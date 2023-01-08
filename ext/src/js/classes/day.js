@@ -1,5 +1,5 @@
 import Content from "./content";
-
+import { ALL_DUB_LANGUAGES } from "../lib/constants";
 export default class Day {
 
     #today;
@@ -51,10 +51,19 @@ export default class Day {
             hiddenContent.push.apply(hiddenContent, this.#todaysDubsList);
         } else {
             console.log(allowedDubs);
+            // set a boolean to check if the 'other' option in allowedDubs
+            const isOtherAllowed = allowedDubs.includes('others');
+            // get ths list of all known dub languages
+            const knownDubsLangs = ALL_DUB_LANGUAGES.map(x => x.toLowerCase());
             if (allowedDubs.length > 0) {
                 this.#todaysDubsList.forEach((content, index) => {
                     if (!allowedDubs.includes(content.dubLang.toLowerCase())) {
-                        hiddenContent.push(content);
+                        // if the 'other' option is allowed, we want to also show dubs that are not in the known list
+                        if (isOtherAllowed && !knownDubsLangs.includes(content.dubLang.toLowerCase())) {
+                            console.log('Unknown dub language: ' + content.dubLang);
+                        } else {
+                            hiddenContent.push(content);
+                        }
                     }
                 });
             }

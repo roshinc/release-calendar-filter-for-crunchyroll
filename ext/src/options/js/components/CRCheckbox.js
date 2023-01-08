@@ -1,5 +1,5 @@
-
-import _ from "../vendors/caldom.min.mjs.js";
+// Vendor: CalDOM
+import _ from "caldom/dist/caldom.min.mjs";
 
 class CRCheckbox extends HTMLElement {
 
@@ -46,10 +46,6 @@ class CRCheckbox extends HTMLElement {
     //     customCheckboxInput.data(dataAttr, element);
     //   }
     // }
-
-    if (this.hasAttribute('checked')) {
-      this.#customCheckboxInput.attr("checked", true);
-    }
     // **3. The inner span element **
     this.#fakeCheckSpan = _("+span")
       .addClass([CRRS_CLASS, CHECKBOX_INNER_SPAN_CLASS])
@@ -72,19 +68,28 @@ class CRCheckbox extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log('Custom square element added to page.');
-    console.log(this.shadowRoot.querySelector('.rs-cr-checkbox-inner-span'));
+    console.log('Custom checkbox element added to page.');
+    //console.log(this.shadowRoot.querySelector('.rs-cr-checkbox-inner-span'));
     this.#fakeCheckSpan.text(this.getAttribute('data-text'));
     console.log(_(this).data('data-handler'));
     this.#customCheckboxInput.on("change", _(this).data('data-handler'));
+
+    // check if the element has the attribute 'checked'
+    if (this.hasAttribute('checked')) {
+      this.#customCheckboxInput.attr("checked", true);
+    };
+    // check if the element has the attribute 'disabled'
+    if (this.hasAttribute('disabled')) {
+      this.#customCheckboxInput.attr("disabled", true);
+    };
   }
 
   disconnectedCallback() {
-    console.log('Custom square element removed from page.');
+    console.log('Custom checkbox element removed from page.');
   }
 
   adoptedCallback() {
-    console.log('Custom square element moved to new page.');
+    console.log('Custom checkbox element moved to new page.');
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

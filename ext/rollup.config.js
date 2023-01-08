@@ -40,7 +40,6 @@ export default [
                     { src: 'src/css', dest: 'dist' },
                     { src: 'src/fonts', dest: 'dist' },
                     { src: 'src/images', dest: 'dist' },
-                    { src: 'src/options', dest: 'dist' },
                     { src: 'src/manifest.json', dest: 'dist' },
                 ]
             }),
@@ -49,6 +48,44 @@ export default [
         ],
 
 
+    },
+    {
+        input: 'src/options/js/options.js',
+        output: {
+            file: 'dist/options/js/options.js',
+            format: 'iife'
+        },
+        plugins: [
+            clear({
+                // required, point out which directories should be clear.
+                targets: ['dist/options'],
+                // optional, whether clear the directores when rollup recompile on --watch mode.
+                watch: true, // default: false
+            }),
+            nodeResolve({
+                browser: true,
+
+                // Add this line for development config, omit for
+                // production config
+                //exportConditions: ['development'],
+            }),
+            // strip({
+            //     debugger: true
+            // }),
+            prettier({
+                tabWidth: 2,
+                singleQuote: false,
+                parser: 'babel',
+            }),
+            copy({
+                targets: [
+                    // copy the options folder except the js folder
+                    { src: ['src/options/*', '!src/options/js/'], dest: 'dist/options/' },
+                ]
+            }),
+            // put it the last one
+            visualizer(),
+        ],
     },
 
     {
@@ -84,7 +121,6 @@ export default [
                     { src: 'src/css', dest: 'dist_firefox' },
                     { src: 'src/fonts', dest: 'dist_firefox' },
                     { src: 'src/images', dest: 'dist_firefox' },
-                    { src: 'src/options', dest: 'dist_firefox' },
                     { src: 'src_firefox/js/static', dest: 'dist_firefox/js' },
                     { src: 'src_firefox/manifest.json', dest: 'dist_firefox' },
                 ]
@@ -94,5 +130,43 @@ export default [
         ],
 
 
-    }
+    },
+    {
+        input: 'src/options/js/options.js',
+        output: {
+            file: 'dist_firefox/options/js/options.js',
+            format: 'iife'
+        },
+        plugins: [
+            clear({
+                // required, point out which directories should be clear.
+                targets: ['dist_firefox/options'],
+                // optional, whether clear the directores when rollup recompile on --watch mode.
+                watch: true, // default: false
+            }),
+            nodeResolve({
+                browser: true,
+
+                // Add this line for development config, omit for
+                // production config
+                //exportConditions: ['development'],
+            }),
+            // strip({
+            //     debugger: true
+            // }),
+            prettier({
+                tabWidth: 2,
+                singleQuote: false,
+                parser: 'babel',
+            }),
+            copy({
+                targets: [
+                    // copy the options folder except the js folder
+                    { src: ['src/options/*', '!src/options/js/'], dest: 'dist_firefox/options/' },
+                ]
+            }),
+            // put it the last one
+            visualizer(),
+        ],
+    },
 ];

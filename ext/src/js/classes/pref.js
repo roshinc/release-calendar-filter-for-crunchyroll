@@ -6,6 +6,9 @@ class Pref {
     // Hold toggle for reflow
     #reflowEnabled;
 
+    // Hold saved languages
+    #savedLanguages;
+
     constructor() { }
 
     static getInstance() {
@@ -35,6 +38,14 @@ class Pref {
 
     get reflowEnabled() {
         return this.#reflowEnabled;
+    }
+
+    set savedLanguages(savedLanguages) {
+        this.#savedLanguages = savedLanguages;
+    }
+
+    get savedLanguages() {
+        return this.#savedLanguages;
     }
 
 

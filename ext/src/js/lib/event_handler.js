@@ -43,8 +43,8 @@ export const handleDubPickerCheckbox = (event) => {
             }
             // dubToggle.elem.checked = false;
 
-            //Hide all dubs
-            preference.crrsFilter.hideAllDubs();
+            //Hide all dubs 
+            preference.crrsFilter.showAllSubsAndHideAllDubs();
         } else {
             let show = Array.from(dubPicked).flatMap(cb => {
                 return _(cb).data("lang");

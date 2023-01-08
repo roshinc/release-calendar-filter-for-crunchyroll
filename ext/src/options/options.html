@@ -44,62 +44,8 @@
 
         </div>
         <div id="cr-rs-filter-menu-pick-dubs" class="cr-rs-class">
-          <p class="cr-rs-class">Enable Dubs for</p><span class="cr-rs-class">
-            <label for="cr-rs-filter-menu-pick-dubs-lang-english" class="cr-rs-class">
-              <input id="cr-rs-filter-menu-pick-dubs-lang-english" type="checkbox"
-                class="cr-rs-class rs-cr-checkbox-input" disabled>
-              <span class="cr-rs-class rs-cr-checkbox-inner-span">English</span>
-            </label>
-          </span>
-          <span class="cr-rs-class">
-            <label for="cr-rs-filter-menu-pick-dubs-lang-spanish" class="cr-rs-class">
-              <input id="cr-rs-filter-menu-pick-dubs-lang-spanish" type="checkbox"
-                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
-                disabled>
-              <span class="cr-rs-class rs-cr-checkbox-inner-span">
-                Spanish
-              </span>
-            </label>
-          </span>
-          <span class="cr-rs-class"><label for="cr-rs-filter-menu-pick-dubs-lang-french" class="cr-rs-class">
-              <input id="cr-rs-filter-menu-pick-dubs-lang-french" type="checkbox"
-                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
-                disabled>
-              <span class="cr-rs-class rs-cr-checkbox-inner-span">
-                French
-              </span>
-            </label>
-          </span>
-          <span class="cr-rs-class">
-            <label for="cr-rs-filter-menu-pick-dubs-lang-german" class="cr-rs-class">
-              <input id="cr-rs-filter-menu-pick-dubs-lang-german" type="checkbox"
-                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
-                disabled>
-              <span class="cr-rs-class rs-cr-checkbox-inner-span">
-                German
-              </span>
-            </label>
-          </span>
-          <span class="cr-rs-class">
-            <label for="cr-rs-filter-menu-pick-dubs-lang-portuguese" class="cr-rs-class">
-              <input id="cr-rs-filter-menu-pick-dubs-lang-portuguese" type="checkbox"
-                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
-                disabled>
-              <span class="cr-rs-class rs-cr-checkbox-inner-span">
-                Portuguese
-              </span>
-            </label>
-          </span>
-          <span class="cr-rs-class">
-            <label for="cr-rs-filter-menu-pick-dubs-lang-others" class="cr-rs-class">
-              <input id="cr-rs-filter-menu-pick-dubs-lang-others" type="checkbox"
-                class="cr-rs-class rs-cr-checkbox-input" checked="true" data-np-invisible="1" data-np-checked="1"
-                disabled>
-              <span class="cr-rs-class rs-cr-checkbox-inner-span">
-                Others
-              </span>
-            </label>
-          </span>
+          <p class="cr-rs-class">Enable Dubs for</p>
+          <span id="quick-pick-dubs-checkboxes"></span>
         </div>
         <div aria-hidden="true" class="cr-rs-class cr-rs-filter-vertical-divider">
         </div>
@@ -190,13 +136,37 @@
     <div class="option">
       <h4 class="option-title">Quick Select Dub Languages</h4>
       <p class="option-blurb">
-        In the filter element (shown above) the options under "Enable Dubs for" let you quickly pick the languages of
-        the dubs you want to see or hide. Only 5 languages can be displayed as options for Quick Select. The selection
-        below is for the options displayed under "Enable Dubs for":
+        In the filter element (shown above) the options under "Enable Dubs for" let
+        you quickly pick the languages of the dubs you want to see or hide. </br></br>
+        The "Shown Languages" box contains the languages available for quick switching on the filter UI element.
+        The available languages are listed in the "Available Languages" box. Use the "Add" and "Remove" buttons
+        to move languages between the boxes. </br></br>
+        Only 5 languages can be displayed as options for Quick Select.
+        Remember to save using the button at the bottom:
       </p>
-      <p id="show-filter-note" class="option-note"></p>
-      <span class="cr-rs-class" id="quick-select-options">
+      <p id="lang-select-note" class="option-note"></p>
 
+      <span class="cr-rs-class" id="quick-select-options">
+        <div id="language-boxes">
+          <div class="language-box">
+            <h5 class="language-box-title">Available Languages</h5>
+            <ul id="available-languages" class="combo-box">
+              <!-- Other options for "Available Languages" combo box -->
+            </ul>
+          </div>
+          <div class="language-buttons button-group">
+            <button class="language-button" id="add-language">Add</button>
+            <button class="language-button" id="remove-language">Remove</button>
+          </div>
+          <div class="language-box">
+            <h5 class="language-box-title">Shown Languages</h5>
+            <ul id="shown-languages" class="combo-box">
+
+              <!-- Other options for "Shown Languages" combo box -->
+            </ul>
+          </div>
+        </div>
+        <p id="others-explanation"></p>
       </span>
     </div>
   </section>
@@ -398,8 +368,6 @@
     <button id="resore-defaults">Restore Defaults</button>
     <div id="status"></div>
   </section>
-  <script src="./js/vendors/petite-vue.iife.js"></script>
-  <script type="module" src="./js/components/CRCheckbox.js"></script>
   <script type="module" src="./js/options.js"></script>
 </body>
 
