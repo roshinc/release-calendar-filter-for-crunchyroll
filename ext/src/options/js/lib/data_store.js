@@ -72,5 +72,6 @@ export const restore_options = () => {
  * Clears the saved filter from sync
  */
 const clearAll = () => {
+    console.log("Clearing all saved options");
     browser.storage.sync.clear();
 }
