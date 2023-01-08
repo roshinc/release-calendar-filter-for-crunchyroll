@@ -1,6 +1,8 @@
 import _ from "caldom/dist/caldom.min.mjs";
+// enable usage of browser. namespace
+import "webextension-polyfill/dist/browser-polyfill.min"
+import { createPopper } from '@popperjs/core/dist/esm';
 
-import Filter from "../classes/filter";
 import preference from "../classes/pref";
 
 import {
@@ -11,6 +13,7 @@ import {
   CRRS_FILTER_MENU_LOCK_BTN_ID, CRRS_HIDDEN_COUNT_CLASS_NAME, DEFAULT_DUB_LANGUAGES
 } from "./constants";
 import { handleDubbedRadioGroup, handleDubPickerCheckbox, handleQueueRadioGroup, handlePremiereRadioGroup, handelLockBtn, handelResetBtn } from "./event_handler";
+import { browserAction } from "webextension-polyfill";
 
 
 
@@ -277,9 +280,96 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
     .addClass(CRRS_CLASS);
   // **2. The text element **
   let dubSelectionText = _("+p")
+    .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-text")
+    .attr("aria-describedby", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip")
     .text("Enable Dubs for")
     .addClass(CRRS_CLASS);
 
+  //2.1 Add tooltip container
+  let dubSelectionTooltip = _("+div")
+    .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip")
+    .html('You can change the language options displayed here in the <a href="' + browser.runtime.getURL("options/options.html") + '"> options </a> page.');
+
+  //2.2 Add tooltip arrow container
+  let dubSelectionTooltipArrow = _("+div")
+    .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow")
+    .attr("data-popper-arrow", "");
+  dubSelectionTooltip.append(dubSelectionTooltipArrow);
+  dubSelectionText.append(dubSelectionTooltip);
+  // Initialize popper
+  let popperInstance = createPopper(dubSelectionText.elem, dubSelectionTooltip.elem, {
+    placement: 'bottom',
+    modifiers: [
+      {
+        name: 'followCursor',
+        options: {
+          enabled: true
+        }
+      },
+      {
+        name: 'offset',
+        options: {
+          offset: [0, 2],
+        },
+      },
+    ],
+  });
+  console.log("Created popper instance:");
+  console.log(popperInstance);
+
+  // initialize the event listeners
+  function show() {
+    console.log('show');
+    // Make the tooltip visible
+    dubSelectionTooltip.attr('data-show', '');
+
+    // Enable the event listeners
+    popperInstance.setOptions((options) => ({
+      ...options,
+      modifiers: [
+        ...options.modifiers,
+        { name: 'eventListeners', enabled: true },
+      ],
+    }));
+
+    // Update its position
+    popperInstance.update();
+  }
+
+  function hide() {
+    // Hide the tooltip
+    dubSelectionTooltip.elem.removeAttribute('data-show');
+
+    // Disable the event listeners
+    popperInstance.setOptions((options) => ({
+      ...options,
+      modifiers: [
+        ...options.modifiers,
+        { name: 'eventListeners', enabled: false },
+      ],
+    }));
+  }
+
+  const showEvents = ['mouseenter', 'focus', 'click'];
+  // const hideEvents = ['mouseleave', 'blur'];
+
+  showEvents.forEach((event) => {
+    //dubSelectionText.prop(event, (e) => { show(); });
+    dubSelectionText.elem.addEventListener(event, show);
+  });
+
+  // hideEvents.forEach((event) => {
+  //   //dubSelectionText.prop(event, (e) => { hide(); });
+  //   dubSelectionText.elem.addEventListener(event, hide);
+  // });
+  // Add an event listener to dismiss the popper when a click occurs outside of the popper
+  document.addEventListener('click', function (event) {
+    if (!dubSelectionTooltip.elem.contains(event.target)) {
+      hide();
+    }
+  });
+  // End of popper initialization
+  // Append the text and tooltip to the wrapping div
   dubSelectionDiv.append([dubSelectionText]);
 
   // Default to DEFAULT_DUB_LANGUAGES constant if no saved languages

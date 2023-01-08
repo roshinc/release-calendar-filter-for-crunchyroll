@@ -375,6 +375,10 @@ const setUIStateOfQuickPickOptions = (isMenuLocked) => {
  * @param {boolean} isMenuLocked Whether the menu is locked or not.
  */
 export const resoreQuickPickOptions = (shownLanguagesList, isMenuLocked) => {
+    if (isMenuLocked) {
+        console.log("in restore quick pick options, locked");
+        shownLanguagesList = getListOfShownLanguages();
+    }
     renderQuickPickOptions(shownLanguagesList);
     setUIStateOfQuickPickOptions(isMenuLocked);
 };
