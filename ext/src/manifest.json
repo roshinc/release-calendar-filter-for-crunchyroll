@@ -14,7 +14,8 @@
     {
       "resources": [
         "images/checkmark.svg",
-        "fonts/*"
+        "fonts/*",
+        "options/options.html"
       ],
       "extension_ids": [
         "obpphalkbgbbdennbifedaleahjcfmfh",

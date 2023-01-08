@@ -15,7 +15,8 @@
   ],
   "web_accessible_resources": [
     "images/checkmark.svg",
-    "fonts/*"
+    "fonts/*",
+    "options/options.html"
   ],
   "content_scripts": [
     {
