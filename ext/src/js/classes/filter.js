@@ -78,10 +78,18 @@ export default class Filter {
     restore(savedJson) {
 
         // undefined is version 1
-        // const savedVersion = savedJson["version"];
-
+        const savedVersion = savedJson["version"];
+        console.log("Saved version: " + savedVersion);
         console.log("In restore");
         console.log(savedJson);
+        // Check if version is not current version
+        if (savedVersion == Filter.#jsonVersion) {
+            console.log("Old version");
+            // assume version 1
+            // reset to defaults
+            this.reset();
+            return;
+        }
 
         this.#dubsLangOptionsListInternal = savedJson["dubsLangOptionsListInternal"];
 
