@@ -31,6 +31,9 @@ export const CRRS_FILTER_MENU_LOCK_BTN_ID = "cr-rs-filter-menu-lock-filters";
 // Hidden count class
 export const CRRS_HIDDEN_COUNT_CLASS_NAME = "cr-rs-filter-hidden-count";
 
+// Define a json version for the saved data
+export const CRRS_JSON_VERSION = 2;
+
 // Constants for the filter menu quick pick dubs
 export const ALL_DUB_LANGUAGES = ["Arabic", "Castilian", "English", "English-IN", "French", "German", "Hindi", "Italian", "Portuguese", "Russian", "Spanish"];
 export const DEFAULT_DUB_LANGUAGES = ["English", "Spanish", "French", "German"];
