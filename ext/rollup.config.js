@@ -44,7 +44,7 @@ export default [
                 ]
             }),
             // put it the last one
-            visualizer(),
+            visualizer({ filename: "stats/chrome-stats.html" }),
         ],
 
 
@@ -84,7 +84,7 @@ export default [
                 ]
             }),
             // put it the last one
-            visualizer(),
+            visualizer({ filename: "stats/chrome-options-stats.html" }),
         ],
     },
 
@@ -109,7 +109,7 @@ export default [
                 //exportConditions: ['development'],
             }),
             strip({
-                debugger: true
+                //debugger: true
             }),
             prettier({
                 tabWidth: 2,
@@ -126,7 +126,7 @@ export default [
                 ]
             }),
             // put it the last one
-            visualizer(),
+            visualizer({ filename: "stats/ff-stats.html" }),
         ],
 
 
@@ -166,7 +166,7 @@ export default [
                 ]
             }),
             // put it the last one
-            visualizer(),
+            visualizer({ filename: "stats/ff-options-stats.html" }),
         ],
     },
 ];
