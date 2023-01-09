@@ -85,4 +85,5 @@ After completing the above steps, you should see the developer, unpacked version
 This extension uses the following external libraries:
 
 - [CalDOM](https://github.com/dumijay/CalDOM/)
+- [Popper v2](https://github.com/floating-ui/floating-ui)
 - [WebExtension `browser` API Polyfill](https://github.com/mozilla/webextension-polyfill/)
