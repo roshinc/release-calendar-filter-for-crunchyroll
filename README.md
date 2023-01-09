@@ -29,13 +29,16 @@ Using the filter element, you can:
 
 - Toggle visibility for all dubbed episodes on the calendar.
 - Toggle visibility for dubbed episodes in a specific language.
+- Toggle visibility for all subbed episodes on the calendar.
 - Include, show only, or hide episodes that are 'In Queue' (if logged in)
 - Include, show only, or hide episodes that are premiering.
 - You can combine any of the above to see what you want to see.
 
 You can also lock filters! So, your choices are applied automatically when you go back to the release calendar or browse another week.
 
-In the options page you can also hide this element, if the filter is locked it will still be applied.
+Don't see the language you want on the filter UI? You can change that in the options page!
+
+In the options page you can also hide this element so that it doesn't display on the screen, if the filter is locked it will still be applied.
 
 ### The Hidden Count elements
 
