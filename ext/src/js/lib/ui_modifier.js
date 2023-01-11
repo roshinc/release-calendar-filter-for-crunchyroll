@@ -13,7 +13,6 @@ import {
   CRRS_FILTER_MENU_LOCK_BTN_ID, CRRS_HIDDEN_COUNT_CLASS_NAME, DEFAULT_DUB_LANGUAGES
 } from "./constants";
 import { handleDubbedRadioGroup, handleDubPickerCheckbox, handleQueueRadioGroup, handlePremiereRadioGroup, handelLockBtn, handelResetBtn } from "./event_handler";
-import { browserAction } from "webextension-polyfill";
 
 
 
