@@ -16,7 +16,6 @@ export const saveFilter = (filter) => {
             console.log('Value is set to ');
             console.log(result);
             console.log(filter);
-            console.log(filterHolder);
         });
 };
 

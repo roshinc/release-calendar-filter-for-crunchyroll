@@ -68,10 +68,10 @@ class CRCheckbox extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log('Custom checkbox element added to page.');
+    //console.log('Custom checkbox element added to page.');
     //console.log(this.shadowRoot.querySelector('.rs-cr-checkbox-inner-span'));
     this.#fakeCheckSpan.text(this.getAttribute('data-text'));
-    console.log(_(this).data('data-handler'));
+    //console.log(_(this).data('data-handler'));
     this.#customCheckboxInput.on("change", _(this).data('data-handler'));
 
     // check if the element has the attribute 'checked'

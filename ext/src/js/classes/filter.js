@@ -71,19 +71,14 @@ export default class Filter {
         this.#setDefaults();
         this.#weekContent = weekContent;
         this.setDubLangs(savedShownLanguages);
-        console.log("In filter constructor");
-        console.log(this.#dubsLangOptionsListInternal);
     }
 
     restore(savedJson) {
 
         // undefined is version 1
         const savedVersion = savedJson["version"];
-        console.log("Saved version: " + savedVersion);
-        console.log("In restore");
-        console.log(savedJson);
         // Check if version is not current version
-        if (savedVersion == Filter.#jsonVersion) {
+        if (savedVersion != Filter.#jsonVersion) {
             console.log("Old version");
             // assume version 1
             // reset to defaults
@@ -93,9 +88,7 @@ export default class Filter {
 
         this.#dubsLangOptionsListInternal = savedJson["dubsLangOptionsListInternal"];
 
-        console.log("hideAllSubs " + savedJson["hideAllSubs"]);
         this.#hideAllSubs = savedJson["hideAllSubs"];
-        console.log(this.#hideAllSubs);
 
         this.#hideAllDubs = savedJson["hideAllDub"];
         this.#dubsShown = savedJson["dubsShown"];
@@ -106,7 +99,6 @@ export default class Filter {
 
         this.#showPremiere = savedJson["showPremiere"];
         this.#showOnlyPremiere = savedJson["showOnlyPremiere"];
-        console.log("Show some dubs: " + this.#showSomeDubs);
         if (!this.#showSomeDubs) {
             this.#show();
         } else {
@@ -158,14 +150,9 @@ export default class Filter {
      * @param {Array} dubOptions 
      */
     setDubLangs(dubOptions) {
-        console.log("In setDubLangs");
-        console.log(dubOptions);
         if (dubOptions && dubOptions.length > 0) {
-            console.log("In if");
             this.#dubsLangOptionsListInternal = dubOptions.map(x => x.toLocaleLowerCase());
         }
-        console.log(this.#dubsLangOptionsListInternal);
-        console.log("Out setDubLangs");
     }
 
     #show(dubsToShow = []) {
@@ -265,10 +252,6 @@ export default class Filter {
         }
 
         let intersection = allDubs.filter(x => listToShow.includes(x));
-        console.log("All Dubs: " + allDubs);
-        console.log("Other Dubs: " + otherDubs);
-        console.log("List to show: " + listToShow);
-        console.log("Intersection: " + intersection);
 
         if (intersection.length == allDubs.length) {
             this.#hideAllDubs = false;
@@ -291,7 +274,6 @@ export default class Filter {
             this.#hideAllDubs = false;
             this.#showSomeDubs = false;
         }
-        console.log("dubsShown: " + this.#dubsShown);
     };
 
     showDubsOf(listToShow) {

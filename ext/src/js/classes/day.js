@@ -21,7 +21,6 @@ export default class Day {
 
     #parseContent(content) {
         const todaysContent = Array.from(content);
-        // console.log(content);
         todaysContent.forEach((content, index) => {
             const aContent = new Content(content, index);
             this.#todaysContentList[index] = aContent;
@@ -50,7 +49,6 @@ export default class Day {
         if (hideAllDubs) {
             hiddenContent.push.apply(hiddenContent, this.#todaysDubsList);
         } else {
-            console.log(allowedDubs);
             // set a boolean to check if the 'other' option in allowedDubs
             const isOtherAllowed = allowedDubs.includes('others');
             // get ths list of all known dub languages

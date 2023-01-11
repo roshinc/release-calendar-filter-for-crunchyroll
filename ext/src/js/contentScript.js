@@ -15,8 +15,6 @@ window.onload = function () {
   restorePreference()
     .then((items) => {
       if (items.showFilter) {
-        console.log(items.savedShownLanguages);
-        console.log(items);
         createInlineMenu(document.querySelector("header.simulcast-calendar-header"), items.savedShownLanguages);
       }
 

@@ -314,12 +314,10 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
       },
     ],
   });
-  console.log("Created popper instance:");
-  console.log(popperInstance);
+
 
   // initialize the event listeners
   function show() {
-    console.log('show');
     // Make the tooltip visible
     dubSelectionTooltip.attr('data-show', '');
 
