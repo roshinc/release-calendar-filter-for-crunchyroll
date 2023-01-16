@@ -1,0 +1,88 @@
+/* || RADIOS STYLES */
+
+.rs-cr-radio-group {
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 1182px) {
+
+    .rs-cr-radio-group {
+        flex-direction: column;
+        column-gap: 5px;
+    }
+}
+
+@media only screen and (min-width: 1182px) {
+
+    .rs-cr-radio-group {
+        flex-direction: row;
+        column-gap: 5px;
+    }
+}
+
+.rs-cr-radio-button-group {
+    display: flex;
+}
+
+.rs-cr-radio-button-input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.rs-cr-radio-button-label {
+    background-color: var(--cr-rc-main-color);
+    color: var(--cr-rc-main-text-color);
+    font-size: var(--cr-rc-main-font-size);
+    line-height: 1;
+    text-align: center;
+    padding: 4px 8px;
+    margin-right: -1px;
+    border: 1px solid var(--cr-rc-main-gray-color);
+    transition: all 0.1s ease-in-out;
+}
+
+.rs-cr-radio-button-label:hover {
+    cursor: pointer;
+}
+
+.rs-cr-radio-button-group input:checked+.rs-cr-radio-button-label {
+    background-color: var(--cr-rc-main-accent-color);
+    color: var(--cr-rc-main-color);
+}
+
+.rs-cr-radio-button-label:first-of-type {
+    border-radius: 4px 0 0 4px;
+}
+
+.rs-cr-radio-button-label:last-of-type {
+    border-radius: 0 4px 4px 0;
+}
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+.rs-cr-radio-button-input:focus+.rs-cr-radio-button-label,
+.rs-cr-radio-button-inputt+.rs-cr-radio-button-label:focus,
+.rs-cr-radio-button-input:not(:disabled)+.rs-cr-radio-button-label:hover {
+    /* Visible in the full-color space */
+    box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: dotted;
+}
+
+
+/* Disabled radion group styles */
+.rs-cr-radio-button-input:disabled+.rs-cr-radio-button-label {
+    cursor: default;
+    opacity: 0.5;
+}

@@ -1,0 +1,119 @@
+/* || IN LINE MENU STYLES */
+
+#cr-rs-filter-menu.cr-rs-class {
+    /* 
+    Styles pretty much copied from '.simulcast-calendar-header 
+    .premium-message' and '.premium-message' 
+    */
+
+    background-color: var(--cr-rc-main-color);
+    border-radius: 0.25rem;
+
+    cursor: default;
+
+    color: var(--cr-rc-main-accent-color);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: var(--cr-rc-main-font-size);
+    font-weight: 400;
+    line-height: 1.5em;
+    text-shadow: 0 0 0.077em transparent;
+
+    width: 100%;
+
+    padding: 0.9em 1em;
+
+    /* Helpful link for flex: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-text {
+    border-bottom: dotted 1px var(--cr-rc-main-accent-color);
+    cursor: pointer;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-text:hover {
+    border-bottom: none;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip {
+    background-color: var(--cr-rc-main-color);
+    color: var(--cr-rc-main-accent-color);
+    border: 1px solid var(--cr-rc-main-accent-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-show] {
+    display: block;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow,
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow::before {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: inherit;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    visibility: hidden;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow::before {
+    content: '';
+    visibility: visible;
+
+    transform: rotate(45deg);
+    border-top: 1px var(--cr-rc-main-accent-color) solid;
+    border-left: 1px var(--cr-rc-main-accent-color) solid;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='top']>#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    bottom: -4px;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='bottom']>#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    top: -4px;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='left']>#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    right: -4px;
+}
+
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='right']>#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    left: -4px;
+}
+
+/* || MEDIA QUERIES */
+
+@media only screen and (max-width: 900px) {
+
+    #cr-rs-filter-menu.cr-rs-class {
+        flex-direction: column;
+        row-gap: 0.541em;
+    }
+
+    .cr-rs-filter-vertical-divider {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+
+    #cr-rs-filter-menu.cr-rs-class {
+        flex-direction: row;
+        column-gap: 18px;
+    }
+
+    .cr-rs-filter-vertical-divider {
+        /* 
+        Helpful link: https://www.w3schools.com/howto/howto_css_vertical_line.asp 
+        */
+        border-left: 1px solid var(--cr-rc-main-gray-color);
+        height: 25px;
+    }
+}

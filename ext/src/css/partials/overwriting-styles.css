@@ -1,0 +1,7 @@
+/* || OVERWRITING STYLES */
+
+p.premium-message {
+    /* if the premium message is shown we want to add 
+    some gap between it and our menu */
+    margin-bottom: 0.6% !important;
+}

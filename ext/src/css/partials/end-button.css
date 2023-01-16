@@ -1,0 +1,88 @@
+/* || END BUTTON STYLES */
+
+.rs-cr-end-button-group {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-left: 1.46%;
+}
+
+.rs-cr-end-button {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding-top: unset;
+    padding-left: unset;
+    padding-right: unset;
+    padding-bottom: unset;
+}
+
+.rs-cr-orange-text,
+.rs-cr-locked {
+    color: var(--cr-rc-main-accent-color);
+}
+
+.rs-cr-unlocked {
+    color: var(--cr-rc-main-gray-color)
+}
+
+.fontello-icon {
+    /* increased icons size */
+    font-size: 134%;
+}
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+.rs-cr-end-button:focus .fontello-icon.rs-cr-unlocked,
+.rs-cr-end-button .rs-cr-unlocked:focus,
+.rs-cr-end-button:not(:disabled) .rs-cr-unlocked:hover {
+    /* Visible in the full-color space */
+    text-shadow:
+        -2px -2px 0 var(--cr-rc-main-accent-color),
+        0 -2px 0 var(--cr-rc-main-accent-color),
+        2px -2px 0 var(--cr-rc-main-accent-color),
+        2px 0 0 var(--cr-rc-main-accent-color),
+        2px 2px 0 var(--cr-rc-main-accent-color),
+        0 2px 0 var(--cr-rc-main-accent-color),
+        -2px 2px 0 var(--cr-rc-main-accent-color),
+        -2px 0 0 var(--cr-rc-main-accent-color);
+
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: dotted;
+}
+
+.rs-cr-end-button:focus .rs-cr-locked,
+.rs-cr-locked:focus,
+.rs-cr-end-button:not(:disabled) .rs-cr-locked:hover,
+.rs-cr-end-button:focus .rs-cr-orange-text,
+.rs-cr-end-button .rs-cr-orange-text:focus,
+.rs-cr-end-button:not(:disabled) .rs-cr-orange-text:hover {
+    /* Visible in the full-color space */
+    text-shadow:
+        -2px -2px 0 var(--cr-rc-main-gray-color),
+        0 -2px 0 var(--cr-rc-main-gray-color),
+        2px -2px 0 var(--cr-rc-main-gray-color),
+        2px 0 0 var(--cr-rc-main-gray-color),
+        2px 2px 0 var(--cr-rc-main-gray-color),
+        0 2px 0 var(--cr-rc-main-gray-color),
+        -2px 2px 0 var(--cr-rc-main-gray-color),
+        -2px 0 0 var(--cr-rc-main-gray-color);
+
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: dotted;
+}

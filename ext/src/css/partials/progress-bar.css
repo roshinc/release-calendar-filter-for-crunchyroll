@@ -1,0 +1,33 @@
+/* || PROGRESS BAR */
+.day.active .cr-rs-progress-on-closed {
+    display: none;
+}
+
+.cr-rs-progress-on-closed {
+    /* Reset the default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 70%;
+    height: .25rem;
+    display: block;
+    margin-top: .4375rem;
+
+    background-color: #f4f2f2;
+
+    overflow: hidden;
+    border: solid var(--cr-rc-main-gray-color) .01rem;
+    border-radius: .125rem;
+}
+
+.cr-rs-progress-on-closed::-webkit-progress-bar {
+    background-color: #f4f2f2;
+}
+
+.cr-rs-progress-on-closed::-webkit-progress-value {
+    background: var(--cr-rc-main-accent-color);
+}
+
+.cr-rs-progress-on-closed::-moz-progress-bar {
+    background: var(--cr-rc-main-accent-color);
+}

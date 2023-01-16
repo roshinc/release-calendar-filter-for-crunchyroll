@@ -1,0 +1,11 @@
+/* || GENERAL STYLES */
+
+
+
+.cr-rs-hide {
+    display: none;
+}
+
+.disabled-in-js {
+    cursor: default;
+}

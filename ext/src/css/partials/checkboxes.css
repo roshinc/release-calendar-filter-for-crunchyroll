@@ -1,0 +1,74 @@
+/* || CHECKBOX STYLES */
+
+#cr-rs-filter-menu-pick-dubs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    align-items: center;
+    column-gap: 1px;
+}
+
+.rs-cr-checkbox-input {
+    /* https://stackoverflow.com/a/719545/1193704 */
+    vertical-align: middle;
+    position: relative;
+    bottom: .08em;
+    /* this is a better value for different fonts! */
+
+    opacity: 0;
+}
+
+/* Text color for the label */
+.rs-cr-checkbox-inner-span {
+    cursor: pointer;
+    font-size: var(--cr-rc-main-font-size);
+    color: var(--cr-rc-main-text-color);
+}
+
+/* Checkbox un-checked style */
+.rs-cr-checkbox-inner-span:before {
+    content: '';
+    border: 1px solid var(--cr-rc-main-gray-color);
+    border-radius: 2px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 0.3em;
+    bottom: .08em;
+}
+
+/* Checked checkbox style (in this case the background is red) */
+.rs-cr-checkbox-input:checked+.rs-cr-checkbox-inner-span:before {
+    /* NOTE: Replace the url with a path to an SVG of a checkmark to get a checkmark icon */
+    background-image: var(--cr-rc-checkmark-svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    /* The size of the checkmark icon, you may/may not need this */
+    background-size: 15px;
+    border-radius: 2px;
+    background-color: var(--cr-rc-main-accent-color);
+    color: var(--cr-rc-main-color);
+}
+
+/* Adding a dotted border around the active tabbed-into checkbox */
+.rs-cr-checkbox-input:focus+.rs-cr-checkbox-inner-span:before,
+.rs-cr-checkbox-input:not(:disabled)+.rs-cr-checkbox-inner-span:hover:before {
+    /* Visible in the full-color space */
+    box-shadow: 0px 0px 0px 2px var(--cr-rc-main-accent-color);
+
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: dotted;
+}
+
+/* Disabled checkbox styles */
+.rs-cr-checkbox-input:disabled+.rs-cr-checkbox-inner-span {
+    cursor: default;
+    opacity: 0.5;
+}

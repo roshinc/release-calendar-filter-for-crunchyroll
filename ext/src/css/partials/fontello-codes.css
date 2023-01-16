@@ -1,0 +1,15 @@
+.icon-reset:before {
+    content: '\e801';
+}
+
+/* '' */
+.icon-locked:before {
+    content: '\e802';
+}
+
+/* '' */
+.icon-unlocked:before {
+    content: '\e803';
+}
+
+/* '' */

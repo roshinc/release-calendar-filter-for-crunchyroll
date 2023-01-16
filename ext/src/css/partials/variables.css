@@ -1,0 +1,49 @@
+:root {
+    --cr-rc-main-color: #FFFFFF;
+    --cr-rc-main-accent-color: #F78C24;
+    --cr-rc-main-gray-color: #cecaca;
+    --cr-rc-main-text-color: #000000;
+
+    /* solarized light */
+    /* base 2*/
+    /* --cr-rc-main-color: #eee8d5; */
+    /* --cr-rc-main-accent-color: #F78C24; */
+    /* base 3 */
+    /* --cr-rc-main-gray-color: rgba(160, 152, 149, .75); */
+    /* base 00 */
+    /* --cr-rc-main-text-color: #657b83; */
+
+    /* solarized dark */
+    /* base 02*/
+    /* --cr-rc-main-color: #073642;
+    --cr-rc-main-accent-color: #F78C24; */
+    /* base 3 */
+    /* --cr-rc-main-gray-color: rgba(95, 103, 106, .75); */
+    /* base 00 */
+    /* --cr-rc-main-text-color: #839496; */
+
+    /* dracula */
+    /* base 02*/
+    /* --cr-rc-main-color: #282a36; */
+    /* --cr-rc-main-accent-color: #F78C24; */
+    /* base 3 */
+    /* --cr-rc-main-gray-color: #44475a; */
+    /* base 00 */
+    /* --cr-rc-main-text-color: #6272a4; */
+
+    /* dark */
+    /* base 02*/
+    /* --cr-rc-main-color: #181A1B; */
+    /* --cr-rc-main-accent-color: #F78C24; */
+    /* base 3 */
+    /* --cr-rc-main-gray-color: #3B3B3B; */
+    /* base 00 */
+    /* --cr-rc-main-text-color: #C7C3BB; */
+
+    --cr-rc-secondry-text-color: #a09895;
+
+    --cr-rc-main-font-size: .8125rem;
+
+    --cr-rc-switch-height: 17px;
+    --cr-rc-switch-inner-circle-size: 13px;
+}

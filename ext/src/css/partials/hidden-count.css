@@ -1,0 +1,33 @@
+/* || HIDDEN COUNT STYLES */
+.cr-rs-filter-hidden-count {
+    list-style: none;
+    cursor: pointer;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    vertical-align: baseline;
+    height: 1.05rem;
+    font-family: Verdana, 'Lucida Grande', sans-serif;
+    font-size: .7rem;
+    line-height: 1.5;
+    color: var(--cr-rc-secondry-text-color);
+}
+
+.cr-rs-filter-hidden-count.changed {
+    border-radius: 4px;
+    animation: highlight 500ms ease-out;
+}
+
+@keyframes highlight {
+    0% {
+        background-color: var(--cr-rc-main-accent-color);
+    }
+
+    100% {
+        background-color: inherit;
+    }
+}

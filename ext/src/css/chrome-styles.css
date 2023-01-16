@@ -1,1 +1,2 @@
-@import url(../css/index.css);
+@import url(./chrome-variables.css);
+@import url(./index.css);

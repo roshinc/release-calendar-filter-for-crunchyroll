@@ -1,0 +1,76 @@
+/* || SWITCH STYLES */
+
+/* 
+Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
+ */
+.rs-cr-toggle-switch {
+    display: inline-block;
+    height: var(--cr-rc-switch-height);
+    margin-left: 10px;
+    position: relative;
+    width: 30px;
+}
+
+.rs-cr-toggle-switch .rs-cr-toggle-input {
+    height: 0;
+    opacity: 0;
+    width: 0;
+}
+
+.rs-cr-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--cr-rc-switch-height);
+    background-color: var(--cr-rc-main-gray-color);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.rs-cr-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: var(--cr-rc-switch-inner-circle-size);
+    width: var(--cr-rc-switch-inner-circle-size);
+    left: 2px;
+    bottom: 2px;
+    border-radius: 50%;
+    background-color: var(--cr-rc-main-color);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.rs-cr-toggle-input:checked+.rs-cr-toggle-slider {
+    background-color: var(--cr-rc-main-accent-color);
+}
+
+.rs-cr-toggle-input:checked+.rs-cr-toggle-slider:before {
+    -webkit-transform: translateX(var(--cr-rc-switch-inner-circle-size));
+    -ms-transform: translateX(var(--cr-rc-switch-inner-circle-size));
+    transform: translateX(var(--cr-rc-switch-inner-circle-size));
+}
+
+.rs-cr-toggle-container:hover .rs-cr-toggle-input:not(:disabled)+.rs-cr-toggle-slider:before,
+.rs-cr-toggle-input:focus+.rs-cr-toggle-slider:before,
+.rs-cr-toggle-input:not(:disabled)+.rs-cr-toggle-slider:hover:before {
+    /* Visible in the full-color space */
+    box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 4px;
+    outline-style: dotted;
+}
+
+/* Disabled switch styles */
+.rs-cr-toggle-input:disabled+.rs-cr-toggle-slider {
+    cursor: default;
+    opacity: 0.5;
+}
