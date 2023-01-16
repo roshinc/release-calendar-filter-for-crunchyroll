@@ -8,6 +8,9 @@ import { createInlineMenu, lockFilters, restoreUI } from "../../src/js/lib/ui_mo
 import { restorePreference } from "../../src/js/lib/data_store";
 import { reflowHiddenCount } from "../../src/js/lib/utils";
 
+// import the css so that it will be bundled
+import "../css/ff-styles.css";
+
 // window.onload = function () {
 
 // restore and apply filter and other preference
