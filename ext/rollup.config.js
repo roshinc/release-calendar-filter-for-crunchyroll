@@ -10,9 +10,10 @@ import postcssImport from 'postcss-import';
 import postcssPresetEnv from 'postcss-preset-env';
 import cssnano from 'cssnano';
 
-import path from 'path';
-import fs from 'fs';
 import mv from 'rollup-plugin-mv';
+
+const chrome_output_dir = 'dist/';
+const firefox_output_dir = 'dist_firefox/';
 
 
 export default [
@@ -25,7 +26,7 @@ export default [
         plugins: [
             clear({
                 // required, point out which directories should be clear.
-                targets: ['dist/'],
+                targets: [chrome_output_dir],
                 // optional, whether clear the directores when rollup recompile on --watch mode.
                 watch: true, // default: false
             }),
@@ -46,7 +47,7 @@ export default [
             }),
             copy({
                 targets: [
-                    { src: 'src/css', dest: 'dist' },
+                    // { src: 'src/css', dest: 'dist' },
                     { src: 'src/fonts', dest: 'dist' },
                     { src: 'src/images', dest: 'dist' },
                     { src: 'src/manifest.json', dest: 'dist' },
@@ -54,15 +55,16 @@ export default [
             }),
             postcss({
                 extract: true, // Extract CSS to a separate file
+                extract: 'index.css',
                 minimize: true, // Minimize the CSS
-                // sourceMap: true, // Generate source maps
-                output: (css) => {
-                    const distPath = path.resolve(process.cwd(), 'dist', 'css');
-                    if (!fs.existsSync(cssPath)) {
-                        fs.mkdirSync(cssPath);
-                    }
-                    css.write(path.join(cssPath, '/hello123.css'));
-                },
+                sourceMap: true, // Generate source maps
+                // output: (css) => {
+                //     const distPath = path.resolve(process.cwd(), 'dist', 'css');
+                //     if (!fs.existsSync(cssPath)) {
+                //         fs.mkdirSync(cssPath);
+                //     }
+                //     css.write(path.join(cssPath, '/hello123.css'));
+                // },
                 config: {
 
                 },
@@ -74,7 +76,7 @@ export default [
             }),
             mv(
                 [
-                    { src: "dist/js/bundle.css", dest: "dist/css/bundle.css" },
+                    { src: "dist/js/index.css", dest: "dist/css/index.css" },
                 ],
                 {
                     overwrite: false,
@@ -134,7 +136,7 @@ export default [
         plugins: [
             clear({
                 // required, point out which directories should be clear.
-                targets: ['dist_firefox/'],
+                targets: [firefox_output_dir],
                 // optional, whether clear the directores when rollup recompile on --watch mode.
                 watch: true, // default: false
             }),
@@ -155,13 +157,42 @@ export default [
             }),
             copy({
                 targets: [
-                    { src: 'src/css', dest: 'dist_firefox' },
+                    // { src: 'src/css', dest: 'dist_firefox' },
                     { src: 'src/fonts', dest: 'dist_firefox' },
                     { src: 'src/images', dest: 'dist_firefox' },
                     { src: 'src_firefox/js/static', dest: 'dist_firefox/js' },
                     { src: 'src_firefox/manifest.json', dest: 'dist_firefox' },
                 ]
             }),
+            postcss({
+                extract: true, // Extract CSS to a separate file
+                extract: 'index.css',
+                minimize: true, // Minimize the CSS
+                sourceMap: true, // Generate source maps
+                // output: (css) => {
+                //     const distPath = path.resolve(process.cwd(), 'dist', 'css');
+                //     if (!fs.existsSync(cssPath)) {
+                //         fs.mkdirSync(cssPath);
+                //     }
+                //     css.write(path.join(cssPath, '/hello123.css'));
+                // },
+                config: {
+
+                },
+                plugins: [
+                    postcssImport(),
+                    postcssPresetEnv(),
+                    cssnano()
+                ]
+            }),
+            mv(
+                [
+                    { src: "dist_firefox/js/index.css", dest: "dist_firefox/css/index.css" },
+                ],
+                {
+                    overwrite: false,
+                }
+            ),
             // put it the last one
             visualizer({ filename: "stats/ff-stats.html" }),
         ],

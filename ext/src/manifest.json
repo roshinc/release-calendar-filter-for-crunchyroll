@@ -34,7 +34,6 @@
       ],
       "run_at": "document_idle",
       "css": [
-        "css/fontello.css",
         "css/index.css"
       ],
       "js": [
