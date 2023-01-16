@@ -1,5 +1,3 @@
-:root {}
-
 @font-face {
   font-family: 'fontello';
   src: url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.woff2?40184825') format('woff2'),
@@ -54,19 +52,3 @@
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
-
-.icon-reset:before {
-  content: '\e801';
-}
-
-/* '' */
-.icon-locked:before {
-  content: '\e802';
-}
-
-/* '' */
-.icon-unlocked:before {
-  content: '\e803';
-}
-
-/* '' */
