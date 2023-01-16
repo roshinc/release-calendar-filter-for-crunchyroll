@@ -9,6 +9,9 @@ import { createInlineMenu, lockFilters, restoreUI } from "./lib/ui_modifier";
 import { restorePreference } from "./lib/data_store";
 import { reflowHiddenCount } from "./lib/utils";
 
+// import the css so that it will be bundled
+import "../css/chrome-styles.css";
+
 window.onload = function () {
 
   // restore and apply filter and other preference

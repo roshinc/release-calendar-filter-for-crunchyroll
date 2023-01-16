@@ -5,6 +5,15 @@ import copy from 'rollup-plugin-copy'
 import strip from '@rollup/plugin-strip';
 import prettier from 'rollup-plugin-prettier';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import postcss from 'rollup-plugin-postcss'
+import postcssImport from 'postcss-import';
+import postcssPresetEnv from 'postcss-preset-env';
+import cssnano from 'cssnano';
+
+import path from 'path';
+import fs from 'fs';
+import mv from 'rollup-plugin-mv';
+
 
 export default [
     {
@@ -43,6 +52,34 @@ export default [
                     { src: 'src/manifest.json', dest: 'dist' },
                 ]
             }),
+            postcss({
+                extract: true, // Extract CSS to a separate file
+                minimize: true, // Minimize the CSS
+                // sourceMap: true, // Generate source maps
+                output: (css) => {
+                    const distPath = path.resolve(process.cwd(), 'dist', 'css');
+                    if (!fs.existsSync(cssPath)) {
+                        fs.mkdirSync(cssPath);
+                    }
+                    css.write(path.join(cssPath, '/hello123.css'));
+                },
+                config: {
+
+                },
+                plugins: [
+                    postcssImport(),
+                    postcssPresetEnv(),
+                    cssnano()
+                ]
+            }),
+            mv(
+                [
+                    { src: "dist/js/bundle.css", dest: "dist/css/bundle.css" },
+                ],
+                {
+                    overwrite: false,
+                }
+            ),
             // put it the last one
             visualizer({ filename: "stats/chrome-stats.html" }),
         ],
