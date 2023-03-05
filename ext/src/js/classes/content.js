@@ -2,7 +2,15 @@ import { createProgressBar } from "../lib/ui_modifier";
 
 export default class Content {
   static #regexp = /^(.*) ?(?:\(([A-Z][a-z]+(?:-(?:[A-Z]{2}))?) Dub\)?)$/;
+  // This is a special case for english dubs, which are not marked as such in the season title
   static #regexp_for_english_dub_special_case = /^(.*) ?(?:\(Dub\)?)$/;
+  // This is a special case for the Crunchyroll Anime Awards
+  static #regexp_for_cr_anime_awards =
+    /^(?!.*Japanese)(.*) (?:\(([A-Z][a-z]+(?:-(?:[A-Z]{2}))?) Audio\)?)$/;
+  // This is a special case for the Crunchyroll Anime Awards english dub
+  static #regexp_for_cr_anime_awards_english_dub =
+    /^(The \d{4} Crunchyroll Anime Awards)$/;
+
   static #id_prefix = "cr-rs-content-";
   #id;
   #contentIndex;
@@ -15,6 +23,7 @@ export default class Content {
   #inQueue;
   #isDub;
   #dubLanguage;
+  #forceShowInSubOnlyAlso = false;
   /* 
    #topEpisodeName;
    #topEpisodeURL;
@@ -84,6 +93,10 @@ export default class Content {
     return this.#isPremiere;
   }
 
+  get isForceShowInSubOnlyAlso() {
+    return this.#forceShowInSubOnlyAlso;
+  }
+
   #parseContent(content) {
     const releaseArticle = content.querySelector("article.js-release");
 
@@ -137,6 +150,42 @@ export default class Content {
         this.#dubLanguage = "English";
         this.#seasonTitle = found[1];
         console.log(`English dub special case detected: ${this.#seasonTitle}`);
+      }
+    }
+
+    // if it was not detected as a dub, check if it is the special case of the Crunchyroll Anime Awards
+    if (!this.#isDub) {
+      const found = this.#seasonTitle.match(
+        Content.#regexp_for_cr_anime_awards
+      );
+      this.#isDub = found != null;
+      if (this.#isDub) {
+        this.#dubLanguage = found[2];
+        this.#seasonTitle = found[1];
+        console.log(
+          `CR Anime Awards special case detected: ${this.#seasonTitle} - ${
+            this.#dubLanguage
+          }`
+        );
+      }
+    }
+
+    // if it was not detected as a dub, check if it is the special case of the Crunchyroll Anime Awards english dub
+    if (!this.#isDub) {
+      const found = this.#seasonTitle.match(
+        Content.#regexp_for_cr_anime_awards_english_dub
+      );
+      this.#isDub = found != null;
+      if (this.#isDub) {
+        this.#dubLanguage = "English";
+        this.#seasonTitle = found[1];
+        console.log(
+          `CR Anime Awards english dub special case detected: ${
+            this.#seasonTitle
+          }`
+        );
+        // this special case also requires it to be shown in sub only mode
+        this.#forceShowInSubOnlyAlso = true;
       }
     }
 
