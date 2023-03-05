@@ -2,6 +2,7 @@ import { createProgressBar } from "../lib/ui_modifier";
 
 export default class Content {
   static #regexp = /^(.*) ?(?:\(([A-Z][a-z]+(?:-(?:[A-Z]{2}))?) Dub\)?)$/;
+  static #regexp_for_english_dub_special_case = /^(.*) ?(?:\(Dub\)?)$/;
   static #id_prefix = "cr-rs-content-";
   #id;
   #contentIndex;
@@ -124,6 +125,19 @@ export default class Content {
     if (this.#isDub) {
       this.#dubLanguage = found[2];
       this.#seasonTitle = found[1];
+    }
+
+    // if it was not detected as a dub, check if it is the special case of english dub
+    if (!this.#isDub) {
+      const found = this.#seasonTitle.match(
+        Content.#regexp_for_english_dub_special_case
+      );
+      this.#isDub = found != null;
+      if (this.#isDub) {
+        this.#dubLanguage = "English";
+        this.#seasonTitle = found[1];
+        console.log(`English dub special case detected: ${this.#seasonTitle}`);
+      }
     }
 
     // progress bar
