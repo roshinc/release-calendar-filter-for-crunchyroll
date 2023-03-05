@@ -1,31 +1,53 @@
 import _ from "caldom/dist/caldom.min.mjs";
 // enable usage of browser. namespace
-import "webextension-polyfill/dist/browser-polyfill.min"
-import { createPopper } from '@popperjs/core/dist/esm';
+import "webextension-polyfill/dist/browser-polyfill.min";
+import { createPopper } from "@popperjs/core/dist/esm";
 
 import preference from "../classes/pref";
 
 import {
-  CRRS_FILTER_MENU_DIV_ID, CRRS_CLASS, CRRS_FILTER_MENU_PICK_DUBS_DIV_ID, CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
-  CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME, CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
-  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
-  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX, CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX,
-  CRRS_FILTER_MENU_LOCK_BTN_ID, CRRS_HIDDEN_COUNT_CLASS_NAME, DEFAULT_DUB_LANGUAGES
+  CRRS_FILTER_MENU_DIV_ID,
+  CRRS_CLASS,
+  CRRS_FILTER_MENU_PICK_DUBS_DIV_ID,
+  CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
+  CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
+  CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
+  CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
+  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
+  CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE,
+  CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
+  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX,
+  CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX,
+  CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX,
+  CRRS_FILTER_MENU_LOCK_BTN_ID,
+  CRRS_HIDDEN_COUNT_CLASS_NAME,
+  DEFAULT_DUB_LANGUAGES,
 } from "./constants";
-import { handleDubbedRadioGroup, handleDubPickerCheckbox, handleQueueRadioGroup, handlePremiereRadioGroup, handelLockBtn, handelResetBtn } from "./event_handler";
-
-
+import {
+  handleDubbedRadioGroup,
+  handleDubPickerCheckbox,
+  handleQueueRadioGroup,
+  handlePremiereRadioGroup,
+  handelLockBtn,
+  handelResetBtn,
+} from "./event_handler";
 
 /**
  * Create a UI element with a checkbox styled as a toggle switch
- * 
+ *
  * @param {string} labelText the label of the toggle switch
  * @param {string} elementId the ID of the toggle input
  * @param {HTMLElement} elementToAttachTo element the toggle should append to
  * @param {EventListener} eventHandlerMethod callback function for onchange
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
-const createToggleSwtich = (labelText, elementId, elementToAttachTo, eventHandlerMethod, checked) => {
+const createToggleSwtich = (
+  labelText,
+  elementId,
+  elementToAttachTo,
+  eventHandlerMethod,
+  checked
+) => {
   //class names
   const TOGGLE_CONTAINER_LABEL_CLASS = "rs-cr-toggle-container";
   const TOGGLE_INNER_LABEL_CLASS = "rs-cr-toggle-switch";
@@ -52,8 +74,7 @@ const createToggleSwtich = (labelText, elementId, elementToAttachTo, eventHandle
     toggleSwitchInput.attr("checked", checked);
   }
   // **4. The Span element **
-  let toggleSwitchSpan = _("+span")
-    .addClass([CRRS_CLASS, TOGGLE_SPAN_CLASS]);
+  let toggleSwitchSpan = _("+span").addClass([CRRS_CLASS, TOGGLE_SPAN_CLASS]);
   // Connect elements
   toggleSwitchText.append([toggleSwitchLabel]);
   toggleSwitchLabel.append([toggleSwitchInput, toggleSwitchSpan]);
@@ -61,14 +82,13 @@ const createToggleSwtich = (labelText, elementId, elementToAttachTo, eventHandle
   elementToAttachTo.append(toggleSwitchText);
 };
 
-
 /**
  * Creates a div thats styled to look like a vertical divider
- * 
+ *
  * @param {HTMLElement} elementToAttachTo element the div should append to
  */
 const createVerticalDivider = (elementToAttachTo) => {
-  // ---- Add Vertical Divider ---- 
+  // ---- Add Vertical Divider ----
   let dividerDivElement = _("+div")
     .attr("aria-hidden", "true")
     .addClass([CRRS_CLASS, "cr-rs-filter-vertical-divider"]);
@@ -76,25 +96,27 @@ const createVerticalDivider = (elementToAttachTo) => {
 };
 
 /**
- * Creates an element that shows the number of content being hidden  
- * 
+ * Creates an element that shows the number of content being hidden
+ *
  * @param {HTMLElement} elementToAttachTo element the div should append to
  */
 export const createHiddenCount = (elementToAttachTo) => {
   let hiddenCount = _().react(
     {},
     {
-      render: state => {
-        let response = _("+div", `${state.count} Hidden`)
-          .addClass([CRRS_CLASS, CRRS_HIDDEN_COUNT_CLASS_NAME]);
+      render: (state) => {
+        let response = _("+div", `${state.count} Hidden`).addClass([
+          CRRS_CLASS,
+          CRRS_HIDDEN_COUNT_CLASS_NAME,
+        ]);
         if (state.changed && preference.reflowEnabled) {
           response.addClass(["changed"]);
         }
 
         return response;
-      } //This is XSS safe
+      }, //This is XSS safe
     }
-  )
+  );
 
   _(elementToAttachTo, hiddenCount);
 
@@ -102,11 +124,9 @@ export const createHiddenCount = (elementToAttachTo) => {
   hiddenCount.state.count = "0";
 
   return hiddenCount;
-
 };
 
 export const createProgressBar = (elementToAttachTo, progressAmount) => {
-
   const PROGRESS_CLASS = "cr-rs-progress-on-closed";
   const PROGRESS_WRAPPING_DIV_CLASS = "cr-rs-progress-wraper-on-closed";
   const PROGRESS_DIV_CLASS = "cr-rs-progress-inner-on-closed";
@@ -119,13 +139,11 @@ export const createProgressBar = (elementToAttachTo, progressAmount) => {
 
   // Add to container
   _(elementToAttachTo, progressElem);
-
-}
-
+};
 
 /**
- * Create a UI element with a custom checkbox 
- * 
+ * Create a UI element with a custom checkbox
+ *
  * @param {string} labelText the label of the checkbox
  * @param {string} elementId the ID of the checkbox
  * @param {HTMLElement} elementToAttachTo element the checkbox should append to
@@ -133,14 +151,19 @@ export const createProgressBar = (elementToAttachTo, progressAmount) => {
  * @param {Array} dataAttrs data attributes to add to the input
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
-const addCheckBox = (labelText, elementId, elementToAttachTo, eventHandlerMethod, dataAttrs, checked) => {
-
+const addCheckBox = (
+  labelText,
+  elementId,
+  elementToAttachTo,
+  eventHandlerMethod,
+  dataAttrs,
+  checked
+) => {
   const CHECKBOX_INPUT_CLASS = "rs-cr-checkbox-input";
   const CHECKBOX_INNER_SPAN_CLASS = "rs-cr-checkbox-inner-span";
 
   // **1. The wraping span element **
-  let customCheckboxSpan = _("+span")
-    .addClass(CRRS_CLASS);
+  let customCheckboxSpan = _("+span").addClass(CRRS_CLASS);
   // **2. The input element **
   let customCheckboxInput = _("+input")
     .attr("id", elementId)
@@ -176,10 +199,9 @@ const addCheckBox = (labelText, elementId, elementToAttachTo, eventHandlerMethod
   elementToAttachTo.append([customCheckboxSpan]);
 };
 
-
 /**
  * Create a UI element with a custom radio option for the group 'switchName'
- * 
+ *
  * @param {string} labelText the label of the radio
  * @param {string} elementId the ID of the radio
  * @param {string} switchName the name of ratio group
@@ -187,8 +209,14 @@ const addCheckBox = (labelText, elementId, elementToAttachTo, eventHandlerMethod
  * @param {EventListener} eventHandlerMethod callback function for onchange
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
-const addRadioOption = (labelText, elementId, switchName, elementToAttachTo, eventHandlerMethod, checked) => {
-
+const addRadioOption = (
+  labelText,
+  elementId,
+  switchName,
+  elementToAttachTo,
+  eventHandlerMethod,
+  checked
+) => {
   const RADIO_BUTTON_INPUT_CLASS = "rs-cr-radio-button-input";
   const RADIO_BUTTON_LABEL_CLASS = "rs-cr-radio-button-label";
 
@@ -215,36 +243,60 @@ const addRadioOption = (labelText, elementId, switchName, elementToAttachTo, eve
 };
 
 /**
- * 
+ *
  * @param {string} groupText the label for the group
  * @param {string} idPrefix the perfix of the id for the options
  * @param {string} switchName name of the group
  * @param {HTMLElement} elementToAttachTo element the radio should append to
  * @param {EventListener} eventHandlerMethod callback function for onchange
  */
-const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo, eventHandlerMethod) => {
-
+const addRadioButtonGroup = (
+  groupText,
+  idPrefix,
+  switchName,
+  elementToAttachTo,
+  eventHandlerMethod
+) => {
   const RADIO_GROUP_CLASS = "rs-cr-radio-group";
   const RADIO_BUTTON_GROUP_CLASS = "rs-cr-radio-button-group";
 
-  let buttonGroup = _("+div")
-    .addClass([CRRS_CLASS, RADIO_GROUP_CLASS]);
+  let buttonGroup = _("+div").addClass([CRRS_CLASS, RADIO_GROUP_CLASS]);
 
   let buttonGroupText = _("+span")
     .text(groupText)
     .addClass([CRRS_CLASS, "switch-holder-text"]);
 
-  let buttonGroupRadioContainer = _("+div")
-    .addClass([CRRS_CLASS, RADIO_BUTTON_GROUP_CLASS]);
+  let buttonGroupRadioContainer = _("+div").addClass([
+    CRRS_CLASS,
+    RADIO_BUTTON_GROUP_CLASS,
+  ]);
 
-  const radioOptions = [CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE];
+  const radioOptions = [
+    CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
+    CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
+    CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE,
+  ];
 
   for (let radioOption of radioOptions) {
     // console.log(radioOption);
     if (radioOption === CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE) {
-      addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, eventHandlerMethod, true);
+      addRadioOption(
+        radioOption,
+        `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`,
+        switchName,
+        buttonGroupRadioContainer,
+        eventHandlerMethod,
+        true
+      );
     } else {
-      addRadioOption(radioOption, `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`, switchName, buttonGroupRadioContainer, eventHandlerMethod, false);
+      addRadioOption(
+        radioOption,
+        `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`,
+        switchName,
+        buttonGroupRadioContainer,
+        eventHandlerMethod,
+        false
+      );
     }
   }
 
@@ -253,11 +305,10 @@ const addRadioButtonGroup = (groupText, idPrefix, switchName, elementToAttachTo,
 };
 
 /**
- * 
+ *
  * @param {HTMLElement} elementToAttachTo the element to append the menu to
  */
 export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
-
   let containerDiv = _("+div")
     .attr("id", CRRS_FILTER_MENU_DIV_ID)
     .addClass(CRRS_CLASS);
@@ -265,12 +316,16 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
   // ---- Add Toggle Switch for showing all dub ----
   //createToggleSwtich("Show Dubs", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, containerDiv, handleShowDubsToggle, true);
   // ---- Add Toggle Switch for showing in queue only ----
-  addRadioButtonGroup("Dubbed:", "dubbed-toggle", CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME, containerDiv, handleDubbedRadioGroup);
+  addRadioButtonGroup(
+    "Dubbed:",
+    "dubbed-toggle",
+    CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
+    containerDiv,
+    handleDubbedRadioGroup
+  );
 
-
-  // ---- Add Vertical Divider ---- 
+  // ---- Add Vertical Divider ----
   createVerticalDivider(containerDiv);
-
 
   // ---- Add Checkbox for showing specific dubs ----
   // **1. The wraping div element **
@@ -280,14 +335,21 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
   // **2. The text element **
   let dubSelectionText = _("+p")
     .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-text")
-    .attr("aria-describedby", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip")
+    .attr(
+      "aria-describedby",
+      "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip"
+    )
     .text("Enable Dubs for")
     .addClass(CRRS_CLASS);
 
   //2.1 Add tooltip container
   let dubSelectionTooltip = _("+div")
     .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip")
-    .html('You can change the language options displayed here in the <a href="' + browser.runtime.getURL("options/options.html") + '"> options </a> page.');
+    .html(
+      'You can change the language options displayed here in the <a href="' +
+        browser.runtime.getURL("options/options.html") +
+        '"> options </a> page.'
+    );
 
   //2.2 Add tooltip arrow container
   let dubSelectionTooltipArrow = _("+div")
@@ -296,36 +358,39 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
   dubSelectionTooltip.append(dubSelectionTooltipArrow);
   dubSelectionText.append(dubSelectionTooltip);
   // Initialize popper
-  let popperInstance = createPopper(dubSelectionText.elem, dubSelectionTooltip.elem, {
-    placement: 'bottom',
-    modifiers: [
-      {
-        name: 'followCursor',
-        options: {
-          enabled: true
-        }
-      },
-      {
-        name: 'offset',
-        options: {
-          offset: [0, 2],
+  let popperInstance = createPopper(
+    dubSelectionText.elem,
+    dubSelectionTooltip.elem,
+    {
+      placement: "bottom",
+      modifiers: [
+        {
+          name: "followCursor",
+          options: {
+            enabled: true,
+          },
         },
-      },
-    ],
-  });
-
+        {
+          name: "offset",
+          options: {
+            offset: [0, 2],
+          },
+        },
+      ],
+    }
+  );
 
   // initialize the event listeners
   function show() {
     // Make the tooltip visible
-    dubSelectionTooltip.attr('data-show', '');
+    dubSelectionTooltip.attr("data-show", "");
 
     // Enable the event listeners
     popperInstance.setOptions((options) => ({
       ...options,
       modifiers: [
         ...options.modifiers,
-        { name: 'eventListeners', enabled: true },
+        { name: "eventListeners", enabled: true },
       ],
     }));
 
@@ -335,19 +400,19 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
 
   function hide() {
     // Hide the tooltip
-    dubSelectionTooltip.elem.removeAttribute('data-show');
+    dubSelectionTooltip.elem.removeAttribute("data-show");
 
     // Disable the event listeners
     popperInstance.setOptions((options) => ({
       ...options,
       modifiers: [
         ...options.modifiers,
-        { name: 'eventListeners', enabled: false },
+        { name: "eventListeners", enabled: false },
       ],
     }));
   }
 
-  const showEvents = ['mouseenter', 'focus', 'click'];
+  const showEvents = ["mouseenter", "focus", "click"];
   // const hideEvents = ['mouseleave', 'blur'];
 
   showEvents.forEach((event) => {
@@ -360,7 +425,7 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
   //   dubSelectionText.elem.addEventListener(event, hide);
   // });
   // Add an event listener to dismiss the popper when a click occurs outside of the popper
-  document.addEventListener('click', function (event) {
+  document.addEventListener("click", function (event) {
     if (!dubSelectionTooltip.elem.contains(event.target)) {
       hide();
     }
@@ -370,34 +435,54 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
   dubSelectionDiv.append([dubSelectionText]);
 
   // Default to DEFAULT_DUB_LANGUAGES constant if no saved languages
-  const languages = savedShownLanguages && savedShownLanguages.length > 0 ? savedShownLanguages : DEFAULT_DUB_LANGUAGES;
+  const languages =
+    savedShownLanguages && savedShownLanguages.length > 0
+      ? savedShownLanguages
+      : DEFAULT_DUB_LANGUAGES;
   //Append the "Others" option
   languages.push("Others");
 
   for (let language of languages) {
     let map = [];
-    map['lang'] = language.toLowerCase()
-    addCheckBox(language, `${CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX}${language.toLowerCase()}`, dubSelectionDiv, handleDubPickerCheckbox, map, true);
+    map["lang"] = language.toLowerCase();
+    addCheckBox(
+      language,
+      `${CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX}${language.toLowerCase()}`,
+      dubSelectionDiv,
+      handleDubPickerCheckbox,
+      map,
+      true
+    );
   }
 
   // Add to container
   containerDiv.append(dubSelectionDiv);
 
-
-  // ---- Add Vertical Divider ---- 
-  createVerticalDivider(containerDiv);
-
-
-  // ---- Add Toggle Switch for showing in queue only ----
-  addRadioButtonGroup("In Queue:", "in-queue-toggle", CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME, containerDiv, handleQueueRadioGroup);
-
-  // ---- Add Vertical Divider ---- 
+  // ---- Add Vertical Divider ----
   createVerticalDivider(containerDiv);
 
   // ---- Add Toggle Switch for showing in queue only ----
-  addRadioButtonGroup("Permiere:", "premier-toggle", CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME, containerDiv, handlePremiereRadioGroup);
+  addRadioButtonGroup(
+    "In Queue:",
+    "in-queue-toggle",
+    CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
+    containerDiv,
+    handleQueueRadioGroup
+  );
 
-  // ---- Add End Button Group ---- 
+  // ---- Add Vertical Divider ----
+  createVerticalDivider(containerDiv);
+
+  // ---- Add Toggle Switch for showing in queue only ----
+  addRadioButtonGroup(
+    "Permiere:",
+    "premier-toggle",
+    CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
+    containerDiv,
+    handlePremiereRadioGroup
+  );
+
+  // ---- Add End Button Group ----
   const END_BUTTON_GROUP_CLASS = "rs-cr-end-button-group";
   const END_BUTTON_CLASS = "rs-cr-end-button";
 
@@ -405,37 +490,43 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
 
   const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
 
+  let lockDiv = _("+div").addClass([CRRS_CLASS, END_BUTTON_GROUP_CLASS]);
 
-  let lockDiv = _("+div")
-    .addClass([CRRS_CLASS, END_BUTTON_GROUP_CLASS]);
-
-
-  // ---- Add Lock Button ---- 
+  // ---- Add Lock Button ----
   let lockBtn = _("+button")
     .data("isLocked", "false")
     .attr("id", CRRS_FILTER_MENU_LOCK_BTN_ID)
     .attr("title", "Save Filters")
     .attr("aria-label", "Save Filters")
-    .on("click", (event) => { handelLockBtn(event, lockFilters) })
+    .on("click", (event) => {
+      handelLockBtn(event, lockFilters);
+    })
     .addClass([CRRS_CLASS, END_BUTTON_CLASS]);
 
   // Add Lock icon
-  let lockIcon = _("+i")
-    .addClass(["fontello-icon", "icon-unlocked", END_BUTTON_UNLOCKED_CLASS]);
-
+  let lockIcon = _("+i").addClass([
+    "fontello-icon",
+    "icon-unlocked",
+    END_BUTTON_UNLOCKED_CLASS,
+  ]);
 
   lockBtn.append(lockIcon);
 
-  // ---- Add Reset Button ---- 
+  // ---- Add Reset Button ----
   let resetBtn = _("+button")
     .attr("title", "Reset Filters")
     .attr("aria-label", "Reset Filters")
-    .on("click", (event) => { handelResetBtn(event, lockFilters) })
+    .on("click", (event) => {
+      handelResetBtn(event, lockFilters);
+    })
     .addClass([CRRS_CLASS, END_BUTTON_CLASS]);
 
   //Add reset icon
-  let resetIcon = _("+i")
-    .addClass(["fontello-icon", "icon-reset", ORANGE_TEXT_CLASS]);
+  let resetIcon = _("+i").addClass([
+    "fontello-icon",
+    "icon-reset",
+    ORANGE_TEXT_CLASS,
+  ]);
 
   resetBtn.append(resetIcon);
 
@@ -446,38 +537,64 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
   _(elementToAttachTo).append(containerDiv);
 };
 
-
 const handleUIChangesOnSaveStatus = (status, icon) => {
-
   const END_BUTTON_LOCKED_CLASS = "rs-cr-locked";
   const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
 
   if (status) {
+    icon
+      .removeClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"])
+      .addClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]);
 
-    icon.removeClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]).addClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]);
-
-    _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).attr("disabled", status);
+    _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).attr(
+      "disabled",
+      status
+    );
 
     _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).attr("disabled", status);
 
-    _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).attr("disabled", status);
-    _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).attr("disabled", status);
-
+    _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).attr(
+      "disabled",
+      status
+    );
+    _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).attr(
+      "disabled",
+      status
+    );
   } else {
-    icon.removeClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]).addClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]);
+    icon
+      .removeClass([END_BUTTON_LOCKED_CLASS, "icon-locked"])
+      .addClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]);
 
-    _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).each(function (elem, i) { elem.removeAttribute("disabled") });
+    _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).each(function (
+      elem,
+      i
+    ) {
+      elem.removeAttribute("disabled");
+    });
 
-    _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).each(function (elem, i) { elem.removeAttribute("disabled") });
+    _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).each(function (elem, i) {
+      elem.removeAttribute("disabled");
+    });
 
-    _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).each(function (elem, i) { elem.removeAttribute("disabled") });
-    _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).each(function (elem, i) { elem.removeAttribute("disabled") });
-
+    _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).each(
+      function (elem, i) {
+        elem.removeAttribute("disabled");
+      }
+    );
+    _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).each(
+      function (elem, i) {
+        elem.removeAttribute("disabled");
+      }
+    );
   }
-}
+};
 
-
-export const lockFilters = (status, lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID}`), icon = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID} i`)) => {
+export const lockFilters = (
+  status,
+  lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID}`),
+  icon = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID} i`)
+) => {
   if (status) {
     //lock
     handleUIChangesOnSaveStatus(true, icon);
@@ -486,7 +603,7 @@ export const lockFilters = (status, lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID
     handleUIChangesOnSaveStatus(false, icon);
     lockBtn.data("isLocked", "false");
   }
-}
+};
 
 export const restoreUI = (savedFilter) => {
   const hideAllDubs = savedFilter["hideAllDub"];
@@ -499,17 +616,20 @@ export const restoreUI = (savedFilter) => {
     indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
   }
 
-  let dubGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`);
+  let dubGroup = document.querySelectorAll(
+    `input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`
+  );
 
   for (const [i, elem] of dubGroup.entries()) {
     if (i == indexToPick) {
       elem.checked = true;
       break;
     }
-
   }
 
-  let dubPickers = document.querySelectorAll(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`);
+  let dubPickers = document.querySelectorAll(
+    `#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`
+  );
   const dubsShown = savedFilter["dubsShown"];
   console.log(dubsShown);
   // if no dubs are shown uncheck all the langs
@@ -527,26 +647,30 @@ export const restoreUI = (savedFilter) => {
     }
   }
 
+  // Restore the option for "In Queue"
   const showInQueue = savedFilter["showInQueue"];
   const showOnlyInQueue = savedFilter["showOnlyInQueue"];
 
-  indexToPick;
+  indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX;
   if (showOnlyInQueue) {
     indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
   } else if (!showInQueue && !showOnlyInQueue) {
+    // does it go here?
     indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
   }
 
-  let queueGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`);
+  let queueGroup = document.querySelectorAll(
+    `input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`
+  );
 
   for (const [i, elem] of queueGroup.entries()) {
     if (i == indexToPick) {
       elem.checked = true;
       break;
     }
-
   }
 
+  // Restore the option for "Premiere"
   const showPremiere = savedFilter["showPremiere"];
   const showOnlyPremiere = savedFilter["showOnlyPremiere"];
 
@@ -557,12 +681,13 @@ export const restoreUI = (savedFilter) => {
     indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
   }
 
-  let premiereGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`);
+  let premiereGroup = document.querySelectorAll(
+    `input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`
+  );
   for (const [i, elem] of premiereGroup.entries()) {
     if (i == indexToPick) {
       elem.checked = true;
       break;
     }
   }
-
-}
+};
