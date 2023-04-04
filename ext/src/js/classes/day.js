@@ -20,8 +20,7 @@ export default class Day {
   }
 
   #parseContent(content) {
-    const todaysContent = Array.from(content);
-    todaysContent.forEach((content, index) => {
+    [...content].forEach((content, index) => {
       const aContent = new Content(content, index);
       this.#todaysContentList[index] = aContent;
       if (aContent.isDubed) {
