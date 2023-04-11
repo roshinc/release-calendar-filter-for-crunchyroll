@@ -1,40 +1,65 @@
 
-import clear from 'rollup-plugin-clear'
-import { visualizer } from "rollup-plugin-visualizer";
-import copy from 'rollup-plugin-copy'
+import clear from 'rollup-plugin-clear';
+import { visualizer } from 'rollup-plugin-visualizer';
+import copy from 'rollup-plugin-copy';
 import strip from '@rollup/plugin-strip';
 import prettier from 'rollup-plugin-prettier';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+
+// Determine whether we're in production mode
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Use strip plugin for remove logging in production mode
+const string_logger = isProduction ? strip({
+    debugger: true
+}) : undefined;
+
+// Common plugins used in multiple configurations
+const commonPlugins = [
+    // Resolve Node.js modules for the browser
+    nodeResolve({
+        browser: true,
+    }),
+    // Format the output using Prettier
+    prettier({
+        tabWidth: 2,
+        singleQuote: false,
+        parser: 'babel',
+    }),
+    // Conditionally add strip plugin based on the environment
+    string_logger,
+];
+
+// Function to create clear plugin with specific targets
+const commonClearPlugin = (targets) =>
+    clear({
+        targets,
+        watch: true, // Clear directories on --watch mode
+    });
+
+// Function to create visualizer plugin with specific filename
+const commonVisualizerPlugin = (filename) =>
+    visualizer({ filename });
+
+// Common output options for all configurations
+const outputOptions = {
+    format: 'iife', // Use Immediately Invoked Function Expression format
+    sourcemap: !isProduction, // Generate source maps in non-production mode
+};
 
 export default [
     {
         input: 'src/js/contentScript.js',
         output: {
             file: 'dist/js/bundle.js',
-            format: 'iife'
+            ...outputOptions,
         },
         plugins: [
-            clear({
-                // required, point out which directories should be clear.
-                targets: ['dist/'],
-                // optional, whether clear the directores when rollup recompile on --watch mode.
-                watch: true, // default: false
-            }),
-            nodeResolve({
-                browser: true,
-
-                // Add this line for development config, omit for
-                // production config
-                //exportConditions: ['development'],
-            }),
-            // strip({
-            //     debugger: true
-            // }),
-            prettier({
-                tabWidth: 2,
-                singleQuote: false,
-                parser: 'babel',
-            }),
+            // Use common clear plugin with specific targets
+            commonClearPlugin(['dist/']),
+            // Add common plugins to the configuration
+            ...commonPlugins,
+            // Copy static files from the src directory to the dist directory
             copy({
                 targets: [
                     { src: 'src/css', dest: 'dist' },
@@ -43,79 +68,44 @@ export default [
                     { src: 'src/manifest.json', dest: 'dist' },
                 ]
             }),
-            // put it the last one
-            visualizer({ filename: "stats/chrome-stats.html" }),
-        ],
-
-
+            // (put it as the last one) Use common visualizer plugin with specific filename
+            commonVisualizerPlugin('stats/chrome-stats.html'),
+        ].filter(Boolean), // Filter out any undefined plugins
     },
     {
         input: 'src/options/js/options.js',
         output: {
             file: 'dist/options/js/options.js',
-            format: 'iife'
+            ...outputOptions,
         },
         plugins: [
-            clear({
-                // required, point out which directories should be clear.
-                targets: ['dist/options'],
-                // optional, whether clear the directores when rollup recompile on --watch mode.
-                watch: true, // default: false
-            }),
-            nodeResolve({
-                browser: true,
 
-                // Add this line for development config, omit for
-                // production config
-                //exportConditions: ['development'],
-            }),
-            // strip({
-            //     debugger: true
-            // }),
-            prettier({
-                tabWidth: 2,
-                singleQuote: false,
-                parser: 'babel',
-            }),
+            // Use common clear plugin with specific targets
+            commonClearPlugin(['dist/options']),
+            // Add common plugins to the configuration
+            ...commonPlugins,
             copy({
                 targets: [
                     // copy the options folder except the js folder
                     { src: ['src/options/*', '!src/options/js/'], dest: 'dist/options/' },
                 ]
             }),
-            // put it the last one
-            visualizer({ filename: "stats/chrome-options-stats.html" }),
-        ],
+            // (put it as the last one) Use common visualizer plugin with specific filename
+            commonVisualizerPlugin('stats/chrome-options-stats.html'),
+        ].filter(Boolean), // Filter out any undefined plugins
     },
 
     {
         input: 'src_firefox/js/contentScript.js',
         output: {
             file: 'dist_firefox/js/bundle.js',
-            format: 'iife'
+            ...outputOptions,
         },
         plugins: [
-            clear({
-                // required, point out which directories should be clear.
-                targets: ['dist_firefox/'],
-                // optional, whether clear the directores when rollup recompile on --watch mode.
-                watch: true, // default: false
-            }),
-            nodeResolve({
-                browser: true,
-
-                // Add this line for development config, omit for
-                // production config
-                //exportConditions: ['development'],
-            }),
-            strip({
-                //debugger: true
-            }),
-            prettier({
-                tabWidth: 2,
-                singleQuote: false,
-                parser: 'babel',
-            }),
+            // Use common clear plugin with specific targets
+            commonClearPlugin(['dist_firefox/']),
+            // Add common plugins to the configuration
+            ...commonPlugins,
             copy({
                 targets: [
                     { src: 'src/css', dest: 'dist_firefox' },
@@ -125,48 +115,29 @@ export default [
                     { src: 'src_firefox/manifest.json', dest: 'dist_firefox' },
                 ]
             }),
-            // put it the last one
-            visualizer({ filename: "stats/ff-stats.html" }),
-        ],
-
-
+            // (put it as the last one) Use common visualizer plugin with specific filename
+            commonVisualizerPlugin('stats/ff-stats.html'),
+        ].filter(Boolean), // Filter out any undefined plugins
     },
     {
         input: 'src/options/js/options.js',
         output: {
             file: 'dist_firefox/options/js/options.js',
-            format: 'iife'
+            ...outputOptions,
         },
         plugins: [
-            clear({
-                // required, point out which directories should be clear.
-                targets: ['dist_firefox/options'],
-                // optional, whether clear the directores when rollup recompile on --watch mode.
-                watch: true, // default: false
-            }),
-            nodeResolve({
-                browser: true,
-
-                // Add this line for development config, omit for
-                // production config
-                //exportConditions: ['development'],
-            }),
-            // strip({
-            //     debugger: true
-            // }),
-            prettier({
-                tabWidth: 2,
-                singleQuote: false,
-                parser: 'babel',
-            }),
+            // Use common clear plugin with specific targets
+            commonClearPlugin(['dist_firefox/options']),
+            // Add common plugins to the configuration
+            ...commonPlugins,
             copy({
                 targets: [
                     // copy the options folder except the js folder
                     { src: ['src/options/*', '!src/options/js/'], dest: 'dist_firefox/options/' },
                 ]
             }),
-            // put it the last one
-            visualizer({ filename: "stats/ff-options-stats.html" }),
-        ],
+            // (put it as the last one) Use common visualizer plugin with specific filename
+            commonVisualizerPlugin('stats/ff-options-stats.html'),
+        ].filter(Boolean), // Filter out any undefined plugins
     },
 ];

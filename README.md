@@ -80,6 +80,15 @@ By default, Crunchyroll only shows watch progress on episodes on the selected da
 
 After completing the above steps, you should see the developer, unpacked version appears in your extension list. To trigger the extension, simply go to `https://www.crunchyroll.com/simulcastcalendar`.
 
+---
+
+## Building The Extension For Stores
+
+1. Inside the `/ext` directory, run `npm install` in the folder to install dependencies
+2. Run `npm run build:prod` to generate the distribution directories
+3. The `/dist_firefox` folder contains the Firefox version
+4. The `/dist` folder contains the Chrome Version
+
 ## External Libraries
 
 This extension uses the following external libraries:
