@@ -6,6 +6,8 @@ import strip from '@rollup/plugin-strip';
 import prettier from 'rollup-plugin-prettier';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
+import checkManifest from './rollup_plugin/checkManifest.js';
+
 // Determine whether we're in production mode
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -55,6 +57,9 @@ export default [
             ...outputOptions,
         },
         plugins: [
+            // Check manifest for localhost text in production mode
+            // Pass the path to the manifest.json file
+            checkManifest('src/manifest.json'),
             // Use common clear plugin with specific targets
             commonClearPlugin(['dist/']),
             // Add common plugins to the configuration
@@ -102,6 +107,9 @@ export default [
             ...outputOptions,
         },
         plugins: [
+            // Check manifest for localhost text in production mode
+            // Pass the path to the manifest.json file
+            checkManifest('src_firefox/manifest.json'),
             // Use common clear plugin with specific targets
             commonClearPlugin(['dist_firefox/']),
             // Add common plugins to the configuration
