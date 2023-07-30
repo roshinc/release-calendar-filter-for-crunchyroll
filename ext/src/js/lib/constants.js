@@ -9,7 +9,8 @@ export const CRRS_FILTER_MENU_DIV_ID = "cr-rs-filter-menu";
 
 // Dubs Picker
 export const CRRS_FILTER_MENU_PICK_DUBS_DIV_ID = "cr-rs-filter-menu-pick-dubs";
-export const CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX = "cr-rs-filter-menu-pick-dubs-lang-";
+export const CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX =
+  "cr-rs-filter-menu-pick-dubs-lang-";
 
 // Radio Groups
 export const CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME = "dubbed-switch";
@@ -24,7 +25,6 @@ export const CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX = 1;
 export const CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE = "Hide";
 export const CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX = 2;
 
-
 // End Button Group
 export const CRRS_FILTER_MENU_LOCK_BTN_ID = "cr-rs-filter-menu-lock-filters";
 
@@ -35,5 +35,23 @@ export const CRRS_HIDDEN_COUNT_CLASS_NAME = "cr-rs-filter-hidden-count";
 export const CRRS_JSON_VERSION = 2;
 
 // Constants for the filter menu quick pick dubs
-export const ALL_DUB_LANGUAGES = ["Arabic", "Castilian", "English", "English-IN", "French", "German", "Hindi", "Italian", "Portuguese", "Russian", "Spanish"];
+export const ALL_DUB_LANGUAGES = [
+  "Arabic",
+  "Castilian",
+  "Catalan",
+  "English",
+  "English-IN",
+  "European-Portuguese",
+  "French",
+  "German",
+  "Hindi",
+  "Italian",
+  "Mandarin",
+  "Polish",
+  "Portuguese",
+  "Russian",
+  "Spanish",
+  "Tamil",
+  "Thai",
+];
 export const DEFAULT_DUB_LANGUAGES = ["English", "Spanish", "French", "German"];
