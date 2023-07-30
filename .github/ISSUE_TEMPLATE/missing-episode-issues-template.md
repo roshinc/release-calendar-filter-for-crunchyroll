@@ -6,7 +6,7 @@ labels: missing episode
 assignees: ""
 ---
 
-## Language Name
+## Browser and version
 
 ## Screenshot
 
