@@ -1,7 +1,8 @@
 import { createProgressBar } from "../lib/ui_modifier";
 
 export default class Content {
-  static #regexp = /^(.*) ?(?:\(([A-Z][a-z]+(?:-(?:[A-Z]{2}))?) Dub\)?)$/;
+  static #regexp =
+    /^(.*) ?(?:\(([A-Z][a-z]+(?:-(?:[A-Z]{2}))?(?: ?[A-Z][a-z]+)?) Dub\)?)$/;
   // This is a special case for english dubs, which are not marked as such in the season title
   static #regexp_for_english_dub_special_case = /^(.*) ?(?:\(Dub\)?)$/;
   // This is a special case for the Crunchyroll Anime Awards
@@ -137,6 +138,9 @@ export default class Content {
     this.#isDub = found != null;
     if (this.#isDub) {
       this.#dubLanguage = found[2];
+      // Replace the spaces in the dub language with dashes
+      // for handling languages with multiple words e.g. European Portuguese
+      this.#dubLanguage = this.#dubLanguage.replace(" ", "-");
       this.#seasonTitle = found[1];
     }
 
@@ -202,6 +206,17 @@ export default class Content {
       this.#isDub,
       this.#dubLanguage
     );
+    // create a class for this content with the dub language, if it is dubbed
+    let contentClass = "cr-rs-no-dub";
+    if (this.#isDub) {
+      contentClass = "cr-rs-" + this.#dubLanguage.toLowerCase();
+    }
+
+    // Check if the class is not already present
+    if (!content.classList.contains(contentClass)) {
+      // Add the class
+      content.classList.add(contentClass);
+    }
   }
 
   /**
