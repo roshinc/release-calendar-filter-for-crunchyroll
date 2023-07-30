@@ -1,17 +1,15 @@
 ---
 name: New Dub issue
-about: Use this if a new dub language has been introduced and has not yet been added
+about:
+  Use this if a new dub language has been introduced and has not yet been added
   to the extension
-title: "[NEW DUB LANGUAGE]"
+title: "[NEW DUB LANGUAGE] "
 labels: new dub language
-assignees: ''
-
+assignees: ""
 ---
 
 ## Language Name
 
-
 ## Screenshot
 
-
-## Crunchyroll release calendar url (with week in it)
+## Crunchyroll release calendar url (with week in it) (or just the date of the first day of that week)
