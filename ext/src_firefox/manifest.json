@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Release Calendar Filter for Crunchyroll",
   "description": "A filter for the Release/Simulcast Calendar on Crunchyroll.",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "icons": {
     "128": "images/icon.png"
   },
@@ -21,7 +21,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.crunchyroll.com/simulcastcalendar*"
+        "*://*.crunchyroll.com/simulcastcalendar*",
+        "*://*.crunchyroll.com/*/simulcastcalendar*"
       ],
       "run_at": "document_idle",
       "css": [
