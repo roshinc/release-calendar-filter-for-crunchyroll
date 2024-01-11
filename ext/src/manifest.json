@@ -30,7 +30,8 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.crunchyroll.com/simulcastcalendar*"
+        "*://*.crunchyroll.com/simulcastcalendar*",
+        "*://*.crunchyroll.com/*/simulcastcalendar*"
       ],
       "run_at": "document_idle",
       "css": [
