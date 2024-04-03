@@ -125,13 +125,13 @@ export const handlePremiereRadioGroup = (event) => {
 
     switch (selectedValue) {
         case 'only':
-            preference.crrsFilter.showPermiereOnly();
+            preference.crrsFilter.showPremiereOnly();
             break;
         case 'show':
-            preference.crrsFilter.showPermiere();
+            preference.crrsFilter.showPremiere();
             break;
         case 'hide':
-            preference.crrsFilter.hidePermiere();
+            preference.crrsFilter.hidePremiere();
             break;
         default:
             throw `unknow selection ${selectedValue}.`;

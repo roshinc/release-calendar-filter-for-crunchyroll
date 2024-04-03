@@ -347,8 +347,8 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
     .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip")
     .html(
       'You can change the language options displayed here in the <a href="' +
-        browser.runtime.getURL("options/options.html") +
-        '"> options </a> page.'
+      browser.runtime.getURL("options/options.html") +
+      '"> options </a> page.'
     );
 
   //2.2 Add tooltip arrow container
@@ -475,7 +475,7 @@ export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
 
   // ---- Add Toggle Switch for showing in queue only ----
   addRadioButtonGroup(
-    "Permiere:",
+    "Premiere:",
     "premier-toggle",
     CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
     containerDiv,

@@ -29,8 +29,8 @@ export default class Week {
     allowedDubs,
     hideInQueue,
     showInQueueOnly,
-    hidePermiere,
-    showPermiereOnly
+    hidePremiere,
+    showPremiereOnly
   ) {
     this.#daysOfTheWeek.forEach((day, index) => {
       day.show(
@@ -39,8 +39,8 @@ export default class Week {
         allowedDubs,
         hideInQueue,
         showInQueueOnly,
-        hidePermiere,
-        showPermiereOnly
+        hidePremiere,
+        showPremiereOnly
       );
     });
   }

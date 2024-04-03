@@ -15,7 +15,7 @@ export const CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX =
 // Radio Groups
 export const CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME = "dubbed-switch";
 export const CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME = "in-queue-switch";
-export const CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME = "permiere-switch";
+export const CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME = "premiere-switch";
 
 // Radio Group Values & Indexes
 export const CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE = "Only";
