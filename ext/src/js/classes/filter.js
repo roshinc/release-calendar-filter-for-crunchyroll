@@ -315,7 +315,7 @@ export default class Filter {
         }
     }
 
-    hidePermiere() {
+    hidePremiere() {
         if (this.#showPremiere) {
 
             this.#showPremiere = false;
@@ -326,7 +326,7 @@ export default class Filter {
         }
     }
 
-    showPermiere() {
+    showPremiere() {
         if (!this.#showPremiere || this.#showOnlyPremiere) {
 
             this.#showPremiere = true;
@@ -337,7 +337,7 @@ export default class Filter {
         }
     }
 
-    showPermiereOnly() {
+    showPremiereOnly() {
         if (!this.#showOnlyPremiere) {
 
             this.#showPremiere = true;

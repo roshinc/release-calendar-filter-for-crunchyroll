@@ -49,11 +49,9 @@ export default class Content {
       episodesWord = `${episodesWord}s`;
     }
 
-    about[index] = `Show ${this.#showTitle} [${
-      this.#seasonTitle
-    }] has ${episodesWord} ${this.#episodesAvailable} avalible at ${
-      this.#dateTime
-    }.`;
+    about[index] = `Show ${this.#showTitle} [${this.#seasonTitle
+      }] has ${episodesWord} ${this.#episodesAvailable} avalible at ${this.#dateTime
+      }.`;
     index++;
 
     if (this.#inQueue) {
@@ -90,7 +88,7 @@ export default class Content {
     return this.#inQueue;
   }
 
-  get isPermiere() {
+  get isPremiere() {
     return this.#isPremiere;
   }
 
@@ -167,8 +165,7 @@ export default class Content {
         this.#dubLanguage = found[2];
         this.#seasonTitle = found[1];
         console.log(
-          `CR Anime Awards special case detected: ${this.#seasonTitle} - ${
-            this.#dubLanguage
+          `CR Anime Awards special case detected: ${this.#seasonTitle} - ${this.#dubLanguage
           }`
         );
       }
@@ -184,8 +181,7 @@ export default class Content {
         this.#dubLanguage = "English";
         this.#seasonTitle = found[1];
         console.log(
-          `CR Anime Awards english dub special case detected: ${
-            this.#seasonTitle
+          `CR Anime Awards english dub special case detected: ${this.#seasonTitle
           }`
         );
         // this special case also requires it to be shown in sub only mode
@@ -195,7 +191,8 @@ export default class Content {
 
     // progress bar
     const currentProgress = releaseArticle.querySelector("progress");
-    if (currentProgress.value > 0) {
+    // Test series doesn't have progress (Sign of things to come or just an oversite) 
+    if (currentProgress && currentProgress.value > 0) {
       createProgressBar(releaseArticle, currentProgress.value);
     }
 
@@ -231,15 +228,12 @@ export default class Content {
   #createID(contentSlug, episodesAvalible, isDubbed, dubLang) {
     if (isDubbed) {
       let dubLangLower = dubLang.toLowerCase();
-      this.#id = `${
-        Content.#id_prefix
-      }${contentSlug}-${episodesAvalible}-${dubLangLower}-${this.#dateTime.getDay()}-${
-        this.#contentIndex
-      }`;
+      this.#id = `${Content.#id_prefix
+        }${contentSlug}-${episodesAvalible}-${dubLangLower}-${this.#dateTime.getDay()}-${this.#contentIndex
+        }`;
     } else {
-      this.#id = `${Content.#id_prefix}${contentSlug}-${episodesAvalible}-${
-        this.#contentIndex
-      }-${this.#dateTime.getDay()}-${this.#contentIndex}`;
+      this.#id = `${Content.#id_prefix}${contentSlug}-${episodesAvalible}-${this.#contentIndex
+        }-${this.#dateTime.getDay()}-${this.#contentIndex}`;
     }
 
     return this.#id;

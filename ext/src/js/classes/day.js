@@ -6,7 +6,7 @@ export default class Day {
   #todaysDubsList = [];
   #todaysSubsList = [];
   #todaysInQueue = [];
-  #todaysPermiere = [];
+  #todaysPremiere = [];
   #todaysDubsThatShouldBeShownInSubOnlyAlso = [];
 
   #hiddenCount;
@@ -32,8 +32,8 @@ export default class Day {
       if (aContent.isInQueue) {
         this.#todaysInQueue.push(aContent);
       }
-      if (aContent.isPermiere) {
-        this.#todaysPermiere.push(aContent);
+      if (aContent.isPremiere) {
+        this.#todaysPremiere.push(aContent);
       }
       if (aContent.isForceShowInSubOnlyAlso) {
         this.#todaysDubsThatShouldBeShownInSubOnlyAlso.push(aContent);
@@ -47,8 +47,8 @@ export default class Day {
     allowedDubs,
     hideInQueue,
     showInQueueOnly,
-    hidePermiere,
-    showPermiereOnly
+    hidePremiere,
+    showPremiereOnly
   ) {
     let hiddenContent = [];
 
@@ -93,8 +93,8 @@ export default class Day {
       hiddenContent.push.apply(hiddenContent, this.#todaysInQueue);
     }
 
-    if (hidePermiere) {
-      hiddenContent.push.apply(hiddenContent, this.#todaysPermiere);
+    if (hidePremiere) {
+      hiddenContent.push.apply(hiddenContent, this.#todaysPremiere);
     }
     const seen = new Set();
     let uniqueListToHide = hiddenContent.filter((el) => {
@@ -107,8 +107,8 @@ export default class Day {
       (x) => !uniqueListToHide.includes(x)
     );
 
-    if (showInQueueOnly && showPermiereOnly) {
-      toShow = toShow.filter((x) => x.isInQueue || x.isPermiere);
+    if (showInQueueOnly && showPremiereOnly) {
+      toShow = toShow.filter((x) => x.isInQueue || x.isPremiere);
       uniqueListToHide = this.#todaysContentList.filter(
         (x) => !toShow.includes(x)
       );
@@ -117,8 +117,8 @@ export default class Day {
       uniqueListToHide = this.#todaysContentList.filter(
         (x) => !toShow.includes(x)
       );
-    } else if (showPermiereOnly) {
-      toShow = toShow.filter((x) => x.isPermiere);
+    } else if (showPremiereOnly) {
+      toShow = toShow.filter((x) => x.isPremiere);
       uniqueListToHide = this.#todaysContentList.filter(
         (x) => !toShow.includes(x)
       );
