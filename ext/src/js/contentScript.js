@@ -18,7 +18,7 @@ window.onload = function () {
         createInlineMenu(document.querySelector("header.simulcast-calendar-header"), items.savedShownLanguages);
       }
 
-      // if reflow is enabbled or not
+      // if reflow is enabled or not
       preference.reflowEnabled = items.reflowHCount;
 
       // parse week
