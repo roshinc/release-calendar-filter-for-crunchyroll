@@ -10,7 +10,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.6",
     "caldom": "^1.0.7",
-    "webextension-polyfill": "^0.10.0"
+    "webextension-polyfill": "^0.12.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
