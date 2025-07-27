@@ -14,3 +14,17 @@ export const reflowHiddenCount = () => {
         void element.offsetHeight;
     });
 };
+
+/**
+ * Function to get the popover ID from the release article dataset
+ * @param releaseArticleDataset a dataset object from a release article that may contain a popoverUrl
+ * @returns {string|null} The popover ID if available, otherwise null
+ */
+export const getPopoverID = (releaseArticleDataset) => {
+    const popoverUrl = releaseArticleDataset.popoverUrl;
+    if (popoverUrl) {
+        // get the last part of the url
+        return popoverUrl.split("/").pop();
+    }
+    return null;
+}

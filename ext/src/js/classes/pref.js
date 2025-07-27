@@ -9,7 +9,8 @@ class Pref {
     // Hold saved languages
     #savedLanguages;
 
-    constructor() { }
+    constructor() {
+    }
 
     static getInstance() {
         if (!this.instance) {
@@ -20,18 +21,21 @@ class Pref {
     }
 
     /**
-         * @param {Filter} crrsFilter
-         */
+     * @param {Filter} crrsFilter
+     */
     set crrsFilter(crrsFilter) {
+        console.log("Setting filter");
+        console.log(crrsFilter);
         this.#crrsFilter = crrsFilter;
     }
+
     get crrsFilter() {
         return this.#crrsFilter;
     }
 
     /**
-         * @param {boolean} reflowEnabled
-         */
+     * @param {boolean} reflowEnabled
+     */
     set reflowEnabled(reflowEnabled) {
         this.#reflowEnabled = reflowEnabled;
     }
