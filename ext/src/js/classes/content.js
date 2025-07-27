@@ -130,22 +130,22 @@ export default class Content {
         const seasonUrl = seasonH1.querySelector("a");
         this.#seasonTitle = seasonUrl.querySelector("cite").textContent;
 
-        console.log(`Season title: ${this.#seasonTitle}`);
         if (tinyContents) {
             const popoverId = getPopoverID(releaseArticleDataset);
             if (popoverId) {
                 // Find the TinyContent object with the matching popoverId
                 const tinyContent = tinyContents.find(tc => tc.popoverId === popoverId);
                 if (tinyContent) {
-                    console.log(`TinyContent found: ${tinyContent.blurb()}`);
+                    // console.log(`TinyContent found: ${tinyContent.blurb()}`);
                     // season name
                     this.#seasonTitle = tinyContent.seasonTitle;
-                    console.log(`Season title: ${this.#seasonTitle}`);
+                } else {
+                    console.warn(`TinyContent with popoverId ${popoverId} not found.`);
                 }
             }
         }
 
-        console.log(`Starting name check with season title: ${this.#seasonTitle}`);
+        // console.log(`Starting name check with season title: ${this.#seasonTitle}`);
         seasonUrl.querySelector("cite").textContent = this.#seasonTitle;
 
         // dub info

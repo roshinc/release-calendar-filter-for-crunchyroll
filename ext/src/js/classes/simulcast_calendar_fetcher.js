@@ -51,9 +51,9 @@ export default class SimulcastCalendarFetcher {
             if (cachedContents) {
                 console.log(`Retrieved ${cachedContents.length} cached content objects`);
                 // Log cached content
-                cachedContents.forEach((content, index) => {
+                /*cachedContents.forEach((content, index) => {
                     console.log(`Cached Content ${index + 1}: ${content.blurb()}`);
-                });
+                });*/
                 return cachedContents;
             }
 
@@ -158,9 +158,9 @@ export default class SimulcastCalendarFetcher {
             console.log(`Created ${tinyContents.length} TinyContent objects from fetch`);
 
             // Log the blurb of each TinyContent object
-            tinyContents.forEach((content, index) => {
-                console.log(`Content ${index + 1}: ${content.blurb()}`);
-            });
+            // tinyContents.forEach((content, index) => {
+            //     console.log(`Content ${index + 1}: ${content.blurb()}`);
+            // });
 
             return tinyContents;
 
@@ -181,7 +181,7 @@ export default class SimulcastCalendarFetcher {
             contentIndex: content.contentIndex,
             showTitle: content.showTitle,
             seasonTitle: content.seasonTitle,
-            blurb: content.blurb(),
+            // blurb: content.blurb(),
             timestamp: Date.now()
         }));
     }
@@ -197,7 +197,7 @@ export default class SimulcastCalendarFetcher {
             contentIndex: contentData.contentIndex,
             showTitle: contentData.showTitle,
             seasonTitle: contentData.seasonTitle,
-            blurb: () => contentData.blurb,
+            // blurb: () => contentData.blurb,
             isCachedData: true,
             timestamp: contentData.timestamp
         }));
