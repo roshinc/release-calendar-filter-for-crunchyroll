@@ -36,8 +36,15 @@ export default class SimulcastCalendarFetcher {
             }
 
             console.warn(`Language detected: ${language}`);
-            const englishUrl = this.constructEnglishUrl(currentUrl, language);
+            const englishUrl = this.constructEnglishUrl(currentUrl);
             console.log(`English URL: ${englishUrl}`);
+
+            // Check for new episodes by comparing current page article count with cached count
+            const shouldClearCache = await this.checkForNewEpisodes(englishUrl);
+            if (shouldClearCache) {
+                console.log("New episodes detected, clearing cache to fetch fresh data");
+                await this.cache.remove(englishUrl);
+            }
 
             // Try to get from cache first
             const cachedContents = await this.cache.get(englishUrl);
@@ -194,6 +201,48 @@ export default class SimulcastCalendarFetcher {
             isCachedData: true,
             timestamp: contentData.timestamp
         }));
+    }
+
+    /**
+     * Checks if new episodes have been added by comparing current page article count with cached count
+     * @param {string} englishUrl - The English URL we're caching
+     * @returns {Promise<boolean>} Whether cache should be cleared due to new episodes
+     */
+    async checkForNewEpisodes(englishUrl) {
+        try {
+            // Count articles on the current page (non-English page)
+            const currentPageArticles = document.querySelectorAll("article.js-release");
+            const currentCount = currentPageArticles.length;
+
+            if (currentCount === 0) {
+                // If current page has no articles, we can't make a comparison
+                console.log("No articles found on current page, skipping new episode check");
+                return false;
+            }
+
+            // Peek at cached data without triggering cache logic
+            const cachedData = await this.cache.peek(englishUrl);
+
+            if (!cachedData || !Array.isArray(cachedData)) {
+                // No cached data exists, so no need to clear
+                return false;
+            }
+
+            const cachedCount = cachedData.length;
+            console.log(`Episode count comparison - Current page: ${currentCount}, Cached: ${cachedCount}`);
+
+            // Clear cache if current page has more articles (new episodes added)
+            if (currentCount > cachedCount) {
+                console.log(`🆕 New episodes detected! Current: ${currentCount}, Cached: ${cachedCount}`);
+                return true;
+            }
+
+            return false;
+
+        } catch (error) {
+            console.error('Failed to check for new episodes:', error);
+            return false; // Don't clear cache on error
+        }
     }
 
     /**
