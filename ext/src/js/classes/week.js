@@ -5,7 +5,7 @@ export default class Week {
   #weekStart;
   #daysOfTheWeek = [];
 
-  constructor(content, showHiddenCount = true) {
+  constructor(content, tinyContents, showHiddenCount = true) {
     // destructuring the content and looping through it
     [...content].forEach((day, index) => {
       let dateElem = day.querySelector(".specific-date");
@@ -18,7 +18,8 @@ export default class Week {
       this.#daysOfTheWeek[index] = new Day(
         time,
         showHiddenCount ? createHiddenCount(dateElem.parentNode) : null,
-        day.querySelectorAll("li")
+        day.querySelectorAll("li"),
+        tinyContents
       );
     });
   }

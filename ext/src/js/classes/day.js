@@ -13,15 +13,15 @@ export default class Day {
   #numOfHiddenContent;
   #numOfShownContent;
 
-  constructor(today, hiddenCount, content) {
+  constructor(today, hiddenCount, content, tinyContents) {
     this.#today = today;
     this.#hiddenCount = hiddenCount;
-    this.#parseContent(content);
+    this.#parseContent(content, tinyContents);
   }
 
-  #parseContent(content) {
+  #parseContent(content, tinyContents) {
     [...content].forEach((content, index) => {
-      const aContent = new Content(content, index);
+      const aContent = new Content(content, index, tinyContents);
       this.#todaysContentList[index] = aContent;
       if (aContent.isDubed) {
         this.#todaysDubsList.push(aContent);
