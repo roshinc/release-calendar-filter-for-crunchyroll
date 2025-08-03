@@ -64,12 +64,7 @@ p.premium-message {
   --cr-rc-switch-inner-circle-size: 13px;
 
   --cr-rc-checkmark-svg: url('chrome-extension://__MSG_@@extension_id__/images/checkmark.svg');
-}
-
-@-moz-document url-prefix {
-  :root {
-    --cr-rc-checkmark-svg: url('moz-extension://__MSG_@@extension_id__/images/checkmark.svg');
-  }
+  --cr-rc-checkmark-svg: url('moz-extension://__MSG_@@extension_id__/images/checkmark.svg');
 }
 
 .cr-rs-hide {

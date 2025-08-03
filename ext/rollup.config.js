@@ -6,6 +6,9 @@ import prettier from "rollup-plugin-prettier";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 
 import checkManifest from "./rollup_plugin/checkManifest.js";
+import processBrowserCSS from "./rollup_plugin/processBrowserCSS.js";
+
+
 
 // Determine whether we're in production mode
 const isProduction = process.env.NODE_ENV === "production";
@@ -63,10 +66,13 @@ export default [
       commonClearPlugin(["dist/"]),
       // Add common plugins to the configuration
       ...commonPlugins,
+      // Process font CSS
+      processBrowserCSS(),
       // Copy static files from the src directory to the dist directory
       copy({
         targets: [
-          { src: "src/css", dest: "dist" },
+          // Copy CSS files except fontello.css and index.css (handled by processBrowserCSS plugin)
+          { src: ["src/css/*", "!src/css/fontello.css", "!src/css/index.css"], dest: "dist/css" },
           { src: "src/fonts", dest: "dist" },
           { src: "src/images", dest: "dist" },
           { src: "src/manifest.json", dest: "dist" },
@@ -112,9 +118,12 @@ export default [
       commonClearPlugin(["dist_firefox/"]),
       // Add common plugins to the configuration
       ...commonPlugins,
+      // Process font CSS for Firefox
+      processBrowserCSS(),
       copy({
         targets: [
-          { src: "src/css", dest: "dist_firefox" },
+          // Copy CSS files except fontello.css and index.css (handled by processBrowserCSS plugin)
+          { src: ["src/css/*", "!src/css/fontello.css", "!src/css/index.css"], dest: "dist_firefox/css" },
           { src: "src/fonts", dest: "dist_firefox" },
           { src: "src/images", dest: "dist_firefox" },
           { src: "src_firefox/js/static", dest: "dist_firefox/js" },
