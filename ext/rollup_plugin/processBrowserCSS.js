@@ -1,4 +1,3 @@
-
 import fs from 'fs';
 import path from 'path';
 
@@ -15,7 +14,7 @@ export default function processBrowserCSS() {
             // Ensure the css directory exists
             const cssDir = path.join(outputDir, 'css');
             if (!fs.existsSync(cssDir)) {
-                fs.mkdirSync(cssDir, { recursive: true });
+                fs.mkdirSync(cssDir, {recursive: true});
             }
 
             // Process fontello.css
@@ -34,16 +33,16 @@ function processFontelloCSS(cssDir, isFirefox) {
     let processedCSS;
 
     if (isFirefox) {
-        // Keep only moz-extension URLs for Firefox
+        // For Firefox: Remove the chrome-extension line completely, keeping moz-extension as the only source
         processedCSS = cssContent.replace(
-            /src:\s*url\('chrome-extension:\/\/__MSG_@@extension_id__\/fonts\/fontello\.woff2\?40184825'\)\s*format\('woff2'\),\s*/g,
-            ''
+            /src:\s*url\('chrome-extension:\/\/__MSG_@@extension_id__\/fonts\/fontello\.woff2\?40184825'\)\s*format\('woff2'\),\s*url\('moz-extension:\/\/__MSG_@@extension_id__\/fonts\/fontello\.woff2\?40184825'\)\s*format\('woff2'\);/g,
+            `src: url('moz-extension://__MSG_@@extension_id__/fonts/fontello.woff2?40184825') format('woff2');`
         );
     } else {
-        // Keep only chrome-extension URLs for Chrome
+        // For Chrome: Remove the moz-extension line, keeping chrome-extension as the only source
         processedCSS = cssContent.replace(
-            /,\s*url\('moz-extension:\/\/__MSG_@@extension_id__\/fonts\/fontello\.woff2\?40184825'\)\s*format\('woff2'\)/g,
-            ''
+            /src:\s*url\('chrome-extension:\/\/__MSG_@@extension_id__\/fonts\/fontello\.woff2\?40184825'\)\s*format\('woff2'\),\s*url\('moz-extension:\/\/__MSG_@@extension_id__\/fonts\/fontello\.woff2\?40184825'\)\s*format\('woff2'\);/g,
+            `src: url('chrome-extension://__MSG_@@extension_id__/fonts/fontello.woff2?40184825') format('woff2');`
         );
     }
 
