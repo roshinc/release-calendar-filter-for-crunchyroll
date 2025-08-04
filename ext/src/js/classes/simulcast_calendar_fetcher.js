@@ -2,17 +2,22 @@
 import "webextension-polyfill/dist/browser-polyfill.min"
 import ExtensionCache from './extension_cache.js';
 import TinyContent from './tiny_content.js';
+import {TWENTY_FOUR_HOURS} from "../lib/constants.js";
 
 /**
  * Handles fetching and caching of Crunchyroll simulcast calendar content
  */
 export default class SimulcastCalendarFetcher {
+
+    #ENGLISH_LANGUAGE = "en-us";
+
+
     constructor(options = {}) {
         // Create a cache instance with TinyContent-specific serialization
         this.cache = new ExtensionCache({
             namespace: 'simulcast_calendar',
             maxCacheSize: options.maxCacheSize || 15,
-            cacheTTL: options.cacheTTL || 24 * 60 * 60 * 1000, // 24 hours
+            cacheTTL: options.cacheTTL || TWENTY_FOUR_HOURS, // 24 hours
             serialize: this.serializeTinyContents.bind(this),
             deserialize: this.deserializeTinyContents.bind(this)
         });
@@ -27,10 +32,10 @@ export default class SimulcastCalendarFetcher {
             const currentUrl = window.location.href;
             console.log(`Current URL: ${currentUrl}`);
 
-            const language = this.detectLanguageFromUrl(currentUrl);
+            const language = this.detectLanguageFromBodyOrUrl(currentUrl);
             console.log(`Detected language: ${language}`);
 
-            if (language === "en") {
+            if (language === this.#ENGLISH_LANGUAGE) {
                 console.log("Already on English page, no need to fetch");
                 return null;
             }
@@ -76,13 +81,17 @@ export default class SimulcastCalendarFetcher {
     }
 
     /**
-     * Detects language from URL
+     * Detects language from Body or URL
      * @param {string} url - The current URL
      * @returns {string} Language code (defaults to "en")
      */
-    detectLanguageFromUrl(url) {
+    detectLanguageFromBodyOrUrl(url) {
+        const lang = document.documentElement.lang;
+        if (lang) {
+            return lang;
+        }
         const match = url.match(/.+crunchyroll\.com\/(.+)\/simulcastcalendar.*/);
-        return match?.[1] || "en";
+        return match?.[1] || this.#ENGLISH_LANGUAGE;
     }
 
     /**
@@ -97,7 +106,7 @@ export default class SimulcastCalendarFetcher {
         );
 
         // First, check if the head link has the filter query param
-        const headLink = document.querySelector('head link[rel="alternate"][hreflang="en-us"]');
+        const headLink = document.querySelector('head link[rel="alternate"][hreflang="' + this.#ENGLISH_LANGUAGE + '"]');
 
         if (headLink) {
             const url = new URL(headLink.href);
@@ -143,6 +152,12 @@ export default class SimulcastCalendarFetcher {
             const doc = parser.parseFromString(html, 'text/html');
 
             console.log("Successfully fetched from URL, the document title is:", doc.title);
+            const fetchedLanguage = doc.documentElement.lang;
+            console.log("Retrieved language:", fetchedLanguage);
+            if (fetchedLanguage !== this.#ENGLISH_LANGUAGE) {
+                console.warn(`Expected language ${this.#ENGLISH_LANGUAGE}, but got ${fetchedLanguage}. Discarding content.`);
+                return null;
+            }
 
             const releaseArticles = doc.querySelectorAll("article.js-release");
 
@@ -231,7 +246,7 @@ export default class SimulcastCalendarFetcher {
             const cachedCount = cachedData.length;
             console.log(`Episode count comparison - Current page: ${currentCount}, Cached: ${cachedCount}`);
 
-            // Clear cache if current page has more articles (new episodes added)
+            // Clear cache if the current page has more articles (new episodes added)
             if (currentCount > cachedCount) {
                 console.log(`🆕 New episodes detected! Current: ${currentCount}, Cached: ${cachedCount}`);
                 return true;
@@ -263,7 +278,7 @@ export default class SimulcastCalendarFetcher {
 
     /**
      * Manually cleanup expired cache entries
-     * @returns {Promise<number>} Number of cleaned up entries
+     * @returns {Promise<number>} Number of cleaned-up entries
      */
     async cleanupExpiredCache() {
         return await this.cache.cleanupExpired();
