@@ -6,30 +6,30 @@ import {createPopper} from "@popperjs/core/dist/esm";
 import preference from "../classes/pref";
 
 import {
-  CRRS_CLASS,
-  CRRS_FILTER_MENU_DIV_ID,
-  CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
-  CRRS_FILTER_MENU_LOCK_BTN_ID,
-  CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
-  CRRS_FILTER_MENU_PICK_DUBS_DIV_ID,
-  CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
-  CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
-  CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX,
-  CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE,
-  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX,
-  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
-  CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX,
-  CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
-  CRRS_HIDDEN_COUNT_CLASS_NAME,
-  DEFAULT_DUB_LANGUAGES,
+    CRRS_CLASS,
+    CRRS_FILTER_MENU_DIV_ID,
+    CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_LOCK_BTN_ID,
+    CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_PICK_DUBS_DIV_ID,
+    CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
+    CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX,
+    CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE,
+    CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX,
+    CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
+    CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX,
+    CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
+    CRRS_HIDDEN_COUNT_CLASS_NAME,
+    DEFAULT_DUB_LANGUAGES,
 } from "./constants";
 import {
-  handleDubbedRadioGroup,
-  handleDubPickerCheckbox,
-  handleLockBtn,
-  handlePremiereRadioGroup,
-  handleQueueRadioGroup,
-  handleResetBtn,
+    handleDubbedRadioGroup,
+    handleDubPickerCheckbox,
+    handleLockBtn,
+    handlePremiereRadioGroup,
+    handleQueueRadioGroup,
+    handleResetBtn,
 } from "./event_handler";
 
 /**
@@ -307,6 +307,7 @@ const addRadioButtonGroup = (
 /**
  *
  * @param {HTMLElement} elementToAttachTo the element to append the menu to
+ * @param savedShownLanguages
  */
 export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
     let containerDiv = _("+div")
