@@ -1,3 +1,6 @@
+// Native page elements
+export const CR_HEADER_DIV_SELECTOR_PATH = "header.simulcast-calendar-header";
+
 // Common class
 export const CRRS_CLASS = "cr-rs-class";
 

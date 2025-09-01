@@ -3,10 +3,21 @@
  */
 
 import {initializeContentScript} from "./lib/content_script_utils.js";
+import {showFilterMenuLoading} from "./classes/loading_state_manager.js";
+import {CR_HEADER_DIV_SELECTOR_PATH} from "./lib/constants.js";
+
+
+let filterLoaderId = null;
+// If the header exists, show the loading state
+const header = document.querySelector(CR_HEADER_DIV_SELECTOR_PATH);
+if (header) {
+    // Show loading state where the filter menu will appear
+    filterLoaderId = showFilterMenuLoading(header);
+}
 
 window.onload = function () {
     // Initialize the content script functionality
-    initializeContentScript();
+    initializeContentScript(filterLoaderId);
 
 };
 
