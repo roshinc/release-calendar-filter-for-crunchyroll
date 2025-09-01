@@ -1,35 +1,35 @@
 import _ from "caldom/dist/caldom.min.mjs";
 // enable usage of browser. namespace
 import "webextension-polyfill/dist/browser-polyfill.min";
-import { createPopper } from "@popperjs/core/dist/esm";
+import {createPopper} from "@popperjs/core/dist/esm";
 
 import preference from "../classes/pref";
 
 import {
-  CRRS_FILTER_MENU_DIV_ID,
-  CRRS_CLASS,
-  CRRS_FILTER_MENU_PICK_DUBS_DIV_ID,
-  CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
-  CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
-  CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
-  CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
-  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
-  CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE,
-  CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
-  CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX,
-  CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX,
-  CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX,
-  CRRS_FILTER_MENU_LOCK_BTN_ID,
-  CRRS_HIDDEN_COUNT_CLASS_NAME,
-  DEFAULT_DUB_LANGUAGES,
+    CRRS_CLASS,
+    CRRS_FILTER_MENU_DIV_ID,
+    CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_LOCK_BTN_ID,
+    CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_PICK_DUBS_DIV_ID,
+    CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX,
+    CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX,
+    CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE,
+    CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX,
+    CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
+    CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX,
+    CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
+    CRRS_HIDDEN_COUNT_CLASS_NAME,
+    DEFAULT_DUB_LANGUAGES,
 } from "./constants";
 import {
-  handleDubbedRadioGroup,
-  handleDubPickerCheckbox,
-  handleQueueRadioGroup,
-  handlePremiereRadioGroup,
-  handelLockBtn,
-  handelResetBtn,
+    handleDubbedRadioGroup,
+    handleDubPickerCheckbox,
+    handleLockBtn,
+    handlePremiereRadioGroup,
+    handleQueueRadioGroup,
+    handleResetBtn,
 } from "./event_handler";
 
 /**
@@ -42,44 +42,44 @@ import {
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
 const createToggleSwtich = (
-  labelText,
-  elementId,
-  elementToAttachTo,
-  eventHandlerMethod,
-  checked
+    labelText,
+    elementId,
+    elementToAttachTo,
+    eventHandlerMethod,
+    checked
 ) => {
-  //class names
-  const TOGGLE_CONTAINER_LABEL_CLASS = "rs-cr-toggle-container";
-  const TOGGLE_INNER_LABEL_CLASS = "rs-cr-toggle-switch";
-  const TOGGLE_INPUT_CLASS = "rs-cr-toggle-input";
-  const TOGGLE_SPAN_CLASS = "rs-cr-toggle-slider";
+    //class names
+    const TOGGLE_CONTAINER_LABEL_CLASS = "rs-cr-toggle-container";
+    const TOGGLE_INNER_LABEL_CLASS = "rs-cr-toggle-switch";
+    const TOGGLE_INPUT_CLASS = "rs-cr-toggle-input";
+    const TOGGLE_SPAN_CLASS = "rs-cr-toggle-slider";
 
-  // ---- Add Toggle Switch ----
-  // **1. The wraping Label element **
-  let toggleSwitchText = _("+label")
-    .attr("for", elementId)
-    .text(labelText)
-    .addClass([CRRS_CLASS, TOGGLE_CONTAINER_LABEL_CLASS]);
-  // **2. The Label element **
-  let toggleSwitchLabel = _("+span")
-    .attr("for", elementId)
-    .addClass([CRRS_CLASS, TOGGLE_INNER_LABEL_CLASS]);
-  // **3. The Input element **
-  let toggleSwitchInput = _("+input")
-    .attr("id", elementId)
-    .attr("type", "checkbox")
-    .on("change", eventHandlerMethod)
-    .addClass([CRRS_CLASS, TOGGLE_INPUT_CLASS]);
-  if (checked) {
-    toggleSwitchInput.attr("checked", checked);
-  }
-  // **4. The Span element **
-  let toggleSwitchSpan = _("+span").addClass([CRRS_CLASS, TOGGLE_SPAN_CLASS]);
-  // Connect elements
-  toggleSwitchText.append([toggleSwitchLabel]);
-  toggleSwitchLabel.append([toggleSwitchInput, toggleSwitchSpan]);
-  // Add to container
-  elementToAttachTo.append(toggleSwitchText);
+    // ---- Add Toggle Switch ----
+    // **1. The wraping Label element **
+    let toggleSwitchText = _("+label")
+        .attr("for", elementId)
+        .text(labelText)
+        .addClass([CRRS_CLASS, TOGGLE_CONTAINER_LABEL_CLASS]);
+    // **2. The Label element **
+    let toggleSwitchLabel = _("+span")
+        .attr("for", elementId)
+        .addClass([CRRS_CLASS, TOGGLE_INNER_LABEL_CLASS]);
+    // **3. The Input element **
+    let toggleSwitchInput = _("+input")
+        .attr("id", elementId)
+        .attr("type", "checkbox")
+        .on("change", eventHandlerMethod)
+        .addClass([CRRS_CLASS, TOGGLE_INPUT_CLASS]);
+    if (checked) {
+        toggleSwitchInput.attr("checked", checked);
+    }
+    // **4. The Span element **
+    let toggleSwitchSpan = _("+span").addClass([CRRS_CLASS, TOGGLE_SPAN_CLASS]);
+    // Connect elements
+    toggleSwitchText.append([toggleSwitchLabel]);
+    toggleSwitchLabel.append([toggleSwitchInput, toggleSwitchSpan]);
+    // Add to container
+    elementToAttachTo.append(toggleSwitchText);
 };
 
 /**
@@ -88,11 +88,11 @@ const createToggleSwtich = (
  * @param {HTMLElement} elementToAttachTo element the div should append to
  */
 const createVerticalDivider = (elementToAttachTo) => {
-  // ---- Add Vertical Divider ----
-  let dividerDivElement = _("+div")
-    .attr("aria-hidden", "true")
-    .addClass([CRRS_CLASS, "cr-rs-filter-vertical-divider"]);
-  elementToAttachTo.append(dividerDivElement);
+    // ---- Add Vertical Divider ----
+    let dividerDivElement = _("+div")
+        .attr("aria-hidden", "true")
+        .addClass([CRRS_CLASS, "cr-rs-filter-vertical-divider"]);
+    elementToAttachTo.append(dividerDivElement);
 };
 
 /**
@@ -101,44 +101,44 @@ const createVerticalDivider = (elementToAttachTo) => {
  * @param {HTMLElement} elementToAttachTo element the div should append to
  */
 export const createHiddenCount = (elementToAttachTo) => {
-  let hiddenCount = _().react(
-    {},
-    {
-      render: (state) => {
-        let response = _("+div", `${state.count} Hidden`).addClass([
-          CRRS_CLASS,
-          CRRS_HIDDEN_COUNT_CLASS_NAME,
-        ]);
-        if (state.changed && preference.reflowEnabled) {
-          response.addClass(["changed"]);
+    let hiddenCount = _().react(
+        {},
+        {
+            render: (state) => {
+                let response = _("+div", `${state.count} Hidden`).addClass([
+                    CRRS_CLASS,
+                    CRRS_HIDDEN_COUNT_CLASS_NAME,
+                ]);
+                if (state.changed && preference.reflowEnabled) {
+                    response.addClass(["changed"]);
+                }
+
+                return response;
+            }, //This is XSS safe
         }
+    );
 
-        return response;
-      }, //This is XSS safe
-    }
-  );
+    _(elementToAttachTo, hiddenCount);
 
-  _(elementToAttachTo, hiddenCount);
+    //Edit below line to update state
+    hiddenCount.state.count = "0";
 
-  //Edit below line to update state
-  hiddenCount.state.count = "0";
-
-  return hiddenCount;
+    return hiddenCount;
 };
 
 export const createProgressBar = (elementToAttachTo, progressAmount) => {
-  const PROGRESS_CLASS = "cr-rs-progress-on-closed";
-  const PROGRESS_WRAPPING_DIV_CLASS = "cr-rs-progress-wraper-on-closed";
-  const PROGRESS_DIV_CLASS = "cr-rs-progress-inner-on-closed";
+    const PROGRESS_CLASS = "cr-rs-progress-on-closed";
+    const PROGRESS_WRAPPING_DIV_CLASS = "cr-rs-progress-wraper-on-closed";
+    const PROGRESS_DIV_CLASS = "cr-rs-progress-inner-on-closed";
 
-  // **1. The wraping progress element **
-  let progressElem = _("+progress")
-    .addClass([CRRS_CLASS, PROGRESS_CLASS])
-    .attr("value", progressAmount)
-    .attr("max", "100");
+    // **1. The wraping progress element **
+    let progressElem = _("+progress")
+        .addClass([CRRS_CLASS, PROGRESS_CLASS])
+        .attr("value", progressAmount)
+        .attr("max", "100");
 
-  // Add to container
-  _(elementToAttachTo, progressElem);
+    // Add to container
+    _(elementToAttachTo, progressElem);
 };
 
 /**
@@ -152,51 +152,51 @@ export const createProgressBar = (elementToAttachTo, progressAmount) => {
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
 const addCheckBox = (
-  labelText,
-  elementId,
-  elementToAttachTo,
-  eventHandlerMethod,
-  dataAttrs,
-  checked
+    labelText,
+    elementId,
+    elementToAttachTo,
+    eventHandlerMethod,
+    dataAttrs,
+    checked
 ) => {
-  const CHECKBOX_INPUT_CLASS = "rs-cr-checkbox-input";
-  const CHECKBOX_INNER_SPAN_CLASS = "rs-cr-checkbox-inner-span";
+    const CHECKBOX_INPUT_CLASS = "rs-cr-checkbox-input";
+    const CHECKBOX_INNER_SPAN_CLASS = "rs-cr-checkbox-inner-span";
 
-  // **1. The wraping span element **
-  let customCheckboxSpan = _("+span").addClass(CRRS_CLASS);
-  // **2. The input element **
-  let customCheckboxInput = _("+input")
-    .attr("id", elementId)
-    .attr("type", "checkbox")
-    .on("change", eventHandlerMethod)
-    .addClass([CRRS_CLASS, CHECKBOX_INPUT_CLASS]);
-  for (const dataAttr in dataAttrs) {
-    if (Object.hasOwnProperty.call(dataAttrs, dataAttr)) {
-      const element = dataAttrs[dataAttr];
-      customCheckboxInput.data(dataAttr, element);
+    // **1. The wraping span element **
+    let customCheckboxSpan = _("+span").addClass(CRRS_CLASS);
+    // **2. The input element **
+    let customCheckboxInput = _("+input")
+        .attr("id", elementId)
+        .attr("type", "checkbox")
+        .on("change", eventHandlerMethod)
+        .addClass([CRRS_CLASS, CHECKBOX_INPUT_CLASS]);
+    for (const dataAttr in dataAttrs) {
+        if (Object.hasOwnProperty.call(dataAttrs, dataAttr)) {
+            const element = dataAttrs[dataAttr];
+            customCheckboxInput.data(dataAttr, element);
+        }
     }
-  }
 
-  if (checked) {
-    customCheckboxInput.attr("checked", checked);
-  }
-  // **3. The inner span element **
-  let fakeCheckSpan = _("+span")
-    .addClass([CRRS_CLASS, CHECKBOX_INNER_SPAN_CLASS])
-    .text(labelText);
+    if (checked) {
+        customCheckboxInput.attr("checked", checked);
+    }
+    // **3. The inner span element **
+    let fakeCheckSpan = _("+span")
+        .addClass([CRRS_CLASS, CHECKBOX_INNER_SPAN_CLASS])
+        .text(labelText);
 
-  // **4. The label element **
-  let customCheckboxLabel = _("+label")
-    .attr("for", elementId)
-    //.text(labelText)
-    .addClass(CRRS_CLASS);
-  customCheckboxLabel.append(customCheckboxInput);
-  customCheckboxLabel.append(fakeCheckSpan);
+    // **4. The label element **
+    let customCheckboxLabel = _("+label")
+        .attr("for", elementId)
+        //.text(labelText)
+        .addClass(CRRS_CLASS);
+    customCheckboxLabel.append(customCheckboxInput);
+    customCheckboxLabel.append(fakeCheckSpan);
 
-  // Connect elements
-  customCheckboxSpan.append([customCheckboxLabel]);
-  // Add to container
-  elementToAttachTo.append([customCheckboxSpan]);
+    // Connect elements
+    customCheckboxSpan.append([customCheckboxLabel]);
+    // Add to container
+    elementToAttachTo.append([customCheckboxSpan]);
 };
 
 /**
@@ -210,36 +210,36 @@ const addCheckBox = (
  * @param {boolean} checked {true} if the defalut state of the switch should be on
  */
 const addRadioOption = (
-  labelText,
-  elementId,
-  switchName,
-  elementToAttachTo,
-  eventHandlerMethod,
-  checked
+    labelText,
+    elementId,
+    switchName,
+    elementToAttachTo,
+    eventHandlerMethod,
+    checked
 ) => {
-  const RADIO_BUTTON_INPUT_CLASS = "rs-cr-radio-button-input";
-  const RADIO_BUTTON_LABEL_CLASS = "rs-cr-radio-button-label";
+    const RADIO_BUTTON_INPUT_CLASS = "rs-cr-radio-button-input";
+    const RADIO_BUTTON_LABEL_CLASS = "rs-cr-radio-button-label";
 
-  // **1. The Input element **
-  let optionInput = _("+input")
-    .attr("type", "radio")
-    .on("change", eventHandlerMethod)
-    .attr("id", elementId)
-    .attr("name", switchName)
-    .attr("value", labelText.toLowerCase())
-    .addClass([CRRS_CLASS, RADIO_BUTTON_INPUT_CLASS]);
-  if (checked) {
-    optionInput.attr("checked", checked);
-  }
-  // **1. The Label element **
-  let optionLabel = _("+label")
-    .attr("for", elementId)
-    .text(labelText)
-    .attr("title", labelText)
-    .addClass([CRRS_CLASS, RADIO_BUTTON_LABEL_CLASS]);
+    // **1. The Input element **
+    let optionInput = _("+input")
+        .attr("type", "radio")
+        .on("change", eventHandlerMethod)
+        .attr("id", elementId)
+        .attr("name", switchName)
+        .attr("value", labelText.toLowerCase())
+        .addClass([CRRS_CLASS, RADIO_BUTTON_INPUT_CLASS]);
+    if (checked) {
+        optionInput.attr("checked", checked);
+    }
+    // **1. The Label element **
+    let optionLabel = _("+label")
+        .attr("for", elementId)
+        .text(labelText)
+        .attr("title", labelText)
+        .addClass([CRRS_CLASS, RADIO_BUTTON_LABEL_CLASS]);
 
-  // Add to container
-  elementToAttachTo.append([optionInput, optionLabel]);
+    // Add to container
+    elementToAttachTo.append([optionInput, optionLabel]);
 };
 
 /**
@@ -251,443 +251,444 @@ const addRadioOption = (
  * @param {EventListener} eventHandlerMethod callback function for onchange
  */
 const addRadioButtonGroup = (
-  groupText,
-  idPrefix,
-  switchName,
-  elementToAttachTo,
-  eventHandlerMethod
+    groupText,
+    idPrefix,
+    switchName,
+    elementToAttachTo,
+    eventHandlerMethod
 ) => {
-  const RADIO_GROUP_CLASS = "rs-cr-radio-group";
-  const RADIO_BUTTON_GROUP_CLASS = "rs-cr-radio-button-group";
+    const RADIO_GROUP_CLASS = "rs-cr-radio-group";
+    const RADIO_BUTTON_GROUP_CLASS = "rs-cr-radio-button-group";
 
-  let buttonGroup = _("+div").addClass([CRRS_CLASS, RADIO_GROUP_CLASS]);
+    let buttonGroup = _("+div").addClass([CRRS_CLASS, RADIO_GROUP_CLASS]);
 
-  let buttonGroupText = _("+span")
-    .text(groupText)
-    .addClass([CRRS_CLASS, "switch-holder-text"]);
+    let buttonGroupText = _("+span")
+        .text(groupText)
+        .addClass([CRRS_CLASS, "switch-holder-text"]);
 
-  let buttonGroupRadioContainer = _("+div").addClass([
-    CRRS_CLASS,
-    RADIO_BUTTON_GROUP_CLASS,
-  ]);
+    let buttonGroupRadioContainer = _("+div").addClass([
+        CRRS_CLASS,
+        RADIO_BUTTON_GROUP_CLASS,
+    ]);
 
-  const radioOptions = [
-    CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
-    CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
-    CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE,
-  ];
+    const radioOptions = [
+        CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
+        CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE,
+        CRRS_FILTER_MENU_RADIO_GROUP_HIDE_VALUE,
+    ];
 
-  for (let radioOption of radioOptions) {
-    // console.log(radioOption);
-    if (radioOption === CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE) {
-      addRadioOption(
-        radioOption,
-        `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`,
-        switchName,
-        buttonGroupRadioContainer,
-        eventHandlerMethod,
-        true
-      );
-    } else {
-      addRadioOption(
-        radioOption,
-        `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`,
-        switchName,
-        buttonGroupRadioContainer,
-        eventHandlerMethod,
-        false
-      );
+    for (let radioOption of radioOptions) {
+        // console.log(radioOption);
+        if (radioOption === CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE) {
+            addRadioOption(
+                radioOption,
+                `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`,
+                switchName,
+                buttonGroupRadioContainer,
+                eventHandlerMethod,
+                true
+            );
+        } else {
+            addRadioOption(
+                radioOption,
+                `cr-rs-filter-menu-${idPrefix}-${radioOption.toLowerCase()}`,
+                switchName,
+                buttonGroupRadioContainer,
+                eventHandlerMethod,
+                false
+            );
+        }
     }
-  }
 
-  buttonGroup.append([buttonGroupText, buttonGroupRadioContainer]);
-  elementToAttachTo.append(buttonGroup);
+    buttonGroup.append([buttonGroupText, buttonGroupRadioContainer]);
+    elementToAttachTo.append(buttonGroup);
 };
 
 /**
  *
  * @param {HTMLElement} elementToAttachTo the element to append the menu to
+ * @param savedShownLanguages
  */
 export const createInlineMenu = (elementToAttachTo, savedShownLanguages) => {
-  let containerDiv = _("+div")
-    .attr("id", CRRS_FILTER_MENU_DIV_ID)
-    .addClass(CRRS_CLASS);
+    let containerDiv = _("+div")
+        .attr("id", CRRS_FILTER_MENU_DIV_ID)
+        .addClass(CRRS_CLASS);
 
-  // ---- Add Toggle Switch for showing all dub ----
-  //createToggleSwtich("Show Dubs", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, containerDiv, handleShowDubsToggle, true);
-  // ---- Add Toggle Switch for showing in queue only ----
-  addRadioButtonGroup(
-    "Dubbed:",
-    "dubbed-toggle",
-    CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
-    containerDiv,
-    handleDubbedRadioGroup
-  );
-
-  // ---- Add Vertical Divider ----
-  createVerticalDivider(containerDiv);
-
-  // ---- Add Checkbox for showing specific dubs ----
-  // **1. The wraping div element **
-  let dubSelectionDiv = _("+div")
-    .attr("id", CRRS_FILTER_MENU_PICK_DUBS_DIV_ID)
-    .addClass(CRRS_CLASS);
-  // **2. The text element **
-  let dubSelectionText = _("+p")
-    .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-text")
-    .attr(
-      "aria-describedby",
-      "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip"
-    )
-    .text("Enable Dubs for")
-    .addClass(CRRS_CLASS);
-
-  //2.1 Add tooltip container
-  let dubSelectionTooltip = _("+div")
-    .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip")
-    .html(
-      'You can change the language options displayed here in the <a href="' +
-      browser.runtime.getURL("options/options.html") +
-      '"> options </a> page.'
+    // ---- Add Toggle Switch for showing all dub ----
+    //createToggleSwtich("Show Dubs", CRRS_FILTER_MENU_SHOW_DUBS_INPUT_ID, containerDiv, handleShowDubsToggle, true);
+    // ---- Add Toggle Switch for showing in queue only ----
+    addRadioButtonGroup(
+        "Dubbed:",
+        "dubbed-toggle",
+        CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
+        containerDiv,
+        handleDubbedRadioGroup
     );
 
-  //2.2 Add tooltip arrow container
-  let dubSelectionTooltipArrow = _("+div")
-    .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow")
-    .attr("data-popper-arrow", "");
-  dubSelectionTooltip.append(dubSelectionTooltipArrow);
-  dubSelectionText.append(dubSelectionTooltip);
-  // Initialize popper
-  let popperInstance = createPopper(
-    dubSelectionText.elem,
-    dubSelectionTooltip.elem,
-    {
-      placement: "bottom",
-      modifiers: [
+    // ---- Add Vertical Divider ----
+    createVerticalDivider(containerDiv);
+
+    // ---- Add Checkbox for showing specific dubs ----
+    // **1. The wraping div element **
+    let dubSelectionDiv = _("+div")
+        .attr("id", CRRS_FILTER_MENU_PICK_DUBS_DIV_ID)
+        .addClass(CRRS_CLASS);
+    // **2. The text element **
+    let dubSelectionText = _("+p")
+        .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-text")
+        .attr(
+            "aria-describedby",
+            "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip"
+        )
+        .text("Enable Dubs for")
+        .addClass(CRRS_CLASS);
+
+    //2.1 Add tooltip container
+    let dubSelectionTooltip = _("+div")
+        .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip")
+        .html(
+            'You can change the language options displayed here in the <a href="' +
+            browser.runtime.getURL("options/options.html") +
+            '"> options </a> page.'
+        );
+
+    //2.2 Add tooltip arrow container
+    let dubSelectionTooltipArrow = _("+div")
+        .attr("id", "cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow")
+        .attr("data-popper-arrow", "");
+    dubSelectionTooltip.append(dubSelectionTooltipArrow);
+    dubSelectionText.append(dubSelectionTooltip);
+    // Initialize popper
+    let popperInstance = createPopper(
+        dubSelectionText.elem,
+        dubSelectionTooltip.elem,
         {
-          name: "followCursor",
-          options: {
-            enabled: true,
-          },
-        },
-        {
-          name: "offset",
-          options: {
-            offset: [0, 2],
-          },
-        },
-      ],
-    }
-  );
-
-  // initialize the event listeners
-  function show() {
-    // Make the tooltip visible
-    dubSelectionTooltip.attr("data-show", "");
-
-    // Enable the event listeners
-    popperInstance.setOptions((options) => ({
-      ...options,
-      modifiers: [
-        ...options.modifiers,
-        { name: "eventListeners", enabled: true },
-      ],
-    }));
-
-    // Update its position
-    popperInstance.update();
-  }
-
-  function hide() {
-    // Hide the tooltip
-    dubSelectionTooltip.elem.removeAttribute("data-show");
-
-    // Disable the event listeners
-    popperInstance.setOptions((options) => ({
-      ...options,
-      modifiers: [
-        ...options.modifiers,
-        { name: "eventListeners", enabled: false },
-      ],
-    }));
-  }
-
-  const showEvents = ["mouseenter", "focus", "click"];
-  // const hideEvents = ['mouseleave', 'blur'];
-
-  showEvents.forEach((event) => {
-    //dubSelectionText.prop(event, (e) => { show(); });
-    dubSelectionText.elem.addEventListener(event, show);
-  });
-
-  // hideEvents.forEach((event) => {
-  //   //dubSelectionText.prop(event, (e) => { hide(); });
-  //   dubSelectionText.elem.addEventListener(event, hide);
-  // });
-  // Add an event listener to dismiss the popper when a click occurs outside of the popper
-  document.addEventListener("click", function (event) {
-    if (!dubSelectionTooltip.elem.contains(event.target)) {
-      hide();
-    }
-  });
-  // End of popper initialization
-  // Append the text and tooltip to the wrapping div
-  dubSelectionDiv.append([dubSelectionText]);
-
-  // Default to DEFAULT_DUB_LANGUAGES constant if no saved languages
-  const languages =
-    savedShownLanguages && savedShownLanguages.length > 0
-      ? savedShownLanguages
-      : DEFAULT_DUB_LANGUAGES;
-  //Append the "Others" option
-  languages.push("Others");
-
-  for (let language of languages) {
-    let map = [];
-    map["lang"] = language.toLowerCase();
-    addCheckBox(
-      language,
-      `${CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX}${language.toLowerCase()}`,
-      dubSelectionDiv,
-      handleDubPickerCheckbox,
-      map,
-      true
+            placement: "bottom",
+            modifiers: [
+                {
+                    name: "followCursor",
+                    options: {
+                        enabled: true,
+                    },
+                },
+                {
+                    name: "offset",
+                    options: {
+                        offset: [0, 2],
+                    },
+                },
+            ],
+        }
     );
-  }
 
-  // Add to container
-  containerDiv.append(dubSelectionDiv);
+    // initialize the event listeners
+    function show() {
+        // Make the tooltip visible
+        dubSelectionTooltip.attr("data-show", "");
 
-  // ---- Add Vertical Divider ----
-  createVerticalDivider(containerDiv);
+        // Enable the event listeners
+        popperInstance.setOptions((options) => ({
+            ...options,
+            modifiers: [
+                ...options.modifiers,
+                {name: "eventListeners", enabled: true},
+            ],
+        }));
 
-  // ---- Add Toggle Switch for showing in queue only ----
-  addRadioButtonGroup(
-    "In Queue:",
-    "in-queue-toggle",
-    CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
-    containerDiv,
-    handleQueueRadioGroup
-  );
+        // Update its position
+        popperInstance.update();
+    }
 
-  // ---- Add Vertical Divider ----
-  createVerticalDivider(containerDiv);
+    function hide() {
+        // Hide the tooltip
+        dubSelectionTooltip.elem.removeAttribute("data-show");
 
-  // ---- Add Toggle Switch for showing in queue only ----
-  addRadioButtonGroup(
-    "Premiere:",
-    "premier-toggle",
-    CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
-    containerDiv,
-    handlePremiereRadioGroup
-  );
+        // Disable the event listeners
+        popperInstance.setOptions((options) => ({
+            ...options,
+            modifiers: [
+                ...options.modifiers,
+                {name: "eventListeners", enabled: false},
+            ],
+        }));
+    }
 
-  // ---- Add End Button Group ----
-  const END_BUTTON_GROUP_CLASS = "rs-cr-end-button-group";
-  const END_BUTTON_CLASS = "rs-cr-end-button";
+    const showEvents = ["mouseenter", "focus", "click"];
+    // const hideEvents = ['mouseleave', 'blur'];
 
-  const ORANGE_TEXT_CLASS = "rs-cr-orange-text";
+    showEvents.forEach((event) => {
+        //dubSelectionText.prop(event, (e) => { show(); });
+        dubSelectionText.elem.addEventListener(event, show);
+    });
 
-  const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
+    // hideEvents.forEach((event) => {
+    //   //dubSelectionText.prop(event, (e) => { hide(); });
+    //   dubSelectionText.elem.addEventListener(event, hide);
+    // });
+    // Add an event listener to dismiss the popper when a click occurs outside of the popper
+    document.addEventListener("click", function (event) {
+        if (!dubSelectionTooltip.elem.contains(event.target)) {
+            hide();
+        }
+    });
+    // End of popper initialization
+    // Append the text and tooltip to the wrapping div
+    dubSelectionDiv.append([dubSelectionText]);
 
-  let lockDiv = _("+div").addClass([CRRS_CLASS, END_BUTTON_GROUP_CLASS]);
+    // Default to DEFAULT_DUB_LANGUAGES constant if no saved languages
+    const languages =
+        savedShownLanguages && savedShownLanguages.length > 0
+            ? savedShownLanguages
+            : DEFAULT_DUB_LANGUAGES;
+    //Append the "Others" option
+    languages.push("Others");
 
-  // ---- Add Lock Button ----
-  let lockBtn = _("+button")
-    .data("isLocked", "false")
-    .attr("id", CRRS_FILTER_MENU_LOCK_BTN_ID)
-    .attr("title", "Save Filters")
-    .attr("aria-label", "Save Filters")
-    .on("click", (event) => {
-      handelLockBtn(event, lockFilters);
-    })
-    .addClass([CRRS_CLASS, END_BUTTON_CLASS]);
+    for (let language of languages) {
+        let map = [];
+        map["lang"] = language.toLowerCase();
+        addCheckBox(
+            language,
+            `${CRRS_FILTER_MENU_PICK_DUBS_INPUT_ID_PREFIX}${language.toLowerCase()}`,
+            dubSelectionDiv,
+            handleDubPickerCheckbox,
+            map,
+            true
+        );
+    }
 
-  // Add Lock icon
-  let lockIcon = _("+i").addClass([
-    "fontello-icon",
-    "icon-unlocked",
-    END_BUTTON_UNLOCKED_CLASS,
-  ]);
+    // Add to container
+    containerDiv.append(dubSelectionDiv);
 
-  lockBtn.append(lockIcon);
+    // ---- Add Vertical Divider ----
+    createVerticalDivider(containerDiv);
 
-  // ---- Add Reset Button ----
-  let resetBtn = _("+button")
-    .attr("title", "Reset Filters")
-    .attr("aria-label", "Reset Filters")
-    .on("click", (event) => {
-      handelResetBtn(event, lockFilters);
-    })
-    .addClass([CRRS_CLASS, END_BUTTON_CLASS]);
+    // ---- Add Toggle Switch for showing in queue only ----
+    addRadioButtonGroup(
+        "In Queue:",
+        "in-queue-toggle",
+        CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
+        containerDiv,
+        handleQueueRadioGroup
+    );
 
-  //Add reset icon
-  let resetIcon = _("+i").addClass([
-    "fontello-icon",
-    "icon-reset",
-    ORANGE_TEXT_CLASS,
-  ]);
+    // ---- Add Vertical Divider ----
+    createVerticalDivider(containerDiv);
 
-  resetBtn.append(resetIcon);
+    // ---- Add Toggle Switch for showing in queue only ----
+    addRadioButtonGroup(
+        "Premiere:",
+        "premier-toggle",
+        CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
+        containerDiv,
+        handlePremiereRadioGroup
+    );
 
-  lockDiv.append([lockBtn, resetBtn]);
-  containerDiv.append([lockDiv]);
+    // ---- Add End Button Group ----
+    const END_BUTTON_GROUP_CLASS = "rs-cr-end-button-group";
+    const END_BUTTON_CLASS = "rs-cr-end-button";
 
-  //Add container to the given element
-  _(elementToAttachTo).append(containerDiv);
+    const ORANGE_TEXT_CLASS = "rs-cr-orange-text";
+
+    const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
+
+    let lockDiv = _("+div").addClass([CRRS_CLASS, END_BUTTON_GROUP_CLASS]);
+
+    // ---- Add Lock Button ----
+    let lockBtn = _("+button")
+        .data("isLocked", "false")
+        .attr("id", CRRS_FILTER_MENU_LOCK_BTN_ID)
+        .attr("title", "Save Filters")
+        .attr("aria-label", "Save Filters")
+        .on("click", (event) => {
+            handleLockBtn(event, lockFilters);
+        })
+        .addClass([CRRS_CLASS, END_BUTTON_CLASS]);
+
+    // Add Lock icon
+    let lockIcon = _("+i").addClass([
+        "fontello-icon",
+        "icon-unlocked",
+        END_BUTTON_UNLOCKED_CLASS,
+    ]);
+
+    lockBtn.append(lockIcon);
+
+    // ---- Add Reset Button ----
+    let resetBtn = _("+button")
+        .attr("title", "Reset Filters")
+        .attr("aria-label", "Reset Filters")
+        .on("click", (event) => {
+            handleResetBtn(event, lockFilters);
+        })
+        .addClass([CRRS_CLASS, END_BUTTON_CLASS]);
+
+    //Add reset icon
+    let resetIcon = _("+i").addClass([
+        "fontello-icon",
+        "icon-reset",
+        ORANGE_TEXT_CLASS,
+    ]);
+
+    resetBtn.append(resetIcon);
+
+    lockDiv.append([lockBtn, resetBtn]);
+    containerDiv.append([lockDiv]);
+
+    //Add container to the given element
+    _(elementToAttachTo).append(containerDiv);
 };
 
 const handleUIChangesOnSaveStatus = (status, icon) => {
-  const END_BUTTON_LOCKED_CLASS = "rs-cr-locked";
-  const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
+    const END_BUTTON_LOCKED_CLASS = "rs-cr-locked";
+    const END_BUTTON_UNLOCKED_CLASS = "rs-cr-unlocked";
 
-  if (status) {
-    icon
-      .removeClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"])
-      .addClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]);
+    if (status) {
+        icon
+            .removeClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"])
+            .addClass([END_BUTTON_LOCKED_CLASS, "icon-locked"]);
 
-    _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).attr(
-      "disabled",
-      status
-    );
+        _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).attr(
+            "disabled",
+            status
+        );
 
-    _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).attr("disabled", status);
+        _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).attr("disabled", status);
 
-    _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).attr(
-      "disabled",
-      status
-    );
-    _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).attr(
-      "disabled",
-      status
-    );
-  } else {
-    icon
-      .removeClass([END_BUTTON_LOCKED_CLASS, "icon-locked"])
-      .addClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]);
+        _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).attr(
+            "disabled",
+            status
+        );
+        _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).attr(
+            "disabled",
+            status
+        );
+    } else {
+        icon
+            .removeClass([END_BUTTON_LOCKED_CLASS, "icon-locked"])
+            .addClass([END_BUTTON_UNLOCKED_CLASS, "icon-unlocked"]);
 
-    _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).each(function (
-      elem,
-      i
-    ) {
-      elem.removeAttribute("disabled");
-    });
+        _(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`).each(function (
+            elem,
+            i
+        ) {
+            elem.removeAttribute("disabled");
+        });
 
-    _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).each(function (elem, i) {
-      elem.removeAttribute("disabled");
-    });
+        _(`#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`).each(function (elem, i) {
+            elem.removeAttribute("disabled");
+        });
 
-    _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).each(
-      function (elem, i) {
-        elem.removeAttribute("disabled");
-      }
-    );
-    _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).each(
-      function (elem, i) {
-        elem.removeAttribute("disabled");
-      }
-    );
-  }
+        _(`input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`).each(
+            function (elem, i) {
+                elem.removeAttribute("disabled");
+            }
+        );
+        _(`input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`).each(
+            function (elem, i) {
+                elem.removeAttribute("disabled");
+            }
+        );
+    }
 };
 
 export const lockFilters = (
-  status,
-  lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID}`),
-  icon = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID} i`)
+    status,
+    lockBtn = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID}`),
+    icon = _(`#${CRRS_FILTER_MENU_LOCK_BTN_ID} i`)
 ) => {
-  if (status) {
-    //lock
-    handleUIChangesOnSaveStatus(true, icon);
-    lockBtn.data("isLocked", "true");
-  } else {
-    handleUIChangesOnSaveStatus(false, icon);
-    lockBtn.data("isLocked", "false");
-  }
+    if (status) {
+        //lock
+        handleUIChangesOnSaveStatus(true, icon);
+        lockBtn.data("isLocked", "true");
+    } else {
+        handleUIChangesOnSaveStatus(false, icon);
+        lockBtn.data("isLocked", "false");
+    }
 };
 
 export const restoreUI = (savedFilter) => {
-  const hideAllDubs = savedFilter["hideAllDub"];
-  const hideAllSubs = savedFilter["hideAllSubs"];
+    const hideAllDubs = savedFilter["hideAllDub"];
+    const hideAllSubs = savedFilter["hideAllSubs"];
 
-  let indexToPick;
-  if (hideAllSubs) {
-    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
-  } else if (hideAllDubs) {
-    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
-  }
-
-  let dubGroup = document.querySelectorAll(
-    `input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`
-  );
-
-  for (const [i, elem] of dubGroup.entries()) {
-    if (i == indexToPick) {
-      elem.checked = true;
-      break;
+    let indexToPick;
+    if (hideAllSubs) {
+        indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
+    } else if (hideAllDubs) {
+        indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
     }
-  }
 
-  let dubPickers = document.querySelectorAll(
-    `#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`
-  );
-  const dubsShown = savedFilter["dubsShown"];
-  console.log(dubsShown);
-  // if no dubs are shown uncheck all the langs
-  if (hideAllDubs) {
-    for (const [i, elem] of dubPickers.entries()) {
-      elem.checked = false;
+    let dubGroup = document.querySelectorAll(
+        `input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`
+    );
+
+    for (const [i, elem] of dubGroup.entries()) {
+        if (i == indexToPick) {
+            elem.checked = true;
+            break;
+        }
     }
-  } else if (dubsShown.length > 0) {
-    for (const [i, elem] of dubPickers.entries()) {
-      if (dubsShown.includes(_(elem).data("lang")[0])) {
-        elem.checked = true;
-      } else {
-        elem.checked = false;
-      }
+
+    let dubPickers = document.querySelectorAll(
+        `#${CRRS_FILTER_MENU_PICK_DUBS_DIV_ID} input`
+    );
+    const dubsShown = savedFilter["dubsShown"];
+    console.log(dubsShown);
+    // if no dubs are shown uncheck all the langs
+    if (hideAllDubs) {
+        for (const [i, elem] of dubPickers.entries()) {
+            elem.checked = false;
+        }
+    } else if (dubsShown.length > 0) {
+        for (const [i, elem] of dubPickers.entries()) {
+            if (dubsShown.includes(_(elem).data("lang")[0])) {
+                elem.checked = true;
+            } else {
+                elem.checked = false;
+            }
+        }
     }
-  }
 
-  // Restore the option for "In Queue"
-  const showInQueue = savedFilter["showInQueue"];
-  const showOnlyInQueue = savedFilter["showOnlyInQueue"];
+    // Restore the option for "In Queue"
+    const showInQueue = savedFilter["showInQueue"];
+    const showOnlyInQueue = savedFilter["showOnlyInQueue"];
 
-  indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX;
-  if (showOnlyInQueue) {
-    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
-  } else if (!showInQueue && !showOnlyInQueue) {
-    // does it go here?
-    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
-  }
-
-  let queueGroup = document.querySelectorAll(
-    `input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`
-  );
-
-  for (const [i, elem] of queueGroup.entries()) {
-    if (i == indexToPick) {
-      elem.checked = true;
-      break;
+    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX;
+    if (showOnlyInQueue) {
+        indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
+    } else if (!showInQueue && !showOnlyInQueue) {
+        // does it go here?
+        indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
     }
-  }
 
-  // Restore the option for "Premiere"
-  const showPremiere = savedFilter["showPremiere"];
-  const showOnlyPremiere = savedFilter["showOnlyPremiere"];
+    let queueGroup = document.querySelectorAll(
+        `input[name="${CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME}"]`
+    );
 
-  indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX;
-  if (showOnlyPremiere) {
-    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
-  } else if (!showOnlyPremiere && !showPremiere) {
-    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
-  }
-
-  let premiereGroup = document.querySelectorAll(
-    `input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`
-  );
-  for (const [i, elem] of premiereGroup.entries()) {
-    if (i == indexToPick) {
-      elem.checked = true;
-      break;
+    for (const [i, elem] of queueGroup.entries()) {
+        if (i == indexToPick) {
+            elem.checked = true;
+            break;
+        }
     }
-  }
+
+    // Restore the option for "Premiere"
+    const showPremiere = savedFilter["showPremiere"];
+    const showOnlyPremiere = savedFilter["showOnlyPremiere"];
+
+    indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_SHOW_INDEX;
+    if (showOnlyPremiere) {
+        indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_ONLY_INDEX;
+    } else if (!showOnlyPremiere && !showPremiere) {
+        indexToPick = CRRS_FILTER_MENU_RADIO_GROUP_HIDE_INDEX;
+    }
+
+    let premiereGroup = document.querySelectorAll(
+        `input[name="${CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME}"]`
+    );
+    for (const [i, elem] of premiereGroup.entries()) {
+        if (i == indexToPick) {
+            elem.checked = true;
+            break;
+        }
+    }
 };

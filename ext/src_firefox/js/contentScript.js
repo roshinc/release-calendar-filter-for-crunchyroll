@@ -1,49 +1,20 @@
 /*
  * All JS in this file will be run on any pages that match the pattern defined in manifest.
  */
-import preference from "../../src/js/classes/pref";
-import Week from "../../src/js/classes/week";
-import Filter from "../../src/js/classes/filter";
-import { createInlineMenu, lockFilters, restoreUI } from "../../src/js/lib/ui_modifier";
-import { restorePreference } from "../../src/js/lib/data_store";
-import { reflowHiddenCount } from "../../src/js/lib/utils";
+import {initializeContentScript} from "../../src/js/lib/content_script_utils.js";
+import {showFilterMenuLoading} from "../../src/js/classes/loading_state_manager.js";
+import {CR_HEADER_DIV_SELECTOR_PATH} from "../../src/js/lib/constants.js";
 
-// window.onload = function () {
+let filterLoaderId = null;
+// If the header exists, show the loading state
+const header = document.querySelector(CR_HEADER_DIV_SELECTOR_PATH);
+if (header) {
+    // Show loading state where the filter menu will appear
+    filterLoaderId = showFilterMenuLoading(header);
+}
 
-// restore and apply filter and other preference
-restorePreference()
-  .then((items) => {
-    if (items.showFilter) {
-      createInlineMenu(document.querySelector("header.simulcast-calendar-header"), items.savedShownLanguages);
-    }
+// Initialize the content script functionality
+initializeContentScript(filterLoaderId);
 
-    // if reflow is enabbled or not
-    preference.reflowEnabled = items.reflowHCount;
 
-    // parse week
-    let week = new Week(document.querySelectorAll(".day"), items.showHCount);
-
-    // get saved show languages for dubs
-    preference.savedLanguages = items.savedShownLanguages;
-
-    // global filter holder
-    preference.crrsFilter = new Filter(week, preference.savedLanguages);
-
-    // restore filter
-    if (items.filter != null) {
-      if (items.filter != preference.crrsFilter.createJson()) {
-        reflowHiddenCount();
-        // modify ui only if the filter is shown
-        if (items.showFilter) {
-          restoreUI(items.filter);
-        }
-        preference.crrsFilter.restore(items.filter);
-      }
-      // if the filter is not null, the ui should show as locked
-      lockFilters(true);
-    }
-
-  });
-
-// }
 

@@ -2,12 +2,16 @@ import _ from "caldom/dist/caldom.min.mjs";
 
 import preference from "../classes/pref";
 
-import { reflowHiddenCount } from "./utils";
+import {reflowHiddenCount} from "./utils";
 import {
-    CRRS_FILTER_MENU_PICK_DUBS_DIV_ID, CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME, CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
-    CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME, CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE, CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE
+    CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_PERMIERE_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_PICK_DUBS_DIV_ID,
+    CRRS_FILTER_MENU_QUEUE_RADIO_GROUP_NAME,
+    CRRS_FILTER_MENU_RADIO_GROUP_ONLY_VALUE,
+    CRRS_FILTER_MENU_RADIO_GROUP_SHOW_VALUE
 } from "./constants";
-import { clearSavedFilter, saveFilter } from "./data_store";
+import {clearSavedFilter, saveFilter} from "./data_store";
 
 export const handleDubPickerCheckbox = (event) => {
     reflowHiddenCount();
@@ -139,7 +143,7 @@ export const handlePremiereRadioGroup = (event) => {
 }
 
 
-export const handelLockBtn = (event, callbackFunction) => {
+export const handleLockBtn = (event, callbackFunction) => {
     reflowHiddenCount();
 
     let icon, lock;
@@ -168,7 +172,7 @@ export const handelLockBtn = (event, callbackFunction) => {
 
 }
 
-export const handelResetBtn = (event, callbackFunction) => {
+export const handleResetBtn = (event, callbackFunction) => {
     reflowHiddenCount();
     let dubGroup = document.querySelectorAll(`input[name="${CRRS_FILTER_MENU_DUBS_RADIO_GROUP_NAME}"]`);
 

@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Release Calendar Filter for Crunchyroll",
   "description": "A filter for the Release/Simulcast Calendar on Crunchyroll.",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "icons": {
     "128": "images/icon.png"
   },
@@ -38,7 +38,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "{8f010de3-24bd-4bdf-9317-f6498684d29d}",
-      "strict_min_version": "53.0"
+      "strict_min_version": "58.0"
     }
   }
 }

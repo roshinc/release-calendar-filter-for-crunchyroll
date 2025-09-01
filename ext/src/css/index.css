@@ -7,198 +7,193 @@
 /* || OVERWRITING STYLES */
 
 p.premium-message {
-  /* if the premium message is shown we want to add 
-  some gap between it and our menu */
-  margin-bottom: 0.6% !important;
+    /* if the premium message is shown we want to add
+    some gap between it and our menu */
+    margin-bottom: 0.6% !important;
 }
 
 /* || GENERAL STYLES */
 
 :root {
-  --cr-rc-main-color: #FFFFFF;
-  --cr-rc-main-accent-color: #F78C24;
-  --cr-rc-main-gray-color: #cecaca;
-  --cr-rc-main-text-color: #000000;
+    --cr-rc-main-color: #FFFFFF;
+    --cr-rc-main-accent-color: #F78C24;
+    --cr-rc-main-gray-color: #cecaca;
+    --cr-rc-main-text-color: #000000;
 
-  /* solarized light */
-  /* base 2*/
-  /* --cr-rc-main-color: #eee8d5; */
-  /* --cr-rc-main-accent-color: #F78C24; */
-  /* base 3 */
-  /* --cr-rc-main-gray-color: rgba(160, 152, 149, .75); */
-  /* base 00 */
-  /* --cr-rc-main-text-color: #657b83; */
+    /* solarized light */
+    /* base 2*/
+    /* --cr-rc-main-color: #eee8d5; */
+    /* --cr-rc-main-accent-color: #F78C24; */
+    /* base 3 */
+    /* --cr-rc-main-gray-color: rgba(160, 152, 149, .75); */
+    /* base 00 */
+    /* --cr-rc-main-text-color: #657b83; */
 
-  /* solarized dark */
-  /* base 02*/
-  /* --cr-rc-main-color: #073642;
-  --cr-rc-main-accent-color: #F78C24; */
-  /* base 3 */
-  /* --cr-rc-main-gray-color: rgba(95, 103, 106, .75); */
-  /* base 00 */
-  /* --cr-rc-main-text-color: #839496; */
+    /* solarized dark */
+    /* base 02*/
+    /* --cr-rc-main-color: #073642;
+    --cr-rc-main-accent-color: #F78C24; */
+    /* base 3 */
+    /* --cr-rc-main-gray-color: rgba(95, 103, 106, .75); */
+    /* base 00 */
+    /* --cr-rc-main-text-color: #839496; */
 
-  /* dracula */
-  /* base 02*/
-  /* --cr-rc-main-color: #282a36; */
-  /* --cr-rc-main-accent-color: #F78C24; */
-  /* base 3 */
-  /* --cr-rc-main-gray-color: #44475a; */
-  /* base 00 */
-  /* --cr-rc-main-text-color: #6272a4; */
+    /* dracula */
+    /* base 02*/
+    /* --cr-rc-main-color: #282a36; */
+    /* --cr-rc-main-accent-color: #F78C24; */
+    /* base 3 */
+    /* --cr-rc-main-gray-color: #44475a; */
+    /* base 00 */
+    /* --cr-rc-main-text-color: #6272a4; */
 
-  /* dark */
-  /* base 02*/
-  /* --cr-rc-main-color: #181A1B; */
-  /* --cr-rc-main-accent-color: #F78C24; */
-  /* base 3 */
-  /* --cr-rc-main-gray-color: #3B3B3B; */
-  /* base 00 */
-  /* --cr-rc-main-text-color: #C7C3BB; */
+    /* dark */
+    /* base 02*/
+    /* --cr-rc-main-color: #181A1B; */
+    /* --cr-rc-main-accent-color: #F78C24; */
+    /* base 3 */
+    /* --cr-rc-main-gray-color: #3B3B3B; */
+    /* base 00 */
+    /* --cr-rc-main-text-color: #C7C3BB; */
 
-  --cr-rc-secondry-text-color: #a09895;
+    --cr-rc-secondry-text-color: #a09895;
 
-  --cr-rc-main-font-size: .8125rem;
+    --cr-rc-main-font-size: .8125rem;
 
-  --cr-rc-switch-height: 17px;
-  --cr-rc-switch-inner-circle-size: 13px;
+    --cr-rc-switch-height: 17px;
+    --cr-rc-switch-inner-circle-size: 13px;
 
-  --cr-rc-checkmark-svg: url('chrome-extension://__MSG_@@extension_id__/images/checkmark.svg');
-}
-
-@-moz-document url-prefix {
-  :root {
+    --cr-rc-checkmark-svg: url('chrome-extension://__MSG_@@extension_id__/images/checkmark.svg');
     --cr-rc-checkmark-svg: url('moz-extension://__MSG_@@extension_id__/images/checkmark.svg');
-  }
 }
 
 .cr-rs-hide {
-  display: none;
+    display: none;
 }
 
 .disabled-in-js {
-  cursor: default;
+    cursor: default;
 }
 
 
 /* || IN LINE MENU STYLES */
 
 #cr-rs-filter-menu.cr-rs-class {
-  /* 
-  Styles pretty much copied from '.simulcast-calendar-header 
-  .premium-message' and '.premium-message' 
-  */
+    /*
+    Styles pretty much copied from '.simulcast-calendar-header
+    .premium-message' and '.premium-message'
+    */
 
-  background-color: var(--cr-rc-main-color);
-  border-radius: 0.25rem;
+    background-color: var(--cr-rc-main-color);
+    border-radius: 0.25rem;
 
-  cursor: default;
+    cursor: default;
 
-  color: var(--cr-rc-main-accent-color);
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: var(--cr-rc-main-font-size);
-  font-weight: 400;
-  line-height: 1.5em;
-  text-shadow: 0 0 0.077em transparent;
+    color: var(--cr-rc-main-accent-color);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: var(--cr-rc-main-font-size);
+    font-weight: 400;
+    line-height: 1.5em;
+    text-shadow: 0 0 0.077em transparent;
 
-  width: 100%;
+    width: 100%;
 
-  padding: 0.9em 1em;
+    padding: 0.9em 1em;
 
-  /* Helpful link for flex: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
+    /* Helpful link for flex: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
 }
 
 #cr-rs-filter-menu-pick-dubs-enable-dubs-for-text {
-  border-bottom: dotted 1px var(--cr-rc-main-accent-color);
-  cursor: pointer;
+    border-bottom: dotted 1px var(--cr-rc-main-accent-color);
+    cursor: pointer;
 }
 
 #cr-rs-filter-menu-pick-dubs-enable-dubs-for-text:hover {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip {
-  background-color: var(--cr-rc-main-color);
-  color: var(--cr-rc-main-accent-color);
-  border: 1px solid var(--cr-rc-main-accent-color);
-  padding: 5px 10px;
-  border-radius: 4px;
-  display: none;
+    background-color: var(--cr-rc-main-color);
+    color: var(--cr-rc-main-accent-color);
+    border: 1px solid var(--cr-rc-main-accent-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: none;
 }
 
 #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-show] {
-  display: block;
+    display: block;
 }
 
 #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow,
 #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow::before {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: inherit;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: inherit;
 }
 
 #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow::before {
-  content: '';
-  visibility: visible;
+    content: '';
+    visibility: visible;
 
-  transform: rotate(45deg);
-  border-top: 1px var(--cr-rc-main-accent-color) solid;
-  border-left: 1px var(--cr-rc-main-accent-color) solid;
+    transform: rotate(45deg);
+    border-top: 1px var(--cr-rc-main-accent-color) solid;
+    border-left: 1px var(--cr-rc-main-accent-color) solid;
 }
 
-#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='top']>#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
-  bottom: -4px;
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='top'] > #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    bottom: -4px;
 }
 
-#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='bottom']>#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
-  top: -4px;
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='bottom'] > #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    top: -4px;
 }
 
-#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='left']>#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
-  right: -4px;
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='left'] > #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    right: -4px;
 }
 
-#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='right']>#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
-  left: -4px;
+#cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip[data-popper-placement^='right'] > #cr-rs-filter-menu-pick-dubs-enable-dubs-for-tooltip-arrow {
+    left: -4px;
 }
 
 /* || MEDIA QUERIES */
 
 @media only screen and (max-width: 900px) {
 
-  #cr-rs-filter-menu.cr-rs-class {
-    flex-direction: column;
-    row-gap: 0.541em;
-  }
+    #cr-rs-filter-menu.cr-rs-class {
+        flex-direction: column;
+        row-gap: 0.541em;
+    }
 
-  .cr-rs-filter-vertical-divider {
-    display: none;
-  }
+    .cr-rs-filter-vertical-divider {
+        display: none;
+    }
 }
 
 @media only screen and (min-width: 900px) {
 
-  #cr-rs-filter-menu.cr-rs-class {
-    flex-direction: row;
-    column-gap: 18px;
-  }
+    #cr-rs-filter-menu.cr-rs-class {
+        flex-direction: row;
+        column-gap: 18px;
+    }
 
-  .cr-rs-filter-vertical-divider {
-    /* 
-      Helpful link: https://www.w3schools.com/howto/howto_css_vertical_line.asp 
-      */
-    border-left: 1px solid var(--cr-rc-main-gray-color);
-    height: 25px;
-  }
+    .cr-rs-filter-vertical-divider {
+        /*
+          Helpful link: https://www.w3schools.com/howto/howto_css_vertical_line.asp
+          */
+        border-left: 1px solid var(--cr-rc-main-gray-color);
+        height: 25px;
+    }
 }
 
 /* || SWITCH STYLES */
@@ -207,285 +202,284 @@ p.premium-message {
 Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
  */
 .rs-cr-toggle-switch {
-  display: inline-block;
-  height: var(--cr-rc-switch-height);
-  margin-left: 10px;
-  position: relative;
-  width: 30px;
+    display: inline-block;
+    height: var(--cr-rc-switch-height);
+    margin-left: 10px;
+    position: relative;
+    width: 30px;
 }
 
 .rs-cr-toggle-switch .rs-cr-toggle-input {
-  height: 0;
-  opacity: 0;
-  width: 0;
+    height: 0;
+    opacity: 0;
+    width: 0;
 }
 
 .rs-cr-toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: var(--cr-rc-switch-height);
-  background-color: var(--cr-rc-main-gray-color);
-  -webkit-transition: .4s;
-  transition: .4s;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--cr-rc-switch-height);
+    background-color: var(--cr-rc-main-gray-color);
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
 .rs-cr-toggle-slider:before {
-  position: absolute;
-  content: "";
-  height: var(--cr-rc-switch-inner-circle-size);
-  width: var(--cr-rc-switch-inner-circle-size);
-  left: 2px;
-  bottom: 2px;
-  border-radius: 50%;
-  background-color: var(--cr-rc-main-color);
-  -webkit-transition: .4s;
-  transition: .4s;
+    position: absolute;
+    content: "";
+    height: var(--cr-rc-switch-inner-circle-size);
+    width: var(--cr-rc-switch-inner-circle-size);
+    left: 2px;
+    bottom: 2px;
+    border-radius: 50%;
+    background-color: var(--cr-rc-main-color);
+    -webkit-transition: .4s;
+    transition: .4s;
 }
 
-.rs-cr-toggle-input:checked+.rs-cr-toggle-slider {
-  background-color: var(--cr-rc-main-accent-color);
+.rs-cr-toggle-input:checked + .rs-cr-toggle-slider {
+    background-color: var(--cr-rc-main-accent-color);
 }
 
-.rs-cr-toggle-input:checked+.rs-cr-toggle-slider:before {
-  -webkit-transform: translateX(var(--cr-rc-switch-inner-circle-size));
-  -ms-transform: translateX(var(--cr-rc-switch-inner-circle-size));
-  transform: translateX(var(--cr-rc-switch-inner-circle-size));
+.rs-cr-toggle-input:checked + .rs-cr-toggle-slider:before {
+    -webkit-transform: translateX(var(--cr-rc-switch-inner-circle-size));
+    -ms-transform: translateX(var(--cr-rc-switch-inner-circle-size));
+    transform: translateX(var(--cr-rc-switch-inner-circle-size));
 }
 
-.rs-cr-toggle-container:hover .rs-cr-toggle-input:not(:disabled)+.rs-cr-toggle-slider:before,
-.rs-cr-toggle-input:focus+.rs-cr-toggle-slider:before,
-.rs-cr-toggle-input:not(:disabled)+.rs-cr-toggle-slider:hover:before {
-  /* Visible in the full-color space */
-  box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+.rs-cr-toggle-container:hover .rs-cr-toggle-input:not(:disabled) + .rs-cr-toggle-slider:before,
+.rs-cr-toggle-input:focus + .rs-cr-toggle-slider:before,
+.rs-cr-toggle-input:not(:disabled) + .rs-cr-toggle-slider:hover:before {
+    /* Visible in the full-color space */
+    box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
 
-  /* Visible in Windows high-contrast themes
-     box-shadow will be hidden in these modes and
-     transparency will not be hidden in high-contrast
-     thus box-shadow will not show but the outline will
-     providing accessibility */
-  outline-color: transparent;
-  outline-width: 4px;
-  outline-style: dotted;
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 4px;
+    outline-style: dotted;
 }
 
 /* Disabled switch styles */
-.rs-cr-toggle-input:disabled+.rs-cr-toggle-slider {
-  cursor: default;
-  opacity: 0.5;
+.rs-cr-toggle-input:disabled + .rs-cr-toggle-slider {
+    cursor: default;
+    opacity: 0.5;
 }
 
 /* || CHECKBOX STYLES */
 
 #cr-rs-filter-menu-pick-dubs {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
-  align-items: center;
-  column-gap: 1px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    align-items: center;
+    column-gap: 1px;
 }
 
 .rs-cr-checkbox-input {
-  /* https://stackoverflow.com/a/719545/1193704 */
-  vertical-align: middle;
-  position: relative;
-  bottom: .08em;
-  /* this is a better value for different fonts! */
+    /* https://stackoverflow.com/a/719545/1193704 */
+    vertical-align: middle;
+    position: relative;
+    bottom: .08em;
+    /* this is a better value for different fonts! */
 
-  opacity: 0;
+    opacity: 0;
 }
 
 /* Text color for the label */
 .rs-cr-checkbox-inner-span {
-  cursor: pointer;
-  font-size: var(--cr-rc-main-font-size);
-  color: var(--cr-rc-main-text-color);
+    cursor: pointer;
+    font-size: var(--cr-rc-main-font-size);
+    color: var(--cr-rc-main-text-color);
 }
 
 /* Checkbox un-checked style */
 .rs-cr-checkbox-inner-span:before {
-  content: '';
-  border: 1px solid var(--cr-rc-main-gray-color);
-  border-radius: 2px;
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-right: 0.3em;
-  bottom: .08em;
+    content: '';
+    border: 1px solid var(--cr-rc-main-gray-color);
+    border-radius: 2px;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 0.3em;
+    bottom: .08em;
 }
 
 /* Checked checkbox style (in this case the background is red) */
-.rs-cr-checkbox-input:checked+.rs-cr-checkbox-inner-span:before {
-  /* NOTE: Replace the url with a path to an SVG of a checkmark to get a checkmark icon */
-  background-image: var(--cr-rc-checkmark-svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  /* The size of the checkmark icon, you may/may not need this */
-  background-size: 15px;
-  border-radius: 2px;
-  background-color: var(--cr-rc-main-accent-color);
-  color: var(--cr-rc-main-color);
+.rs-cr-checkbox-input:checked + .rs-cr-checkbox-inner-span:before {
+    /* NOTE: Replace the url with a path to an SVG of a checkmark to get a checkmark icon */
+    background-image: var(--cr-rc-checkmark-svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    /* The size of the checkmark icon, you may/may not need this */
+    background-size: 15px;
+    border-radius: 2px;
+    background-color: var(--cr-rc-main-accent-color);
+    color: var(--cr-rc-main-color);
 }
 
 /* Adding a dotted border around the active tabbed-into checkbox */
-.rs-cr-checkbox-input:focus+.rs-cr-checkbox-inner-span:before,
-.rs-cr-checkbox-input:not(:disabled)+.rs-cr-checkbox-inner-span:hover:before {
-  /* Visible in the full-color space */
-  box-shadow: 0px 0px 0px 2px var(--cr-rc-main-accent-color);
+.rs-cr-checkbox-input:focus + .rs-cr-checkbox-inner-span:before,
+.rs-cr-checkbox-input:not(:disabled) + .rs-cr-checkbox-inner-span:hover:before {
+    /* Visible in the full-color space */
+    box-shadow: 0px 0px 0px 2px var(--cr-rc-main-accent-color);
 
-  /* Visible in Windows high-contrast themes
-     box-shadow will be hidden in these modes and
-     transparency will not be hidden in high-contrast
-     thus box-shadow will not show but the outline will
-     providing accessibility */
-  outline-color: transparent;
-  outline-width: 2px;
-  outline-style: dotted;
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: dotted;
 }
 
 /* Disabled checkbox styles */
-.rs-cr-checkbox-input:disabled+.rs-cr-checkbox-inner-span {
-  cursor: default;
-  opacity: 0.5;
+.rs-cr-checkbox-input:disabled + .rs-cr-checkbox-inner-span {
+    cursor: default;
+    opacity: 0.5;
 }
 
 /* || RADIOS STYLES */
 
 .rs-cr-radio-group {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 @media only screen and (max-width: 1182px) {
 
-  .rs-cr-radio-group {
-    flex-direction: column;
-    column-gap: 5px;
-  }
+    .rs-cr-radio-group {
+        flex-direction: column;
+        column-gap: 5px;
+    }
 }
 
 @media only screen and (min-width: 1182px) {
 
-  .rs-cr-radio-group {
-    flex-direction: row;
-    column-gap: 5px;
-  }
+    .rs-cr-radio-group {
+        flex-direction: row;
+        column-gap: 5px;
+    }
 }
 
 .rs-cr-radio-button-group {
-  display: flex;
+    display: flex;
 }
 
 .rs-cr-radio-button-input {
-  position: absolute !important;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  width: 1px;
-  border: 0;
-  overflow: hidden;
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
 }
 
 .rs-cr-radio-button-label {
-  background-color: var(--cr-rc-main-color);
-  color: var(--cr-rc-main-text-color);
-  font-size: var(--cr-rc-main-font-size);
-  line-height: 1;
-  text-align: center;
-  padding: 4px 8px;
-  margin-right: -1px;
-  border: 1px solid var(--cr-rc-main-gray-color);
-  transition: all 0.1s ease-in-out;
+    background-color: var(--cr-rc-main-color);
+    color: var(--cr-rc-main-text-color);
+    font-size: var(--cr-rc-main-font-size);
+    line-height: 1;
+    text-align: center;
+    padding: 4px 8px;
+    margin-right: -1px;
+    border: 1px solid var(--cr-rc-main-gray-color);
+    transition: all 0.1s ease-in-out;
 }
 
 .rs-cr-radio-button-label:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
-.rs-cr-radio-button-group input:checked+.rs-cr-radio-button-label {
-  background-color: var(--cr-rc-main-accent-color);
-  color: var(--cr-rc-main-color);
+.rs-cr-radio-button-group input:checked + .rs-cr-radio-button-label {
+    background-color: var(--cr-rc-main-accent-color);
+    color: var(--cr-rc-main-color);
 }
 
 .rs-cr-radio-button-label:first-of-type {
-  border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
 }
 
 .rs-cr-radio-button-label:last-of-type {
-  border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
 }
 
 /* Adding a dotted border around the active tabbed-into checkbox */
-.rs-cr-radio-button-input:focus+.rs-cr-radio-button-label,
-.rs-cr-radio-button-inputt+.rs-cr-radio-button-label:focus,
-.rs-cr-radio-button-input:not(:disabled)+.rs-cr-radio-button-label:hover {
-  /* Visible in the full-color space */
-  box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
+.rs-cr-radio-button-input:focus + .rs-cr-radio-button-label,
+.rs-cr-radio-button-inputt + .rs-cr-radio-button-label:focus,
+.rs-cr-radio-button-input:not(:disabled) + .rs-cr-radio-button-label:hover {
+    /* Visible in the full-color space */
+    box-shadow: 0px 0px 0px 4px var(--cr-rc-main-accent-color);
 
-  /* Visible in Windows high-contrast themes
-     box-shadow will be hidden in these modes and
-     transparency will not be hidden in high-contrast
-     thus box-shadow will not show but the outline will
-     providing accessibility */
-  outline-color: transparent;
-  outline-width: 2px;
-  outline-style: dotted;
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: dotted;
 }
 
 
 /* Disabled radion group styles */
-.rs-cr-radio-button-input:disabled+.rs-cr-radio-button-label {
-  cursor: default;
-  opacity: 0.5;
+.rs-cr-radio-button-input:disabled + .rs-cr-radio-button-label {
+    cursor: default;
+    opacity: 0.5;
 }
 
 /* || END BUTTON STYLES */
 
 .rs-cr-end-button-group {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  margin-left: 1.46%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-left: 1.46%;
 }
 
 .rs-cr-end-button {
-  background-color: transparent;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  padding-top: unset;
-  padding-left: unset;
-  padding-right: unset;
-  padding-bottom: unset;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    padding-top: unset;
+    padding-left: unset;
+    padding-right: unset;
+    padding-bottom: unset;
 }
 
 .rs-cr-orange-text,
 .rs-cr-locked {
-  color: var(--cr-rc-main-accent-color);
+    color: var(--cr-rc-main-accent-color);
 }
 
 .rs-cr-unlocked {
-  color: var(--cr-rc-main-gray-color)
+    color: var(--cr-rc-main-gray-color)
 }
 
 .fontello-icon {
-  /* increased icons size */
-  font-size: 134%;
+    /* increased icons size */
+    font-size: 134%;
 }
 
 /* Adding a dotted border around the active tabbed-into checkbox */
 .rs-cr-end-button:focus .fontello-icon.rs-cr-unlocked,
 .rs-cr-end-button .rs-cr-unlocked:focus,
 .rs-cr-end-button:not(:disabled) .rs-cr-unlocked:hover {
-  /* Visible in the full-color space */
-  text-shadow:
-    -2px -2px 0 var(--cr-rc-main-accent-color),
+    /* Visible in the full-color space */
+    text-shadow: -2px -2px 0 var(--cr-rc-main-accent-color),
     0 -2px 0 var(--cr-rc-main-accent-color),
     2px -2px 0 var(--cr-rc-main-accent-color),
     2px 0 0 var(--cr-rc-main-accent-color),
@@ -494,14 +488,14 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
     -2px 2px 0 var(--cr-rc-main-accent-color),
     -2px 0 0 var(--cr-rc-main-accent-color);
 
-  /* Visible in Windows high-contrast themes
-     box-shadow will be hidden in these modes and
-     transparency will not be hidden in high-contrast
-     thus box-shadow will not show but the outline will
-     providing accessibility */
-  outline-color: transparent;
-  outline-width: 2px;
-  outline-style: dotted;
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: dotted;
 }
 
 .rs-cr-end-button:focus .rs-cr-locked,
@@ -510,9 +504,8 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
 .rs-cr-end-button:focus .rs-cr-orange-text,
 .rs-cr-end-button .rs-cr-orange-text:focus,
 .rs-cr-end-button:not(:disabled) .rs-cr-orange-text:hover {
-  /* Visible in the full-color space */
-  text-shadow:
-    -2px -2px 0 var(--cr-rc-main-gray-color),
+    /* Visible in the full-color space */
+    text-shadow: -2px -2px 0 var(--cr-rc-main-gray-color),
     0 -2px 0 var(--cr-rc-main-gray-color),
     2px -2px 0 var(--cr-rc-main-gray-color),
     2px 0 0 var(--cr-rc-main-gray-color),
@@ -521,80 +514,200 @@ Most styles from https://www.w3schools.com/howto/howto_css_switch.asp
     -2px 2px 0 var(--cr-rc-main-gray-color),
     -2px 0 0 var(--cr-rc-main-gray-color);
 
-  /* Visible in Windows high-contrast themes
-     box-shadow will be hidden in these modes and
-     transparency will not be hidden in high-contrast
-     thus box-shadow will not show but the outline will
-     providing accessibility */
-  outline-color: transparent;
-  outline-width: 2px;
-  outline-style: dotted;
+    /* Visible in Windows high-contrast themes
+       box-shadow will be hidden in these modes and
+       transparency will not be hidden in high-contrast
+       thus box-shadow will not show but the outline will
+       providing accessibility */
+    outline-color: transparent;
+    outline-width: 2px;
+    outline-style: dotted;
 }
 
 /* || HIDDEN COUNT STYLES */
 .cr-rs-filter-hidden-count {
-  list-style: none;
-  cursor: pointer;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  font-weight: inherit;
-  font-style: inherit;
-  vertical-align: baseline;
-  height: 1.05rem;
-  font-family: Verdana, 'Lucida Grande', sans-serif;
-  font-size: .7rem;
-  line-height: 1.5;
-  color: var(--cr-rc-secondry-text-color);
+    list-style: none;
+    cursor: pointer;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    vertical-align: baseline;
+    height: 1.05rem;
+    font-family: Verdana, 'Lucida Grande', sans-serif;
+    font-size: .7rem;
+    line-height: 1.5;
+    color: var(--cr-rc-secondry-text-color);
 }
 
 .cr-rs-filter-hidden-count.changed {
-  border-radius: 4px;
-  animation: highlight 500ms ease-out;
+    border-radius: 4px;
+    animation: highlight 500ms ease-out;
 }
 
 @keyframes highlight {
-  0% {
-    background-color: var(--cr-rc-main-accent-color);
-  }
+    0% {
+        background-color: var(--cr-rc-main-accent-color);
+    }
 
-  100% {
-    background-color: inherit;
-  }
+    100% {
+        background-color: inherit;
+    }
 }
 
 /* || PROGRESS BAR */
 .day.active .cr-rs-progress-on-closed {
-  display: none;
+    display: none;
 }
 
 .cr-rs-progress-on-closed {
-  /* Reset the default appearance */
-  -webkit-appearance: none;
-  appearance: none;
+    /* Reset the default appearance */
+    -webkit-appearance: none;
+    appearance: none;
 
-  width: 70%;
-  height: .25rem;
-  display: block;
-  margin-top: .4375rem;
+    width: 70%;
+    height: .25rem;
+    display: block;
+    margin-top: .4375rem;
 
-  background-color: #f4f2f2;
+    background-color: #f4f2f2;
 
-  overflow: hidden;
-  border: solid var(--cr-rc-main-gray-color) .01rem;
-  border-radius: .125rem;
+    overflow: hidden;
+    border: solid var(--cr-rc-main-gray-color) .01rem;
+    border-radius: .125rem;
 }
 
 .cr-rs-progress-on-closed::-webkit-progress-bar {
-  background-color: #f4f2f2;
+    background-color: #f4f2f2;
 }
 
 .cr-rs-progress-on-closed::-webkit-progress-value {
-  background: var(--cr-rc-main-accent-color);
+    background: var(--cr-rc-main-accent-color);
 }
 
 .cr-rs-progress-on-closed::-moz-progress-bar {
-  background: var(--cr-rc-main-accent-color);
+    background: var(--cr-rc-main-accent-color);
+}
+
+/* || LOADING STATES*/
+/* Filter menu placeholder */
+.cr-rs-filter-menu-placeholder {
+    min-height: 50px;
+    margin: 0.6% 0;
+    position: relative;
+}
+
+/* Inline loader base */
+.cr-rs-inline-loader {
+    background-color: var(--cr-rc-main-color);
+    border-radius: 0.25rem;
+
+    cursor: default;
+
+    color: var(--cr-rc-main-accent-color);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: var(--cr-rc-main-font-size);
+    font-weight: 400;
+    line-height: 1.5em;
+    text-shadow: 0 0 0.077em transparent;
+    width: 100%;
+    padding: 0.9em 1em;
+    /* Helpful link for flex: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+/* Skeleton loading */
+.cr-rs-skeleton-container {
+    width: 100%;
+}
+
+.cr-rs-skeleton-line {
+    height: 16px;
+    background: linear-gradient(90deg,
+    rgba(247, 140, 36, 0.1) 25%,
+    rgba(247, 140, 36, 0.2) 50%,
+    rgba(247, 140, 36, 0.1) 75%);
+    background-size: 200% 100%;
+    animation: cr-rs-skeleton 1.5s infinite;
+    border-radius: 4px;
+    margin: 8px 0;
+}
+
+
+/* Fade out animation */
+.cr-rs-loader-fadeout {
+    animation: cr-rs-fadeout 0.3s ease-out forwards;
+}
+
+/* Toast container */
+.cr-rs-toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+/* Toast styles */
+.cr-rs-toast {
+    padding: 12px 20px;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    pointer-events: auto;
+    max-width: 300px;
+}
+
+.cr-rs-toast-show {
+    transform: translateX(0);
+}
+
+.cr-rs-toast-success {
+    background: #4CAF50;
+}
+
+.cr-rs-toast-error {
+    background: #f44336;
+}
+
+.cr-rs-toast-info {
+    background: var(--cr-rc-main-accent-color, #F78C24);
+}
+
+/* Animations */
+@keyframes cr-rs-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes cr-rs-skeleton {
+    0% {
+        background-position: 200% 50%;
+    }
+    100% {
+        background-position: -200% 50%;
+    }
+}
+
+
+@keyframes cr-rs-fadeout {
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
 }
