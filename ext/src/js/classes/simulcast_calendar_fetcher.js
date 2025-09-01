@@ -2,14 +2,13 @@
 import "webextension-polyfill/dist/browser-polyfill.min"
 import ExtensionCache from './extension_cache.js';
 import TinyContent from './tiny_content.js';
-import {TWENTY_FOUR_HOURS} from "../lib/constants.js";
+import {ENGLISH_LANGUAGE_CODE, TWENTY_FOUR_HOURS} from "../lib/constants.js";
+import {detectLanguageFromBodyOrUrl} from "../lib/utils.js";
 
 /**
  * Handles fetching and caching of Crunchyroll simulcast calendar content
  */
 export default class SimulcastCalendarFetcher {
-
-    #ENGLISH_LANGUAGE = "en-us";
 
 
     constructor(options = {}) {
@@ -25,26 +24,36 @@ export default class SimulcastCalendarFetcher {
 
     /**
      * Main method to fetch TinyContent objects with caching
-     * @returns {Promise<Array<TinyContent>|null>} Array of TinyContent objects or null if failed
+     * @param {string|null} detectedLanguage - Language detected from the body or URL,
+     * a null value means it needs to be detected
+     * @returns {Promise<Array<TinyContent>|null>} Array of TinyContent objects
+     * or null if failed
      */
-    async fetchTinyContents() {
+    async fetchTinyContents(detectedLanguage = null) {
         try {
+
             const currentUrl = window.location.href;
             console.log(`Current URL: ${currentUrl}`);
 
-            const language = this.detectLanguageFromBodyOrUrl(currentUrl);
-            console.log(`Detected language: ${language}`);
+            let language = detectedLanguage;
+            if (language === null) {
+                console.log("Detected language is null, trying to detect from body or URL");
 
-            if (language === this.#ENGLISH_LANGUAGE) {
+                language = detectLanguageFromBodyOrUrl(currentUrl);
+                console.log(`Detected language: ${language}`);
+            }
+
+
+            if (language === ENGLISH_LANGUAGE_CODE) {
                 console.log("Already on English page, no need to fetch");
                 return null;
             }
 
-            console.warn(`Language detected: ${language}`);
+            console.log(`Language detected: ${language}`);
             const englishUrl = this.constructEnglishUrl(currentUrl);
             console.log(`English URL: ${englishUrl}`);
 
-            // Check for new episodes by comparing current page article count with cached count
+            // Check for new episodes by comparing the current page article count with cached count
             const shouldClearCache = await this.checkForNewEpisodes(englishUrl);
             if (shouldClearCache) {
                 console.log("New episodes detected, clearing cache to fetch fresh data");
@@ -80,19 +89,6 @@ export default class SimulcastCalendarFetcher {
         }
     }
 
-    /**
-     * Detects language from Body or URL
-     * @param {string} url - The current URL
-     * @returns {string} Language code (defaults to "en")
-     */
-    detectLanguageFromBodyOrUrl(url) {
-        const lang = document.documentElement.lang;
-        if (lang) {
-            return lang;
-        }
-        const match = url.match(/.+crunchyroll\.com\/(.+)\/simulcastcalendar.*/);
-        return match?.[1] || this.#ENGLISH_LANGUAGE;
-    }
 
     /**
      * Constructs English URL from current URL
@@ -106,7 +102,7 @@ export default class SimulcastCalendarFetcher {
         );
 
         // First, check if the head link has the filter query param
-        const headLink = document.querySelector('head link[rel="alternate"][hreflang="' + this.#ENGLISH_LANGUAGE + '"]');
+        const headLink = document.querySelector('head link[rel="alternate"][hreflang="' + ENGLISH_LANGUAGE_CODE + '"]');
 
         if (headLink) {
             const url = new URL(headLink.href);
@@ -154,8 +150,8 @@ export default class SimulcastCalendarFetcher {
             console.log("Successfully fetched from URL, the document title is:", doc.title);
             const fetchedLanguage = doc.documentElement.lang;
             console.log("Retrieved language:", fetchedLanguage);
-            if (fetchedLanguage !== this.#ENGLISH_LANGUAGE) {
-                console.warn(`Expected language ${this.#ENGLISH_LANGUAGE}, but got ${fetchedLanguage}. Discarding content.`);
+            if (fetchedLanguage !== ENGLISH_LANGUAGE_CODE) {
+                console.warn(`Expected language ${ENGLISH_LANGUAGE_CODE}, but got ${fetchedLanguage}. Discarding content.`);
                 return null;
             }
 
