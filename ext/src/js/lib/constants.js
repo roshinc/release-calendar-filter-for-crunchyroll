@@ -57,3 +57,7 @@ export const ALL_DUB_LANGUAGES = [
 export const DEFAULT_DUB_LANGUAGES = ["English", "Spanish", "French", "German"];
 
 export const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+export const TWELVE_HOURS = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+
+export const ENGLISH_LANGUAGE_CODE = "en-us";
+

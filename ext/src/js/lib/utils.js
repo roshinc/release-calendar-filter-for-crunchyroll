@@ -1,6 +1,6 @@
 import preference from "../classes/pref";
 
-import { CRRS_HIDDEN_COUNT_CLASS_NAME } from "./constants";
+import {CRRS_HIDDEN_COUNT_CLASS_NAME, ENGLISH_LANGUAGE_CODE} from "./constants";
 
 export const reflowHiddenCount = () => {
 
@@ -27,4 +27,26 @@ export const getPopoverID = (releaseArticleDataset) => {
         return popoverUrl.split("/").pop();
     }
     return null;
+}
+/**
+ * Detects language from Body or URL
+ * @param {string} url - The current URL
+ * @returns {string} Language code (defaults to "en")
+ */
+export const detectLanguageFromBodyOrUrl = (url) => {
+    const lang = document.documentElement.lang;
+    if (lang) {
+        return lang;
+    }
+    const match = url.match(/.+crunchyroll\.com\/(.+)\/simulcastcalendar.*/);
+    return match?.[1] || ENGLISH_LANGUAGE_CODE;
+}
+
+/**
+ * Detects language from Body or URL and checks if the language is english
+ * @param {string} url - The current URL
+ * @returns {boolean} true if the language is english, false otherwise
+ */
+export const detectIfEnglishLanguageFromBodyOrUrl = (url) => {
+    return detectLanguageFromBodyOrUrl(url) === ENGLISH_LANGUAGE_CODE;
 }
