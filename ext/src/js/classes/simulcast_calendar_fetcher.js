@@ -142,7 +142,12 @@ export default class SimulcastCalendarFetcher {
      */
     async fetchFromUrl(url) {
         try {
-            const response = await fetch(url, {credentials: 'omit'});
+            const response = await fetch(url, {
+                credentials: 'omit',
+                headers: {
+                    "Accept-Language": "en-US,en;q=0.9"
+                }
+            });
             const html = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
