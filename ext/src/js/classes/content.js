@@ -90,6 +90,7 @@ export default class Content {
     }
 
     #parseContent(content, tinyContents) {
+        let shouldSeasonTitleBeModified = false;
         const releaseArticle = content.querySelector("article.js-release");
 
         const releaseArticleDataset = releaseArticle.dataset;
@@ -129,6 +130,7 @@ export default class Content {
         const seasonH1 = releaseArticle.querySelector("h1.season-name");
         const seasonUrl = seasonH1.querySelector("a");
         this.#seasonTitle = seasonUrl.querySelector("cite").textContent;
+        const originalSeasonTitle = this.#seasonTitle;
 
         if (tinyContents) {
             const popoverId = getPopoverID(releaseArticleDataset);
@@ -136,8 +138,10 @@ export default class Content {
                 // Find the TinyContent object with the matching popoverId
                 const tinyContent = tinyContents.find(tc => tc.popoverId === popoverId);
                 if (tinyContent) {
+                    shouldSeasonTitleBeModified = true;
                     // console.log(`TinyContent found: ${tinyContent.blurb()}`);
                     // season name
+                    //console.log(`Replacing season title with TinyContent: ${tinyContent.seasonTitle}, original: ${this.#seasonTitle}`);
                     this.#seasonTitle = tinyContent.seasonTitle;
                 } else {
                     console.warn(`TinyContent with popoverId ${popoverId} not found.`);
@@ -146,7 +150,16 @@ export default class Content {
         }
 
         // console.log(`Starting name check with season title: ${this.#seasonTitle}`);
-        seasonUrl.querySelector("cite").textContent = this.#seasonTitle;
+
+        if (shouldSeasonTitleBeModified) {
+            console.log(`Restore needed for ${this.#seasonTitle}`);
+            // If the season title does not start with the original season title, restore it
+            if (!this.#seasonTitle.startsWith(originalSeasonTitle)) {
+                seasonUrl.querySelector("cite").textContent = originalSeasonTitle;
+            } else {
+                seasonUrl.querySelector("cite").textContent = this.#seasonTitle;
+            }
+        }
 
         // dub info
         const found = this.#seasonTitle.match(Content.#regexp);
@@ -205,6 +218,7 @@ export default class Content {
                 this.#forceShowInSubOnlyAlso = true;
             }
         }
+
 
         // progress bar
         const currentProgress = releaseArticle.querySelector("progress");
