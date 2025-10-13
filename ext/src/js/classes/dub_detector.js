@@ -1,7 +1,6 @@
 // dubHelper.js
 export default class DubDetector {
 
-
     static #patterns = {
         mainDub:
             /^(.*) ?(?:\(([A-Z][a-z]+(?:-(?:[A-Z]{2}))?(?: ?[A-Z][a-z]+)?) Dub\)?)$/,
@@ -41,6 +40,10 @@ export default class DubDetector {
         "中文": "Mandarin",
     };
 
+    static #typoCorrectionsLanguageMapping = {
+        "Portugese": "Portuguese"
+    };
+
 
     detect(givenTitle) {
         let response = {
@@ -60,6 +63,13 @@ export default class DubDetector {
             // Replace the spaces in the dub language with dashes
             // for handling languages with multiple words e.g. European Portuguese
             response.dubLanguage = response.dubLanguage.replaceAll(" ", "-");
+
+            // Check if the dub language is a typo and correct it if needed
+            if (DubDetector.#typoCorrectionsLanguageMapping[response.dubLanguage]) {
+                response.dubLanguage = DubDetector.#typoCorrectionsLanguageMapping[response.dubLanguage];
+                console.log(`Corrected dub language: ${response.dubLanguage} from original: ${found[2]}`);
+            }
+
             response.title = this.#trimIfNotNullString(found[1]);
 
             console.log(`Dub info detected: ${response.title} - ${response.dubLanguage}`);
