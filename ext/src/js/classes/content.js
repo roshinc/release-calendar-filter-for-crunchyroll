@@ -2,16 +2,7 @@ import {createProgressBar} from "../lib/ui_modifier";
 import {getPopoverID} from '../lib/utils.js';
 
 export default class Content {
-    static #regexp =
-        /^(.*) ?(?:\(([A-Z][a-z]+(?:-(?:[A-Z]{2}))?(?: ?[A-Z][a-z]+)?) Dub\)?)$/;
-    // This is a special case for English dubs, which are not marked as such in the season title
-    static #regexp_for_english_dub_special_case = /^(.*) ?(?:\(Dub\)?)$/;
-    // This is a special case for the Crunchyroll Anime Awards
-    static #regexp_for_cr_anime_awards =
-        /^(?!.*Japanese)(.*) (?:\(([A-Z][a-z]+(?:-(?:[A-Z]{2}))?) Audio\)?)$/;
-    // This is a special case for the Crunchyroll Anime Awards english dub
-    static #regexp_for_cr_anime_awards_english_dub =
-        /^(The \d{4} Crunchyroll Anime Awards)$/;
+
 
     static #id_prefix = "cr-rs-content-";
     #id;
@@ -27,10 +18,13 @@ export default class Content {
     #dubLanguage;
     #forceShowInSubOnlyAlso = false;
 
-    constructor(content, index, tinyContents) {
+    #weekContext;
+
+    constructor(content, index, weekContext) {
         //this.#createID(index);
         this.#contentIndex = index;
-        this.#parseContent(content, tinyContents);
+        this.#weekContext = weekContext;
+        this.#parseContent(content);
     }
 
     blurb() {
@@ -89,7 +83,7 @@ export default class Content {
         return this.#forceShowInSubOnlyAlso;
     }
 
-    #parseContent(content, tinyContents) {
+    #parseContent(content) {
         let shouldSeasonTitleBeModified = false;
         const releaseArticle = content.querySelector("article.js-release");
 
@@ -126,6 +120,7 @@ export default class Content {
          * we will try to find the corresponding TinyContent object
          * We can use this to get the real values for parsing.
          */
+        const tinyContents = this.#weekContext.tinyContents;
         // season name
         const seasonH1 = releaseArticle.querySelector("h1.season-name");
         const seasonUrl = seasonH1.querySelector("a");
@@ -152,71 +147,24 @@ export default class Content {
         // console.log(`Starting name check with season title: ${this.#seasonTitle}`);
 
         if (shouldSeasonTitleBeModified) {
-            console.log(`Restore needed for ${this.#seasonTitle}`);
             // If the season title does not start with the original season title, restore it
             if (!this.#seasonTitle.startsWith(originalSeasonTitle)) {
+                console.log(`Restore needed for ${this.#seasonTitle}`);
                 seasonUrl.querySelector("cite").textContent = originalSeasonTitle;
             } else {
                 seasonUrl.querySelector("cite").textContent = this.#seasonTitle;
             }
         }
 
-        // dub info
-        const found = this.#seasonTitle.match(Content.#regexp);
-        this.#isDub = found != null;
-        if (this.#isDub) {
-            this.#dubLanguage = found[2];
-            // Replace the spaces in the dub language with dashes
-            // for handling languages with multiple words e.g. European Portuguese
-            this.#dubLanguage = this.#dubLanguage.replace(" ", "-");
-            this.#seasonTitle = found[1];
-        }
-
-        // if it was not detected as a dub, check if it is the special case of english dub
-        if (!this.#isDub) {
-            const found = this.#seasonTitle.match(
-                Content.#regexp_for_english_dub_special_case
-            );
-            this.#isDub = found != null;
-            if (this.#isDub) {
-                this.#dubLanguage = "English";
-                this.#seasonTitle = found[1];
-                console.log(`English dub special case detected: ${this.#seasonTitle}`);
-            }
-        }
-
-        // if it was not detected as a dub, check if it is the special case of the Crunchyroll Anime Awards
-        if (!this.#isDub) {
-            const found = this.#seasonTitle.match(
-                Content.#regexp_for_cr_anime_awards
-            );
-            this.#isDub = found != null;
-            if (this.#isDub) {
-                this.#dubLanguage = found[2];
-                this.#seasonTitle = found[1];
-                console.log(
-                    `CR Anime Awards special case detected: ${this.#seasonTitle} - ${this.#dubLanguage
-                    }`
-                );
-            }
-        }
-
-        // if it was not detected as a dub, check if it is the special case of the Crunchyroll Anime Awards english dub
-        if (!this.#isDub) {
-            const found = this.#seasonTitle.match(
-                Content.#regexp_for_cr_anime_awards_english_dub
-            );
-            this.#isDub = found != null;
-            if (this.#isDub) {
-                this.#dubLanguage = "English";
-                this.#seasonTitle = found[1];
-                console.log(
-                    `CR Anime Awards english dub special case detected: ${this.#seasonTitle
-                    }`
-                );
-                // this special case also requires it to be shown in sub only mode
-                this.#forceShowInSubOnlyAlso = true;
-            }
+        // dubbed
+        const detectedResponse = this.#weekContext.dubDetector.detect(this.#seasonTitle);
+        if (detectedResponse.isDub) {
+            this.#isDub = detectedResponse.isDub;
+            this.#dubLanguage = detectedResponse.dubLanguage;
+            this.#forceShowInSubOnlyAlso = detectedResponse.forceShowInSubOnlyAlso;
+            this.#seasonTitle = detectedResponse.title;
+            console.log(`Detected dubbed content: ${detectedResponse}`);
+            console.log(detectedResponse)
         }
 
 
