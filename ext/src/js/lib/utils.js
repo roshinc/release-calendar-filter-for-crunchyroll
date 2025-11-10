@@ -50,3 +50,19 @@ export const detectLanguageFromBodyOrUrl = (url) => {
 export const detectIfEnglishLanguageFromBodyOrUrl = (url) => {
     return detectLanguageFromBodyOrUrl(url) === ENGLISH_LANGUAGE_CODE;
 }
+
+/**
+ * Trims the input string if it is not null, undefined, or empty and is of type string.
+ * If the input is not a string but is non-null, returns the input as is.
+ *
+ * @param {any} str - The input value to be checked and potentially trimmed.
+ * @return {any} The trimmed string if the input is a non-null string, otherwise the original input.
+ */
+export const trimIfNotNullString = (str) => {
+    if (str) {
+        if (typeof str === 'string') {
+            return str.trim();
+        }
+    }
+    return str;
+}

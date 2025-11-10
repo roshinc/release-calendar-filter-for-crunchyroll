@@ -55,7 +55,9 @@ export const ALL_DUB_LANGUAGES = [
     "Russian",
     "Spanish",
     "Tamil",
+    "Telugu",
     "Thai",
+    "Indonesian"
 ];
 export const DEFAULT_DUB_LANGUAGES = ["English", "Spanish", "French", "German"];
 

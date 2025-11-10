@@ -94,6 +94,13 @@ describe('DubDetector', () => {
             expect(result.dubLanguage).toBe('Italian');
             expect(result.title).toBe('DAN DA DAN Season 2');
         });
+        it('should handle Indonesian dub', () => {
+            const result = detector.detect('Campfire Cooking in Another World with My Absurd Skill Season 2 (Bahasa Indonesia)');
+
+            expect(result.isDub).toBe(true);
+            expect(result.dubLanguage).toBe('Indonesian');
+            expect(result.title).toBe('Campfire Cooking in Another World with My Absurd Skill Season 2');
+        });
         it('should handle titles with ordinal season numbers', () => {
             const result = detector.detect('Reborn as a Vending Machine, I Now Wander the Dungeon 2nd Season (German Dub)');
 
@@ -343,7 +350,16 @@ describe('DubDetector', () => {
             expect(result.title).toBe('May I Ask for One Final Thing? Season 1');
         });
 
-        it('should map िंदी (Hindi)', () => {
+        it('should map िंदी (Telugu)', () => {
+            const result = detector.detect('Mechanical Marie Season 1 (తెలుగు)');
+
+            expect(result.isDub).toBe(true);
+            expect(ALL_DUB_LANGUAGES.includes(result.dubLanguage)).toBe(true);
+            expect(result.dubLanguage).toBe('Telugu');
+            expect(result.title).toBe('Mechanical Marie Season 1');
+        });
+
+        it('should map తెలుగు (Hindi)', () => {
             const result = detector.detect('May I Ask for One Final Thing? Season 1 (हिंदी)');
 
             expect(result.isDub).toBe(true);

@@ -1,4 +1,6 @@
 // dubHelper.js
+import {trimIfNotNullString} from "../lib/utils.js";
+
 export default class DubDetector {
 
     static #patterns = {
@@ -33,11 +35,13 @@ export default class DubDetector {
         "Polski": "Polish",
         "ไทย": "Thai",
         "தமிழ்": "Tamil",
+        "తెలుగు": "Telugu",
         "Catalá": "Catalan",
         "English (India)": "English-IN",
         "Português (Portugal)": "European-Portuguese",
         "普通话": "Mandarin",
         "中文": "Mandarin",
+        "Bahasa Indonesia": "Indonesian",
     };
 
     static #typoCorrectionsLanguageMapping = {
@@ -50,7 +54,7 @@ export default class DubDetector {
             isDub: false,
             dubLanguage: null,
             forceShowInSubOnlyAlso: false,
-            title: this.#trimIfNotNullString(givenTitle),
+            title: trimIfNotNullString(givenTitle),
         }
 
         // dub info
@@ -59,10 +63,10 @@ export default class DubDetector {
 
 
         if (response.isDub) {
-            response.dubLanguage = this.#trimIfNotNullString(found[2]);
+            response.dubLanguage = trimIfNotNullString(found[2]);
             // Replace the spaces in the dub language with dashes
             // for handling languages with multiple words e.g. European Portuguese
-            response.dubLanguage = response.dubLanguage.replaceAll(" ", "-");
+            response.dubLanguage = trimIfNotNullString(response.dubLanguage.replaceAll(" ", "-"));
 
             // Check if the dub language is a typo and correct it if needed
             if (DubDetector.#typoCorrectionsLanguageMapping[response.dubLanguage]) {
@@ -70,7 +74,7 @@ export default class DubDetector {
                 console.log(`Corrected dub language: ${response.dubLanguage} from original: ${found[2]}`);
             }
 
-            response.title = this.#trimIfNotNullString(found[1]);
+            response.title = trimIfNotNullString(found[1]);
 
             console.log(`Dub info detected: ${response.title} - ${response.dubLanguage}`);
             return response;
@@ -83,7 +87,7 @@ export default class DubDetector {
             );
 
             if (found != null) {
-                const rawLang = this.#trimIfNotNullString(found[2]);
+                const rawLang = trimIfNotNullString(found[2]);
                 const mappedLang = DubDetector.#languageMapping[rawLang];
                 console.log(`Raw language: ${rawLang} - Mapped language: ${mappedLang}`);
                 if (mappedLang) {
@@ -95,7 +99,7 @@ export default class DubDetector {
                     // Replace the spaces in the dub language with dashes
                     // for handling languages with multiple words e.g. European Portuguese
                     response.dubLanguage = response.dubLanguage.replaceAll(" ", "-");
-                    response.title = this.#trimIfNotNullString(found[1]);
+                    response.title = trimIfNotNullString(found[1]);
 
                     console.log(`CR Season 1 fix special case detected: ${response.title}`);
                     console.log(`Dub language: ${(response.dubLanguage)} from original: ${mappedLang}`);
@@ -113,7 +117,7 @@ export default class DubDetector {
             response.isDub = found != null;
             if (response.isDub) {
                 response.dubLanguage = "English";
-                response.title = this.#trimIfNotNullString(found[1]);
+                response.title = trimIfNotNullString(found[1]);
                 console.log(`English dub special case detected: ${response.title}`);
 
                 return response;
@@ -127,8 +131,8 @@ export default class DubDetector {
             );
             response.isDub = found != null;
             if (response.isDub) {
-                response.dubLanguage = this.#trimIfNotNullString(found[2]);
-                response.title = this.#trimIfNotNullString(found[1]);
+                response.dubLanguage = trimIfNotNullString(found[2]);
+                response.title = trimIfNotNullString(found[1]);
                 console.log(
                     `CR Anime Awards special case detected: ${response.title} - ${response.dubLanguage
                     }`
@@ -146,7 +150,7 @@ export default class DubDetector {
             response.isDub = found != null;
             if (response.isDub) {
                 response.dubLanguage = "English";
-                response.title = this.#trimIfNotNullString(found[1]);
+                response.title = trimIfNotNullString(found[1]);
                 console.log(
                     `CR Anime Awards english dub special case detected: ${response.title
                     }`
@@ -163,19 +167,5 @@ export default class DubDetector {
         return response;
     }
 
-    /**
-     * Trims the input string if it is not null, undefined, or empty and is of type string.
-     * If the input is not a string but is non-null, returns the input as is.
-     *
-     * @param {any} str - The input value to be checked and potentially trimmed.
-     * @return {any} The trimmed string if the input is a non-null string, otherwise the original input.
-     */
-    #trimIfNotNullString(str) {
-        if (str) {
-            if (typeof str === 'string') {
-                return str.trim();
-            }
-        }
-        return str;
-    }
+
 }
